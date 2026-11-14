@@ -292,8 +292,14 @@ public struct Ingredient: Codable, Hashable, Identifiable, Sendable {
             let n = grams / pg
             let r = (n * 2).rounded() / 2
             if abs(n - r) < 0.08, r > 0 {
-                let s = r == r.rounded() ? String(Int(r)) : String(format: "%.1f", r).replacingOccurrences(of: ".", with: ",")
-                return "\(s) шт"
+                let whole = r == r.rounded()
+                let s = whole ? String(Int(r)) : String(format: "%.1f", r).replacingOccurrences(of: ".", with: ",")
+                let unit: (String, String, String)
+                if food.has("canned") { unit = ("банка", "банки", "банок") }
+                else if food.has("slice") { unit = ("ломтик", "ломтика", "ломтиков") }
+                else { unit = ("шт", "шт", "шт") }
+                let word = whole ? Say.plural(Int(r), unit.0, unit.1, unit.2) : unit.1
+                return "\(s) \(word)"
             }
         }
         if food.role == .fat {

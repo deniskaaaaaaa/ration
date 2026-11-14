@@ -237,7 +237,7 @@ public enum Catalog {
             g("radish", "Редис", .vegetable, 16, 0.7, 0.1, 3.4, ("Редис", "редис", "редисом"), tags: ["salad", "raw"], cook: .freshVeg, en: ["radish"]),
             g("avocado", "Авокадо", .vegetable, 160, 2, 14.7, 8.5, ("Авокадо", "авокадо", "авокадо"), tags: ["salad", "raw", "fatty"], piece: 150, cook: .freshVeg, en: ["avocado"]),
             g("pickles", "Огурцы маринованные", .vegetable, 12, 0.5, 0.2, 2.3, ("Маринованные огурцы", "маринованные огурцы", "маринованными огурцами"), tags: ["raw", "salad"], cook: .noCook, en: ["pickles"]),
-            g("sauerkraut", "Квашеная капуста", .vegetable, 19, 0.9, 0.1, 4.3, ("Квашеная капуста", "квашеную капусту", "квашеной капустой"), tags: ["raw"], cook: .noCook, en: ["sauerkraut"]),
+            g("sauerkraut", "Квашеная капуста", .vegetable, 19, 0.9, 0.1, 4.3, ("Квашеная капуста", "квашеную капусту", "квашеной капустой"), tags: ["raw", "nocut"], cook: .noCook, en: ["sauerkraut"]),
             g("olives", "Оливки", .vegetable, 115, 0.8, 10.7, 6.3, ("Оливки", "оливки", "оливками"), tags: ["salad", "raw", "fatty"], cook: .noCook, en: ["olives"])
         ]
 

@@ -51,7 +51,7 @@ public enum Say {
     /// Нужно ли жарить или варить этот белок.
     static func needsHeat(_ f: Food) -> Bool {
         switch cook(f) {
-        case .noCook, .cannedFish, .cookedMeat: return false
+        case .noCook, .cannedFish, .cookedMeat, .cannedLegumes: return false
         default: return true
         }
     }
@@ -69,6 +69,7 @@ public enum Say {
         case .shrimp: return "Если \(a) замороженные — подержи их 5 минут в холодной воде."
         case .cannedFish: return "Слей жидкость из банки и разбери \(a) вилкой на кусочки."
         case .cookedMeat: return "Сними кожу и разбери \(a) руками на кусочки."
+        case .cannedLegumes: return "Откинь \(a) на дуршлаг и промой водой."
         default: return nil
         }
     }
@@ -150,7 +151,7 @@ public enum Say {
     /// Подготовка овощей.
     static func vegPrep(_ v: [Food]) -> [String] {
         var out: [String] = []
-        let cut = v.filter { [.freshVeg, .noCook].contains(cook($0)) }
+        let cut = v.filter { [.freshVeg, .noCook].contains(cook($0)) && !$0.has("nocut") }
         let leaf = v.filter { cook($0) == .leafy && !$0.has("herb") }
         let herb = v.filter { cook($0) == .leafy && $0.has("herb") }
         let frozen = v.filter { cook($0) == .frozenVeg }
@@ -168,7 +169,18 @@ public enum Say {
         v.filter { ![.leafy].contains(cook($0)) || $0.has("cookable") }
     }
 
-    static func spices(_ s: [Food]) -> String {
-        list(s.filter { $0.role == .spice && !$0.isKind("c:salt") && !$0.isKind("c:vinegar") && !$0.isKind("c:lemon_juice") }.prefix(3).map { $0.words.acc })
+    static func spices(_ s: [Food]) -> String { list(spiceList(s)) }
+
+    /// Специи для перечисления в шаге (без соли, уксуса и лимонного сока — о них говорится отдельно).
+    static func spiceList(_ s: [Food]) -> [String] {
+        Array(s.filter { $0.role == .spice && !$0.isKind("c:salt") && !$0.isKind("c:vinegar") && !$0.isKind("c:lemon_juice") }.prefix(3).map { $0.words.acc })
+    }
+
+    /// 1 банка, 2 банки, 5 банок.
+    public static func plural(_ n: Int, _ one: String, _ few: String, _ many: String) -> String {
+        let m10 = n % 10, m100 = n % 100
+        if m10 == 1 && m100 != 11 { return one }
+        if (2...4).contains(m10) && !(12...14).contains(m100) { return few }
+        return many
     }
 }

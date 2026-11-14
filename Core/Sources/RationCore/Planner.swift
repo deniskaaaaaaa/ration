@@ -267,7 +267,9 @@ public enum Planner {
             f.foods[x.key] = food
             parts.append(makePart(key: x.key, food: food, range: r))
         }
+        let hasChicken = f.foods.values.contains { $0.has("chicken") || $0.has("turkey") }
         for sid in t.spices where f.spices.count < 5 {
+            if sid == "c:chicken_spice" && !hasChicken { continue }
             if let a = pool.first(where: { $0.food.isKind(sid) && $0.food.role == .spice && !used.contains($0.food.id) }) {
                 used.insert(a.food.id)
                 f.spices.append(a.food)
@@ -282,6 +284,7 @@ public enum Planner {
 
     static func makePart(key: String, food: Food, range: ClosedRange<Double>) -> Part {
         var lo = range.lowerBound, hi = range.upperBound
+        if food.has("crisp") { hi = min(hi, 60); lo = min(lo, hi) }
         var typical = min(max(food.role.typical, lo), hi)
         if food.role == .spice { return Part(key: key, food: food, grams: 0, lo: 0, hi: 0, typical: 0, piece: nil, locked: true) }
         var piece = food.pieceGrams
@@ -458,7 +461,7 @@ public enum Planner {
             for p in d.parts where isMain(p, d) { seenMain[p.food.id, default: 0] += 1 }
         }
         for (_, n) in seenTpl where n > 1 { pen += 0.03 * Double(n - 1) }
-        for (_, n) in seenMain where n > 1 { pen += 0.015 * Double(n - 1) }
+        for (_, n) in seenMain where n > 1 { pen += 0.04 * Double(n - 1) }
         return pen
     }
 

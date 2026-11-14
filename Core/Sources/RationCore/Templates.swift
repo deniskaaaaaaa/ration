@@ -111,6 +111,8 @@ public enum Templates {
     /// Белок: подготовка и жарка, если нужны.
     private static func proteinSteps(_ p: Food, panIntro: Bool = true) -> [String] {
         var s: [String] = []
+        let c = Say.cook(p)
+        if c == .lentils || c == .dryBeans { return [Say.side(p)] }
         if let pr = Say.prep(p) { s.append(pr) }
         if Say.needsHeat(p) {
             if panIntro { s.append("Разогрей масло в сковороде.") }
@@ -341,7 +343,7 @@ public enum Templates {
             title: { f in "Бутерброды " + Say.with(Say.list(f.all(["s", "c", "v"]).map { $0.words.ins })) },
             steps: { f in
                 guard let b = f["b"], let x = f["s"] else { return [] }
-                var s = ["Подсуши \(Say.acc(b)) в тостере или на сухой сковороде."]
+                var s: [String] = b.has("crisp") ? [] : ["Подсуши \(Say.acc(b)) в тостере или на сухой сковороде."]
                 if let sc = f["sc"] { s.append("Смажь \(Say.ins(sc)).") }
                 if let pr = Say.prep(x) { s.append(pr) }
                 if let v = f["v"] { s += Say.vegPrep([v]) }
@@ -480,8 +482,7 @@ public enum Templates {
                     s.append("Разогрей масло в сковороде.")
                 }
                 if let tm = f["t"] { s.append("Добавь \(Say.acc(tm))\(tm.isKind("c:tomato_paste") ? " и немного воды из-под макарон" : "") и прогрей 3 минуты.") }
-                let sp = Say.spices(f.spices)
-                s.append("Добавь \(Say.acc(p))\(sp.isEmpty ? "" : " и \(sp)"), перемешай \(Say.with(Say.ins(side))) и прогрей минуту.")
+                s.append("Добавь \(Say.list([p.words.acc] + Say.spiceList(f.spices))), перемешай \(Say.with(Say.ins(side))) и прогрей минуту.")
                 if let c = f["c"] { s.append("Посыпь \(Say.ins(c)).") }
                 return s
             }))
@@ -573,9 +574,10 @@ public enum Templates {
                 guard let p = f["p"], let g = f["g"], let dr = f["dr"] else { return [] }
                 var s: [String] = []
                 if p.role == .eggs { s.append(boiledEggs(false)) }
+                else if Say.cook(p) == .lentils || Say.cook(p) == .dryBeans { s.append(Say.side(p)) }
                 else if Say.needsHeat(p) {
                     s += proteinSteps(p)
-                    s.append("Дай \(Say.acc(p)) пару минут остыть и нарежь.")
+                    s.append("Дай немного остыть и нарежь.")
                 } else if let pr = Say.prep(p) { s.append(pr) }
                 s += Say.vegPrep(f.all(["g", "v"]))
                 s.append("Смешай в миске \(Say.list(f.all(["g", "v", "p", "c"]).map { $0.words.acc })).")
@@ -747,8 +749,7 @@ public enum Templates {
                 s.append("Разогрей сковороду с маслом до сильного жара.")
                 s.append(Say.pan(p))
                 if !veg.isEmpty { s.append("Добавь \(Say.list(veg.map { $0.words.acc })) и жарь 3–4 минуты на сильном огне, постоянно помешивая.") }
-                let sp = Say.spices(f.spices)
-                s.append("Добавь \(Say.acc(side)), соевый соус\(sp.isEmpty ? "" : " и \(sp)"), перемешай и прогрей 1–2 минуты.")
+                s.append("Добавь \(Say.list([side.words.acc, "соевый соус"] + Say.spiceList(f.spices))), перемешай и прогрей 1–2 минуты.")
                 return s
             }))
 
@@ -773,8 +774,10 @@ public enum Templates {
                 if let v = f["v"] { s += Say.vegPrep([v]); s.append("Переверни и добавь \(Say.acc(v)).") }
                 if p.role == .eggs {
                     s.append("Через 8 минут сделай в картошке углубления, разбей в них яйца и держи под крышкой 3–4 минуты.")
-                } else {
+                } else if Say.needsHeat(p) {
                     s.append("Добавь \(Say.acc(p)) и жарь ещё 8–10 минут до готовности, иногда переворачивая.")
+                } else {
+                    s.append("Через 8 минут добавь \(Say.acc(p)) и обжарь вместе ещё 3–4 минуты.")
                 }
                 s.append("Посоли и поперчи в самом конце.")
                 if let h = f["h"] { s.append("Посыпь \(Say.ins(h)).") }
@@ -862,8 +865,7 @@ public enum Templates {
                 s.append(veg.isEmpty ? "Разогрей масло в кастрюле." : "Разогрей масло в кастрюле и обжарь \(Say.list(veg.map { $0.words.acc })) 3–4 минуты.")
                 if let p = f["p"] { s.append(Say.pan(p)) }
                 s.append("Откинь \(Say.acc(l)) на дуршлаг.")
-                let sp = Say.spices(f.spices)
-                s.append("Добавь \(Say.acc(l)), \(Say.acc(tm))\(sp.isEmpty ? "" : ", \(sp)") и стакан воды.")
+                s.append("Добавь \(Say.list([l.words.acc, tm.words.acc] + Say.spiceList(f.spices) + ["стакан воды"])).")
                 s.append("Туши под крышкой 15 минут, иногда помешивая.")
                 if let side = f["s"] { s.append("Подавай \(Say.with(Say.ins(side))).") }
                 return s
@@ -886,7 +888,8 @@ public enum Templates {
                 s.append(veg.isEmpty ? "Разогрей масло в сковороде." : "Разогрей масло и обжарь \(Say.list(veg.map { $0.words.acc })) 5–6 минут.")
                 let sp = Say.spices(f.spices)
                 if let tm = f["t"] {
-                    s.append("Добавь \(Say.acc(tm))\(tm.isKind("c:tomato_paste") ? " и 100 мл воды" : "")\(sp.isEmpty ? "" : ", \(sp)") и туши 5 минут.")
+                    let add = [tm.words.acc] + (tm.isKind("c:tomato_paste") ? ["100 мл воды"] : []) + Say.spiceList(f.spices)
+                    s.append("Добавь \(Say.list(add)) и туши 5 минут.")
                 } else if !sp.isEmpty { s.append("Добавь \(sp) и туши 5 минут.") }
                 s.append("Сделай ложкой углубления, разбей в них яйца и посоли.")
                 s.append("Накрой крышкой и готовь 5–7 минут, пока белок не схватится.")
@@ -916,8 +919,7 @@ public enum Templates {
                 var add = veg.map { $0.words.acc }
                 if let pt = potato { add.append(pt.words.acc) }
                 if let tm = f["t"] { add.append(tm.words.acc) }
-                let sp = Say.spices(f.spices)
-                s.append("Добавь \(Say.list(add)), 100 мл воды\(sp.isEmpty ? "" : " и \(sp)").")
+                s.append("Добавь \(Say.list(add + ["100 мл воды"] + Say.spiceList(f.spices))).")
                 if p.role == .legumes && Say.cook(p) == .cannedLegumes { s.append("Откинь \(Say.acc(p)) на дуршлаг и добавь в сковороду.") }
                 s.append("Туши под крышкой на слабом огне 20–25 минут, пока овощи не станут мягкими.")
                 if let b = f["s"], b.role == .bread { s.append("Подавай \(Say.with(Say.ins(b))).") }
@@ -964,7 +966,7 @@ public enum Templates {
             tip: { _ in "Свари сразу несколько штук — в холодильнике они хранятся до 5 дней." }))
 
         t.append(T("kefir_fruit", [.snack, .evening], minutes: 2,
-            slots: [S("m", [.milk, .yogurt], range: 200...350, main: true),
+            slots: [S("m", [.milk], range: 200...350, main: true),
                     S("fr", [.fruit, .berries], req: false, no: ["dried"], range: 80...150)],
             sweet: true,
             title: { f in
@@ -973,8 +975,10 @@ public enum Templates {
             },
             steps: { f in
                 guard let m = f["m"] else { return [] }
-                var s = ["Налей \(Say.acc(m)) в стакан или миску."]
-                if let x = fruitStep(f["fr"]) { s.append(x) }
+                var s = ["Налей \(Say.acc(m)) в стакан."]
+                if let fr = f["fr"] {
+                    s.append(fr.role == .berries ? "Добавь \(Say.acc(fr)) прямо в стакан или ешь вприкуску." : "Нарежь \(Say.acc(fr)) и ешь вприкуску.")
+                }
                 return s
             }))
 
