@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Рацион из холодильника</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Unbounded:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Раскладка: колонка телефонного приложения, плавающая навигация снизу; главный образ — кольцо КБЖУ, каждый макронутриент со своим цветом во всём интерфейсе. */
+:root {
+  --bg: #0b0b0a;
+  --surface: #151513;
+  --raised: #20201d;
+  --line: rgba(255, 246, 230, 0.08);
+  --line-2: rgba(255, 246, 230, 0.15);
+  --track: rgba(255, 246, 230, 0.07);
+  --text: #f6f2ea;
+  --muted: #a29e94;
+  --dim: #6e6b64;
+  --accent: #ff6a3d;
+  --accent-2: #ffa260;
+  --accent-ink: #1c0b04;
+  --prot: #8fa9ff;
+  --fat: #f4cf55;
+  --carb: #56d8e2;
+  --ok: #7ddf9c;
+  --warn: #ffab4f;
+  --display: "Unbounded", "Arial Black", system-ui, sans-serif;
+  --body: "Onest", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --r-xl: 28px;
+  --r-lg: 20px;
+  --r-md: 14px;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; padding: 0; min-height: 100%; }
+body {
+  background: var(--bg);
+  background-image:
+    radial-gradient(90% 420px at 85% -80px, rgba(255, 106, 61, 0.20), transparent 70%),
+    radial-gradient(70% 380px at 0% 0%, rgba(143, 169, 255, 0.10), transparent 70%);
+  background-repeat: no-repeat;
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 10px; }
+[hidden] { display: none !important; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+.num { font-variant-numeric: tabular-nums; }
+svg.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+.wrap { max-width: 520px; margin: 0 auto; padding: 0 16px 18px; }
+
+/* Шапка */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 0 20px; }
+.logo { display: flex; align-items: center; gap: 11px; }
+.mark { width: 40px; height: 40px; border-radius: 13px; display: grid; place-items: center; background: linear-gradient(145deg, #2a2a26, #141412); border: 1px solid var(--line-2); box-shadow: 0 8px 20px -8px rgba(255,106,61,.5); }
+.lt { font-family: var(--display); font-weight: 700; font-size: 16px; line-height: 1.05; letter-spacing: -0.01em; }
+.ls { font-size: 13px; color: var(--muted); line-height: 1.2; }
+.date { font-size: 13px; color: var(--muted); padding: 7px 12px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.02); white-space: nowrap; }
+
+/* Общие блоки */
+.view { display: grid; gap: 22px; animation: viewIn .35s cubic-bezier(.2,.8,.2,1); }
+@keyframes viewIn { from { opacity: .15; transform: translateY(10px); } }
+.view > *, .capture > *, .page > * { min-width: 0; }
+.card { background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,0) 60%), var(--surface); border: 1px solid var(--line); border-radius: var(--r-xl); padding: 18px; }
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.bh { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin: 0 4px 10px; }
+.aside { font-size: 13px; color: var(--dim); text-align: right; }
+.vh h2 { font-family: var(--display); font-weight: 700; font-size: 28px; line-height: 1.08; letter-spacing: -0.02em; margin-top: 6px; }
+.vh .sub { color: var(--muted); margin: 8px 0 0; font-size: 15px; max-width: 34em; }
+.hint { font-size: 14px; color: var(--muted); margin: 10px 4px 0; }
+.ai-off { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: var(--r-lg); background: rgba(255,171,79,.08); border: 1px solid rgba(255,171,79,.3); font-size: 14px; margin-bottom: 18px; }
+.ai-off svg { color: var(--warn); margin-top: 1px; }
+
+/* Кнопки */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; width: 100%; min-height: 52px; padding: 12px 18px; border-radius: 17px; border: 1px solid var(--line-2); background: var(--raised); font-weight: 600; font-size: 16px; line-height: 1.15; transition: transform .15s ease, filter .15s ease, background .2s; text-align: center; }
+.btn:active:not(:disabled) { transform: scale(.98); }
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+.btn.primary { border: 0; min-height: 58px; font-size: 17px; font-weight: 700; color: var(--accent-ink); background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%); box-shadow: 0 14px 34px -14px rgba(255,106,61,.75), inset 0 1px 0 rgba(255,255,255,.35); }
+.btn.primary:hover:not(:disabled) { filter: brightness(1.06); }
+.btn.ai { border: 1.5px solid transparent; background: linear-gradient(var(--raised), var(--raised)) padding-box, linear-gradient(120deg, var(--accent), var(--fat), var(--carb), var(--prot)) border-box; min-height: 56px; font-weight: 700; }
+.btn.busy { position: relative; overflow: hidden; }
+.btn.busy::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 20%, rgba(255,255,255,.35) 50%, transparent 80%); transform: translateX(-100%); animation: sweep 1.4s ease-in-out infinite; }
+@keyframes sweep { to { transform: translateX(100%); } }
+.btn.ghost { background: transparent; }
+.btn.sm { min-height: 44px; font-size: 15px; border-radius: 14px; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.row2.even { grid-template-columns: 1fr 1fr; }
+.filebtn { position: relative; overflow: hidden; }
+.filebtn input { position: absolute; inset: 0; opacity: 0; cursor: pointer; font-size: 0; }
+.linkbtn { border: 0; background: none; color: var(--dim); font-size: 14px; padding: 10px 4px; text-decoration: underline; text-underline-offset: 3px; }
+
+/* Сегменты, чипы */
+.seg { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 4px; padding: 4px; border-radius: 15px; background: rgba(0,0,0,.35); border: 1px solid var(--line); }
+.seg button { border: 0; background: transparent; border-radius: 11px; min-height: 40px; padding: 6px 8px; color: var(--muted); font-weight: 600; font-size: 15px; transition: background .2s, color .2s; }
+.seg button[aria-pressed="true"] { background: var(--raised); color: var(--text); box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 6px 14px -6px rgba(0,0,0,.8); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 1px solid var(--line-2); background: rgba(255,255,255,.03); color: var(--text); padding: 8px 13px; border-radius: 999px; font-size: 14px; font-weight: 500; line-height: 1.15; transition: background .2s, border-color .2s, opacity .2s; }
+.chip[aria-pressed="true"] { background: rgba(255,106,61,.16); border-color: rgba(255,106,61,.55); }
+.chip.st[aria-pressed="false"] { opacity: .38; text-decoration: line-through; }
+.chip.st[aria-pressed="true"] { background: rgba(255,255,255,.06); border-color: var(--line-2); }
+
+/* Цель: кольцо */
+.hero { padding: 22px 18px 18px; position: relative; overflow: hidden; box-shadow: 0 40px 70px -40px rgba(255,106,61,.45); }
+.hero-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; background: rgba(255,106,61,.14); color: var(--accent-2); border: 1px solid rgba(255,106,61,.3); }
+.ringbox { position: relative; width: 232px; height: 232px; margin: 14px auto 6px; }
+.ringbox .ring { position: absolute; inset: 0; }
+.ring.intro { animation: ringIn 1s cubic-bezier(.2,.8,.2,1); }
+@keyframes ringIn { from { transform: rotate(-60deg) scale(.92); opacity: .3; } }
+.ringc { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
+.ringc .big { font-family: var(--display); font-weight: 700; font-size: 44px; line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.ringc .u { color: var(--muted); font-size: 14px; margin-top: 6px; }
+.macros3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px; }
+.mt { padding: 12px 12px 11px; border-radius: 16px; background: rgba(0,0,0,.28); border: 1px solid var(--line); }
+.mt .n { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.mt .v { font-family: var(--display); font-weight: 600; font-size: 22px; line-height: 1.1; margin-top: 6px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.mt .v small { font-family: var(--body); font-size: 13px; font-weight: 500; color: var(--muted); margin-left: 2px; letter-spacing: 0; }
+.mt .pc { font-size: 12px; color: var(--dim); margin-top: 2px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex: none; }
+.dot.p { background: var(--prot); box-shadow: 0 0 10px var(--prot); }
+.dot.f { background: var(--fat); box-shadow: 0 0 10px var(--fat); }
+.dot.c { background: var(--carb); box-shadow: 0 0 10px var(--carb); }
+.dot.k { background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+.hero-foot { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+.hero-foot b { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* Цели */
+.goals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.goal { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; text-align: left; padding: 14px 12px 13px; border-radius: var(--r-lg); border: 1px solid var(--line); background: var(--surface); transition: border-color .2s, background .2s, transform .15s; }
+.goal:active { transform: scale(.98); }
+.goal .ic { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; background: var(--raised); color: var(--muted); transition: background .2s, color .2s; }
+.goal b { font-weight: 700; font-size: 15px; line-height: 1.15; }
+.goal small { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; }
+.goal[aria-pressed="true"] { border-color: rgba(255,106,61,.6); background: linear-gradient(180deg, rgba(255,106,61,.18), rgba(255,106,61,.03)); }
+.goal[aria-pressed="true"] .ic { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: var(--accent-ink); }
+
+/* Список настроек */
+.list { padding: 4px 16px; }
+.lr { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 13px 0; border-top: 1px solid var(--line); }
+.lr:first-child { border-top: 0; }
+.lr.col { flex-direction: column; align-items: stretch; gap: 10px; }
+.lrh { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.ll { font-weight: 600; font-size: 15px; }
+.ll small { display: block; font-weight: 400; font-size: 13px; color: var(--muted); }
+.lv { font-weight: 600; color: var(--accent-2); font-size: 15px; }
+.seg.sm { width: 190px; }
+.seg.sm button { min-height: 36px; font-size: 14px; }
+.stepper { display: grid; grid-template-columns: 40px 76px 40px; align-items: center; gap: 2px; padding: 3px; border-radius: 14px; background: rgba(0,0,0,.35); border: 1px solid var(--line); }
+.stepper button { width: 40px; height: 40px; border-radius: 11px; border: 0; background: var(--raised); font-size: 20px; line-height: 1; display: grid; place-items: center; color: var(--text); }
+.stepper button:active { background: #2c2c28; }
+.stepper input { width: 100%; border: 0; background: transparent; text-align: center; font-family: var(--display); font-weight: 600; font-size: 17px; padding: 0; -moz-appearance: textfield; font-variant-numeric: tabular-nums; }
+.stepper input::-webkit-outer-spin-button, .stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 30px; background: transparent; margin: 0; }
+input[type="range"]::-webkit-slider-runnable-track { height: 8px; border-radius: 99px; background: linear-gradient(90deg, var(--accent), var(--accent-2)) 0 0 / var(--pct, 50%) 100% no-repeat, var(--track); }
+input[type="range"]::-moz-range-track { height: 8px; border-radius: 99px; background: var(--track); }
+input[type="range"]::-moz-range-progress { height: 8px; border-radius: 99px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 26px; height: 26px; border-radius: 50%; background: var(--text); margin-top: -9px; box-shadow: 0 4px 14px rgba(0,0,0,.6), 0 0 0 5px rgba(255,106,61,.22); }
+input[type="range"]::-moz-range-thumb { width: 26px; height: 26px; border-radius: 50%; background: var(--text); border: 0; box-shadow: 0 4px 14px rgba(0,0,0,.6), 0 0 0 5px rgba(255,106,61,.22); }
+.ticks { display: flex; justify-content: space-between; font-size: 11px; color: var(--dim); margin-top: -2px; padding: 0 4px; }
+.switch { position: relative; width: 52px; height: 32px; flex: none; }
+.switch input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.switch i { position: absolute; inset: 0; border-radius: 99px; background: var(--raised); border: 1px solid var(--line-2); transition: background .2s; pointer-events: none; }
+.switch i::after { content: ""; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: var(--text); transition: transform .2s; box-shadow: 0 2px 6px rgba(0,0,0,.5); }
+.switch input:checked + i { background: linear-gradient(135deg, var(--accent), var(--accent-2)); border-color: transparent; }
+.switch input:checked + i::after { transform: translateX(20px); }
+.switch input:focus-visible + i { outline: 2px solid var(--accent); outline-offset: 3px; }
+.mgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.mbox { border-radius: 14px; background: rgba(0,0,0,.35); border: 1px solid var(--line); padding: 8px 10px 6px; }
+.mbox label { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+.mbox input { width: 100%; border: 0; background: transparent; font-family: var(--display); font-weight: 600; font-size: 17px; padding: 4px 0 0; font-variant-numeric: tabular-nums; }
+.warnline { color: var(--warn); font-size: 13px; }
+.okline { color: var(--muted); font-size: 13px; }
+
+/* Продукты */
+.capture { display: grid; gap: 14px; }
+.places { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin: 0 -18px; padding: 2px 18px; }
+.places::-webkit-scrollbar { display: none; }
+.place { flex: none; display: inline-flex; align-items: center; gap: 7px; padding: 9px 13px; border-radius: 14px; border: 1px solid var(--line-2); background: rgba(255,255,255,.03); font-size: 14px; font-weight: 600; color: var(--muted); }
+.place[aria-pressed="true"] { color: var(--text); background: var(--raised); border-color: rgba(255,106,61,.55); box-shadow: 0 0 0 3px rgba(255,106,61,.12); }
+.place[aria-pressed="true"] svg { color: var(--accent); }
+.strip { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; margin: 0 -18px; padding: 2px 18px 4px; }
+.strip::-webkit-scrollbar { display: none; }
+.ph { position: relative; flex: none; width: 96px; height: 120px; border-radius: 16px; overflow: hidden; background: var(--raised); border: 1px solid var(--line-2); }
+.ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ph::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,.75)); pointer-events: none; }
+.ph .tag { position: absolute; left: 6px; right: 6px; bottom: 6px; border: 0; background: rgba(20,20,18,.75); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border-radius: 9px; color: var(--text); font-size: 11px; font-weight: 600; padding: 4px 6px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ph .rm { position: absolute; top: 6px; right: 6px; width: 26px; height: 26px; border-radius: 50%; border: 0; background: rgba(20,20,18,.75); color: var(--text); display: grid; place-items: center; padding: 0; }
+.ph .rm svg { width: 14px; height: 14px; }
+.ph .ok { position: absolute; top: 6px; left: 6px; width: 24px; height: 24px; border-radius: 50%; background: var(--ok); color: #082010; display: grid; place-items: center; }
+.ph .ok svg { width: 14px; height: 14px; stroke-width: 2.6; }
+.group { margin-bottom: 12px; }
+.gh { display: flex; align-items: center; gap: 8px; margin: 0 4px 8px; font-size: 13px; color: var(--muted); font-weight: 600; }
+.gh svg { width: 16px; height: 16px; }
+.gh span { color: var(--dim); font-weight: 500; }
+.plist { padding: 2px 16px; }
+.prow { display: grid; grid-template-columns: 1fr auto 30px; gap: 4px 10px; align-items: center; padding: 11px 0; border-top: 1px solid var(--line); }
+.prow:first-child { border-top: 0; }
+.prow input { border: 0; background: transparent; padding: 2px 0; font-size: 16px; min-width: 0; border-radius: 0; }
+.prow input:focus { outline: none; box-shadow: 0 1px 0 var(--accent); }
+.prow .pn { font-weight: 600; width: 100%; }
+.prow .pa { width: 92px; text-align: right; color: var(--muted); }
+.prow .del { width: 30px; height: 30px; border-radius: 50%; border: 0; background: transparent; color: var(--dim); display: grid; place-items: center; padding: 0; }
+.prow .del svg { width: 16px; height: 16px; }
+.pmeta { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; font-size: 12.5px; color: var(--muted); margin-top: -2px; }
+.pmeta .kb { font-variant-numeric: tabular-nums; }
+.badge { display: inline-flex; align-items: center; height: 20px; padding: 0 8px; border-radius: 99px; font-size: 11px; font-weight: 600; background: rgba(255,255,255,.06); color: var(--muted); }
+.badge.ok { background: rgba(125,223,156,.13); color: var(--ok); }
+.editk { border: 0; background: none; color: var(--accent-2); font-size: 12.5px; font-weight: 600; padding: 2px 0; display: inline-flex; align-items: center; gap: 4px; }
+.editk svg { width: 13px; height: 13px; }
+.kedit { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 6px; }
+.empty { text-align: center; padding: 26px 18px; color: var(--muted); font-size: 15px; border: 1px dashed var(--line-2); border-radius: var(--r-xl); }
+.empty svg { width: 34px; height: 34px; color: var(--dim); margin-bottom: 8px; stroke-width: 1.4; }
+.addbar { display: grid; grid-template-columns: 1fr 86px 48px; gap: 6px; margin-top: 12px; padding: 5px 5px 5px 14px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line-2); align-items: center; }
+.addbar.sm { grid-template-columns: 1fr 44px; margin-top: 14px; background: rgba(0,0,0,.3); }
+.addbar input { border: 0; background: transparent; font-size: 16px; padding: 8px 0; min-width: 0; }
+.addbar input:focus { outline: none; }
+.addbar input + input { border-left: 1px solid var(--line); padding-left: 10px; }
+.addbar button { width: 100%; height: 40px; border-radius: 13px; border: 0; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: var(--accent-ink); display: grid; place-items: center; }
+.addbar button svg { stroke-width: 2.4; }
+
+/* Статус ИИ */
+.status { display: flex; align-items: center; gap: 12px; margin-top: 12px; padding: 13px 14px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line); font-size: 14.5px; }
+.status .si { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; flex: none; background: var(--raised); }
+.status .si svg { width: 16px; height: 16px; }
+.status.ok .si { background: rgba(125,223,156,.15); color: var(--ok); }
+.status.err { border-color: rgba(255,171,79,.35); }
+.status.err .si { background: rgba(255,171,79,.15); color: var(--warn); }
+.status .st { flex: 1; }
+.status .stop { border: 1px solid var(--line-2); background: transparent; border-radius: 11px; padding: 6px 12px; font-size: 13px; font-weight: 600; flex: none; }
+.spin { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--line-2); border-top-color: var(--accent); animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Рацион: настройки */
+.timein { border: 1px solid var(--line); background: rgba(0,0,0,.35); border-radius: 12px; padding: 8px 12px; font-family: var(--display); font-weight: 600; font-size: 16px; min-width: 116px; color-scheme: dark; }
+textarea.wish { width: 100%; min-height: 70px; border-radius: 16px; border: 1px solid var(--line); background: rgba(0,0,0,.35); padding: 11px 13px; font-size: 16px; resize: vertical; }
+textarea.wish:focus, .timein:focus { outline: none; border-color: rgba(255,106,61,.55); }
+
+/* Скелет */
+.skel { display: grid; gap: 10px; margin-top: 6px; }
+.sk { height: 86px; border-radius: var(--r-lg); background: linear-gradient(100deg, var(--surface) 30%, #1f1f1c 50%, var(--surface) 70%) 0 0 / 300% 100%; border: 1px solid var(--line); animation: sk 1.6s linear infinite; }
+.sk:first-child { height: 180px; border-radius: var(--r-xl); }
+@keyframes sk { from { background-position: 100% 0; } to { background-position: -50% 0; } }
+
+/* Рацион: пейджер */
+.ptabs { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin: 4px -16px 0; padding: 2px 16px; }
+.ptabs::-webkit-scrollbar { display: none; }
+.ptab { flex: none; border: 1px solid var(--line-2); background: rgba(255,255,255,.03); border-radius: 15px; padding: 7px 14px 8px; text-align: left; font-weight: 600; font-size: 14px; line-height: 1.15; color: var(--muted); }
+.ptab small { display: block; font-size: 11.5px; font-weight: 500; color: var(--dim); margin-top: 1px; font-variant-numeric: tabular-nums; }
+.ptab[aria-selected="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+.ptab[aria-selected="true"] small { color: rgba(11,11,10,.6); }
+.page { margin-top: 14px; display: grid; gap: 18px; touch-action: pan-y; }
+.page.from-r { animation: fromR .32s cubic-bezier(.2,.8,.2,1); }
+.page.from-l { animation: fromL .32s cubic-bezier(.2,.8,.2,1); }
+@keyframes fromR { from { opacity: .2; transform: translateX(28px); } }
+@keyframes fromL { from { opacity: .2; transform: translateX(-28px); } }
+.pnav { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center; margin-top: 18px; }
+.pnav .cnt { font-family: var(--display); font-weight: 600; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.pnav .btn { min-height: 48px; }
+
+/* Итог дня */
+.dayhead { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.dayhead h3 { font-family: var(--display); font-weight: 700; font-size: 21px; line-height: 1.15; letter-spacing: -0.02em; }
+.dayhead .sub { color: var(--muted); font-size: 14px; margin-top: 4px; }
+.rings4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 18px; }
+.r4 { text-align: center; }
+.r4 .rb { position: relative; width: 70px; height: 70px; margin: 0 auto; }
+.r4 .rb .ring { position: absolute; inset: 0; }
+.r4 .rb b { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--display); font-weight: 600; font-size: 14px; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.r4 .rl { font-size: 13px; font-weight: 600; margin-top: 8px; }
+.r4 .rv { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; line-height: 1.3; }
+.r4 .rd { font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.d-ok { color: var(--ok); }
+.d-warn { color: var(--warn); }
+.note { color: var(--muted); font-size: 15px; margin: 14px 0 0; padding-top: 14px; border-top: 1px solid var(--line); }
+
+.tl { display: grid; gap: 10px; position: relative; }
+.tl::before { content: ""; position: absolute; left: 51px; top: 18px; bottom: 18px; width: 1px; background: linear-gradient(180deg, var(--line-2), var(--line) 80%, transparent); }
+.tli { display: grid; grid-template-columns: 44px 16px 1fr; gap: 0; align-items: start; border: 0; background: none; padding: 0; text-align: left; width: 100%; }
+.tli .tt { font-family: var(--display); font-weight: 600; font-size: 13px; color: var(--muted); padding-top: 18px; font-variant-numeric: tabular-nums; }
+.tli .td { width: 9px; height: 9px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent); margin: 22px 0 0 3px; position: relative; z-index: 1; }
+.tli .tc { margin-left: 8px; padding: 14px 14px 13px; border-radius: var(--r-lg); background: var(--surface); border: 1px solid var(--line); transition: border-color .2s, transform .15s; }
+.tli:hover .tc { border-color: var(--line-2); }
+.tli:active .tc { transform: scale(.99); }
+.tc .tn { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-2); }
+.tc .tti { font-weight: 700; font-size: 16px; line-height: 1.25; margin-top: 3px; }
+.tc .tk { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-top: 9px; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; align-items: center; }
+.tc .tk b { font-family: var(--display); font-weight: 600; font-size: 15px; color: var(--text); letter-spacing: -0.02em; }
+.mbar { display: flex; height: 5px; border-radius: 99px; overflow: hidden; margin-top: 10px; gap: 2px; background: var(--track); }
+.mbar i { display: block; height: 100%; border-radius: 99px; }
+
+.tcard { padding: 6px 14px 4px; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; font-variant-numeric: tabular-nums; }
+th { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); text-align: right; padding: 10px 5px 8px; white-space: nowrap; }
+td { text-align: right; padding: 10px 5px; border-top: 1px solid var(--line); vertical-align: top; white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; padding-left: 0; white-space: normal; }
+th:last-child, td:last-child { padding-right: 0; }
+td:first-child { min-width: 8.5em; font-weight: 500; }
+td .lbl { display: block; font-size: 12px; color: var(--dim); font-weight: 400; margin-top: 1px; }
+th.p, td.p { color: var(--prot); } th.f, td.f { color: var(--fat); } th.c, td.c { color: var(--carb); }
+tr.total td { border-top: 1px solid var(--line-2); font-weight: 700; color: var(--text); padding-bottom: 12px; }
+tr.click { cursor: pointer; }
+.buy { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: var(--r-lg); background: rgba(255,171,79,.08); border: 1px solid rgba(255,171,79,.3); font-size: 15px; }
+.buy svg { color: var(--warn); margin-top: 1px; }
+.buy b { display: block; margin-bottom: 2px; }
+.copybox textarea { width: 100%; min-height: 200px; border-radius: 16px; border: 1px solid var(--line-2); background: rgba(0,0,0,.35); padding: 12px; font-size: 14px; }
+
+/* Приём пищи */
+.mhero { padding: 20px 18px 18px; position: relative; overflow: hidden; }
+.mhero::after { content: ""; position: absolute; right: -60px; top: -60px; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(255,106,61,.22), transparent 70%); pointer-events: none; }
+.mtime { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+.mtime .tm { font-family: var(--display); font-weight: 700; font-size: 15px; color: var(--accent-2); }
+.mtime .sep { width: 4px; height: 4px; border-radius: 50%; background: var(--dim); }
+.mtime .min { display: inline-flex; align-items: center; gap: 5px; }
+.mtime .min svg { width: 15px; height: 15px; }
+.mtitle { font-family: var(--display); font-weight: 700; font-size: 25px; line-height: 1.14; letter-spacing: -0.025em; margin: 10px 0 16px; position: relative; }
+.mstats { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 6px; position: relative; }
+.ms { padding: 10px 10px 9px; border-radius: 14px; background: rgba(0,0,0,.3); border: 1px solid var(--line); }
+.ms .v { font-family: var(--display); font-weight: 600; font-size: 18px; line-height: 1.1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.ms .n { font-size: 11.5px; color: var(--muted); display: flex; align-items: center; gap: 5px; margin-top: 4px; }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.step { display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: start; width: 100%; text-align: left; border: 1px solid var(--line); background: var(--surface); border-radius: 18px; padding: 12px 14px 12px 12px; font-size: 15.5px; line-height: 1.45; transition: opacity .2s, border-color .2s; }
+.step .sn { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; font-family: var(--display); font-weight: 700; font-size: 15px; background: var(--raised); color: var(--accent-2); }
+.step .sn svg { display: none; width: 18px; height: 18px; stroke-width: 2.6; }
+.step[aria-pressed="true"] { opacity: .5; }
+.step[aria-pressed="true"] .sn { background: rgba(125,223,156,.16); color: var(--ok); }
+.step[aria-pressed="true"] .sn span { display: none; }
+.step[aria-pressed="true"] .sn svg { display: block; }
+.step[aria-pressed="true"] .stx { text-decoration: line-through; text-decoration-color: var(--dim); }
+.tip { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: var(--r-lg); background: linear-gradient(135deg, rgba(143,169,255,.10), rgba(86,216,226,.06)); border: 1px solid rgba(143,169,255,.22); font-size: 15px; }
+.tip svg { color: var(--prot); margin-top: 1px; }
+
+/* Навигация */
+.nav { position: sticky; bottom: 14px; z-index: 30; display: flex; gap: 4px; width: max-content; margin: 28px auto 0; padding: 6px; border-radius: 24px; background: rgba(30, 30, 27, 0.78); -webkit-backdrop-filter: blur(20px) saturate(1.5); backdrop-filter: blur(20px) saturate(1.5); border: 1px solid var(--line-2); box-shadow: 0 24px 50px -12px rgba(0,0,0,.85); }
+.nav button { position: relative; display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 16px; border-radius: 18px; border: 0; background: transparent; color: var(--muted); font-weight: 700; font-size: 14px; transition: background .25s, color .25s; }
+.nav button .lab { display: none; }
+.nav button[aria-selected="true"] { background: var(--text); color: var(--bg); padding: 0 18px 0 15px; }
+.nav button[aria-selected="true"] .lab { display: inline; }
+.nav .cnt { position: absolute; top: 6px; right: 7px; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 99px; background: var(--accent); color: var(--accent-ink); font-size: 10.5px; font-weight: 700; display: grid; place-items: center; }
+.nav button[aria-selected="true"] .cnt { position: static; margin-left: 2px; }
+
+@media (max-width: 380px) {
+  .vh h2 { font-size: 24px; }
+  .ringbox { width: 204px; height: 204px; }
+  .ringc .big { font-size: 38px; }
+  .mt .v { font-size: 19px; }
+  .seg.sm { width: 160px; }
+  .mstats { grid-template-columns: 1fr 1fr; }
+  .mgrid, .kedit { grid-template-columns: 1fr 1fr; }
+  .r4 .rb { width: 62px; height: 62px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="logo">
+      <span class="mark"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="rgba(255,246,230,.1)" stroke-width="3.4"/><circle cx="12" cy="12" r="8" fill="none" stroke="#8fa9ff" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="14 36.3" transform="rotate(-90 12 12)"/><circle cx="12" cy="12" r="8" fill="none" stroke="#f4cf55" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="9 41.3" stroke-dashoffset="-18" transform="rotate(-90 12 12)"/><circle cx="12" cy="12" r="8" fill="none" stroke="#56d8e2" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="15 35.3" stroke-dashoffset="-31.5" transform="rotate(-90 12 12)"/></svg></span>
+      <div><div class="lt">Рацион</div><div class="ls">из холодильника</div></div>
+    </div>
+    <div class="date" id="today"></div>
+  </header>
+
+  <div id="aiOff" class="ai-off" hidden></div>
+
+  <!-- 1. ЦЕЛЬ -->
+  <section id="view-goal" class="view" role="tabpanel" aria-labelledby="tab-goal">
+    <div class="card hero" id="heroCard"></div>
+
+    <div>
+      <div class="bh"><span class="eyebrow">Цель</span></div>
+      <div class="goals" id="goalSeg"></div>
+    </div>
+
+    <div>
+      <div class="bh"><span class="eyebrow">Параметры</span><span class="aside">формула Миффлина — Сан Жеора</span></div>
+      <div class="card list">
+        <div class="lr"><span class="ll">Пол</span>
+          <div class="seg sm" id="sexSeg">
+            <button data-sex="m" aria-pressed="false">Мужчина</button>
+            <button data-sex="f" aria-pressed="false">Женщина</button>
+          </div>
+        </div>
+        <div class="lr"><span class="ll">Возраст<small>лет</small></span>
+          <div class="stepper"><button data-step="age" data-d="-1" aria-label="Меньше">−</button><input id="f-age" type="number" inputmode="numeric" data-pf="age" aria-label="Возраст"><button data-step="age" data-d="1" aria-label="Больше">+</button></div>
+        </div>
+        <div class="lr"><span class="ll">Рост<small>см</small></span>
+          <div class="stepper"><button data-step="height" data-d="-1" aria-label="Меньше">−</button><input id="f-height" type="number" inputmode="numeric" data-pf="height" aria-label="Рост"><button data-step="height" data-d="1" aria-label="Больше">+</button></div>
+        </div>
+        <div class="lr"><span class="ll">Вес<small>кг</small></span>
+          <div class="stepper"><button data-step="weight" data-d="-0.5" aria-label="Меньше">−</button><input id="f-weight" type="number" inputmode="decimal" step="0.1" data-pf="weight" aria-label="Вес"><button data-step="weight" data-d="0.5" aria-label="Больше">+</button></div>
+        </div>
+        <div class="lr col">
+          <div class="lrh"><span class="ll">Активность</span><span class="lv" id="actLabel"></span></div>
+          <input type="range" id="f-act" min="0" max="4" step="1" aria-label="Уровень активности">
+          <div class="ticks"><span>сидячая</span><span>очень высокая</span></div>
+          <div class="okline" id="actDesc"></div>
+        </div>
+        <div class="lr"><label class="ll" for="f-manual">Свои КБЖУ<small>ввести цифры вручную</small></label>
+          <span class="switch"><input type="checkbox" id="f-manual" role="switch"><i></i></span>
+        </div>
+        <div class="lr col" id="manualBox" hidden>
+          <div class="mgrid">
+            <div class="mbox"><label for="m-k"><span class="dot k"></span>Ккал</label><input id="m-k" type="number" inputmode="numeric" data-mf="mk"></div>
+            <div class="mbox"><label for="m-p"><span class="dot p"></span>Белки</label><input id="m-p" type="number" inputmode="numeric" data-mf="mp"></div>
+            <div class="mbox"><label for="m-f"><span class="dot f"></span>Жиры</label><input id="m-f" type="number" inputmode="numeric" data-mf="mf"></div>
+            <div class="mbox"><label for="m-c"><span class="dot c"></span>Углев.</label><input id="m-c" type="number" inputmode="numeric" data-mf="mc"></div>
+          </div>
+          <div id="manualWarn" class="okline"></div>
+        </div>
+      </div>
+      <p class="hint" id="goalHint"></p>
+    </div>
+
+    <button class="btn primary" data-go="food">Дальше — продукты <svg class="i" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  </section>
+
+  <!-- 2. ПРОДУКТЫ -->
+  <section id="view-food" class="view" role="tabpanel" aria-labelledby="tab-food" hidden>
+    <div class="vh">
+      <span class="eyebrow">Шаг 2 из 3</span>
+      <h2>Что есть дома</h2>
+      <p class="sub">Сфоткай холодильник, морозилку и шкафы — ИИ сам перечислит продукты и подберёт их КБЖУ.</p>
+    </div>
+
+    <div class="card capture">
+      <div class="lrh"><span class="eyebrow">Где снимаю</span><span class="aside" id="photoCount"></span></div>
+      <div class="places" id="placeChips"></div>
+      <div class="row2">
+        <label class="btn primary filebtn" for="camIn"><svg class="i" viewBox="0 0 24 24"><path d="M4 8.5h3l1.8-2.8h6.4L17 8.5h3V19H4z"/><circle cx="12" cy="13.4" r="3.4"/></svg>Снять фото<input id="camIn" type="file" accept="image/*" capture="environment"></label>
+        <label class="btn filebtn" for="galIn"><svg class="i" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M4 17l5-4.5 4 3.5 3-2.5 4 3.5"/></svg>Галерея<input id="galIn" type="file" accept="image/*" multiple></label>
+      </div>
+      <div class="strip" id="photos" hidden></div>
+      <button class="btn ai" id="recBtn" hidden></button>
+      <div id="recStatus"></div>
+      <div class="tip" style="font-size:14px"><svg class="i" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg><span>Для точных цифр сфоткай этикетку с пищевой ценностью — ИИ перепишет КБЖУ прямо с неё. Если видно бренд, он возьмёт цифры этого продукта.</span></div>
+    </div>
+
+    <div>
+      <div class="bh"><span class="eyebrow">Продукты</span><span class="aside" id="prodCount"></span></div>
+      <div id="plist"></div>
+      <form class="addbar" id="addForm" autocomplete="off">
+        <input id="addName" placeholder="Добавить вручную" aria-label="Название продукта">
+        <input id="addAmt" placeholder="сколько" aria-label="Количество">
+        <button type="submit" aria-label="Добавить продукт"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+      </form>
+      <button class="linkbtn" id="clearProds">Очистить список</button>
+    </div>
+
+    <div>
+      <div class="bh"><span class="eyebrow">Всегда есть дома</span><span class="aside">нажми, чтобы выключить</span></div>
+      <div class="card">
+        <div class="chips" id="staples"></div>
+        <form class="addbar sm" id="stapleForm" autocomplete="off">
+          <input id="stapleName" placeholder="Своя специя или соус" aria-label="Новая специя или соус">
+          <button type="submit" aria-label="Добавить"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+        </form>
+      </div>
+      <p class="hint">Специи и соусы ИИ берёт без фото. Калории масла, майонеза и кетчупа он учитывает в КБЖУ.</p>
+    </div>
+
+    <button class="btn primary" data-go="plan">Дальше — рацион <svg class="i" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  </section>
+
+  <!-- 3. РАЦИОН -->
+  <section id="view-plan" class="view" role="tabpanel" aria-labelledby="tab-plan" hidden>
+    <div class="vh">
+      <span class="eyebrow">Шаг 3 из 3</span>
+      <h2>Рацион на сегодня</h2>
+      <p class="sub" id="planTarget"></p>
+    </div>
+
+    <div class="card list">
+      <div class="lr col"><span class="ll">Приёмов пищи</span>
+        <div class="seg" id="mealsSeg">
+          <button data-meals="3" aria-pressed="false">3</button><button data-meals="4" aria-pressed="false">4</button><button data-meals="5" aria-pressed="false">5</button><button data-meals="6" aria-pressed="false">6</button>
+        </div>
+      </div>
+      <div class="lr"><label class="ll" for="firstTime">Первый приём<small>остальные через 3–4 часа</small></label><input id="firstTime" class="timein" type="time"></div>
+      <div class="lr col"><span class="ll">Готовить не дольше</span>
+        <div class="seg" id="cookSeg">
+          <button data-cook="" aria-pressed="false">Любое</button><button data-cook="15" aria-pressed="false">15 мин</button><button data-cook="30" aria-pressed="false">30 мин</button><button data-cook="45" aria-pressed="false">45 мин</button>
+        </div>
+      </div>
+      <div class="lr col"><label class="ll" for="wishText">Пожелания</label>
+        <div class="chips" id="wishChips"></div>
+        <textarea class="wish" id="wishText" placeholder="Например: ужин потяжелее, хочу что-то сладкое"></textarea>
+      </div>
+    </div>
+
+    <div>
+      <button class="btn primary" id="genBtn"></button>
+      <div id="genStatus"></div>
+    </div>
+
+    <div id="planOut"></div>
+  </section>
+
+  <nav class="nav" role="tablist" aria-label="Разделы">
+    <button role="tab" id="tab-goal" data-tab="goal" aria-selected="true" aria-label="Цель"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8"/></svg><span class="lab">Цель</span></button>
+    <button role="tab" id="tab-food" data-tab="food" aria-selected="false" aria-label="Продукты"><svg class="i" viewBox="0 0 24 24"><rect x="6" y="2.8" width="12" height="18.4" rx="3"/><path d="M6 10h12M9 6.2v1.6M9 13v3"/></svg><span class="lab">Продукты</span><span class="cnt" id="navCount" hidden></span></button>
+    <button role="tab" id="tab-plan" data-tab="plan" aria-selected="false" aria-label="Рацион"><svg class="i" viewBox="0 0 24 24"><path d="M7 3v7.5M5 3v4.5a2 2 0 0 0 4 0V3M7 10.5V21M17 21V3c-2.2 1.6-3.2 4-3.2 7.2V13H17"/></svg><span class="lab">Рацион</span></button>
+  </nav>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---------- иконки ----------
+  const I = {
+    flame: '<path d="M12 3c1 3.6 5.2 5.4 5.2 10.2a5.2 5.2 0 0 1-10.4 0c0-2.6 1.5-4.1 2.6-5.2.3 1.7 1.2 2.7 2.3 3.1C11 9 11 6.2 12 3z"/>',
+    scale: '<path d="M12 4v16M6 20h12M5 7.5h14M7.5 7.5 4.5 14a3 3 0 0 0 6 0zM16.5 7.5l-3 6.5a3 3 0 0 0 6 0z"/>',
+    up: '<path d="M4 17l6-6 4 4 6-7M14 8h6v6"/>',
+    fridge: '<rect x="6" y="2.8" width="12" height="18.4" rx="3"/><path d="M6 10h12M9 6.2v1.6M9 13v3"/>',
+    snow: '<path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.6 12 7l2.5-2.4M9.5 19.4 12 17l2.5 2.4"/>',
+    cab: '<rect x="4" y="4" width="16" height="16" rx="2.5"/><path d="M12 4v16M9.5 11v2M14.5 11v2"/>',
+    table: '<path d="M3 9.5h18M6 9.5V20M18 9.5V20M8 9.5 9.5 5h5L16 9.5"/>',
+    dots: '<circle cx="6" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="18" cy="12" r="1.4"/>',
+    spark: '<path d="M12 3.5l1.7 4.9 4.8 1.7-4.8 1.7L12 16.7l-1.7-4.9-4.8-1.7 4.8-1.7z"/><path d="M18.5 14.5l.8 2.1 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/>',
+    check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+    x: '<path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>',
+    alert: '<path d="M12 4 2.8 19.5h18.4z"/><path d="M12 10v4.5M12 17.2v.3"/>',
+    info: '<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8v.3"/>',
+    pen: '<path d="M4 20h4L19 9l-4-4L4 16v4z"/>',
+    clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+    copy: '<rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6.5A2.5 2.5 0 0 0 13.5 4h-7A2.5 2.5 0 0 0 4 6.5v7A2.5 2.5 0 0 0 6.5 16H8"/>',
+    tune: '<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>',
+    swap: '<path d="M4 8h13l-3-3M20 16H7l3 3"/>',
+    bag: '<path d="M5 8h14l-1.2 12H6.2z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/>',
+    bulb: '<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
+    left: '<path d="M19 12H5M11 6l-6 6 6 6"/>',
+    right: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+    box: '<path d="M4 7.5 12 4l8 3.5v9L12 20l-8-3.5z"/><path d="M4 7.5 12 11l8-3.5M12 11v9"/>'
+  };
+  const ic = (n, cls) => `<svg class="i${cls ? " " + cls : ""}" viewBox="0 0 24 24" aria-hidden="true">${I[n]}</svg>`;
+
+  // ---------- хранение ----------
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem("rh2:" + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem("rh2:" + k, JSON.stringify(v)); } catch (e) {} }
+  };
+
+  const GOALS = {
+    cut:  { k: 0.8, p: 2.2, f: 0.8, label: "Сушка", short: "−20% ккал", hint: "дефицит 20%", icon: "flame" },
+    keep: { k: 1.0, p: 1.8, f: 0.9, label: "Поддержание", short: "калории в ноль", hint: "в ноль", icon: "scale" },
+    bulk: { k: 1.1, p: 1.8, f: 1.0, label: "Набор", short: "+10% ккал", hint: "профицит 10%", icon: "up" }
+  };
+  const ACTS = [
+    { v: 1.2, l: "Сидячая", d: "Почти без движения и без тренировок" },
+    { v: 1.375, l: "Лёгкая", d: "1–3 тренировки в неделю" },
+    { v: 1.55, l: "Средняя", d: "3–5 тренировок или работа на ногах" },
+    { v: 1.725, l: "Высокая", d: "Физическая работа плюс регулярный зал" },
+    { v: 1.9, l: "Очень высокая", d: "Тяжёлый труд и тренировки каждый день" }
+  ];
+  const PLACES = ["Холодильник", "Морозилка", "Шкаф", "Стол", "Другое"];
+  const PLACE_IC = { "Холодильник": "fridge", "Морозилка": "snow", "Шкаф": "cab", "Стол": "table", "Другое": "dots" };
+  const DEFAULT_STAPLES = ["Соль", "Перец чёрный", "Паприка", "Чеснок сушёный", "Лук сушёный", "Куркума", "Орегано", "Базилик", "Приправа для курицы", "Лавровый лист", "Сахар", "Мука", "Подсолнечное масло", "Оливковое масло", "Сливочное масло", "Кетчуп", "Майонез", "Горчица", "Соевый соус", "Томатная паста", "Уксус", "Мёд"];
+  const WISHES = ["Обед с собой в машину", "Без духовки", "Минимум посуды", "Приготовить сразу на 2 дня", "Сладкий перекус", "Без рыбы"];
+  const SRC_LABEL = { "этикетка": "с этикетки", "бренд": "по бренду", "таблица": "по таблицам", "своё": "вписано вручную" };
+  const EDITING = new Set();
+
+  const S = {
+    tab: "goal",
+    profile: Object.assign({ sex: "m", age: 24, height: 182, weight: 88.5, act: 1.55, goal: "cut", manual: false, mk: 2000, mp: 150, mf: 60, mc: 200 }, store.get("profile", {})),
+    staples: store.get("staples", DEFAULT_STAPLES.map(n => ({ name: n, on: true }))),
+    products: store.get("products", []),
+    photos: [],
+    place: "Холодильник",
+    meals: store.get("meals", 4),
+    firstTime: store.get("firstTime", "07:00"),
+    cookMax: store.get("cookMax", ""),
+    wishes: store.get("wishes", []),
+    wishText: store.get("wishText", ""),
+    plan: store.get("plan", null),
+    page: 0,
+    done: {},
+    busy: null
+  };
+  let uid = Date.now();
+  const newId = () => "id" + (uid++).toString(36);
+  let introDone = false, lastPage = 0;
+
+  // ---------- пример рациона ----------
+  const EXAMPLE = {
+    example: true,
+    target: { kcal: 2370, p: 195, f: 71, c: 238 },
+    note: "Так выглядит готовый день. Сфоткай свои продукты — и рацион соберётся из того, что лежит у тебя.",
+    buy: [],
+    meals: [
+      { name: "Завтрак", time: "07:00", title: "Омлет и овсянка на молоке с бананом", minutes: 15,
+        ingredients: [
+          { name: "Яйцо куриное", grams: 110, label: "2 шт", fixed: true, kcal: 157, p: 12.7, f: 11.5, c: 0.7 },
+          { name: "Овсяные хлопья", grams: 60, kcal: 360, p: 12.3, f: 6.1, c: 61 },
+          { name: "Молоко 2,5%", grams: 200, label: "200 мл", kcal: 52, p: 2.8, f: 2.5, c: 4.7 },
+          { name: "Банан", grams: 120, label: "1 шт", fixed: true, kcal: 96, p: 1.5, f: 0.2, c: 21.8 },
+          { name: "Подсолнечное масло", grams: 5, label: "1 ч. л.", kcal: 899, p: 0, f: 99.9, c: 0 },
+          { name: "Соль, перец чёрный", grams: 0, label: "по вкусу", fixed: true, kcal: 0, p: 0, f: 0, c: 0 }
+        ],
+        steps: [
+          "Залей овсяные хлопья молоком, доведи до кипения и вари 4–5 минут на слабом огне, помешивая.",
+          "Пока варится каша, разогрей сковороду с маслом на среднем огне.",
+          "Взбей яйца вилкой с щепоткой соли и перца, вылей на сковороду, накрой крышкой и держи 3–4 минуты.",
+          "Нарежь банан кружочками и выложи на кашу."
+        ],
+        tip: "Кашу можно сделать в микроволновке: 2 минуты на полной мощности, перемешать и ещё минуту." },
+      { name: "Обед", time: "11:00", title: "Курица с рисом и овощами в соевом соусе", minutes: 30,
+        ingredients: [
+          { name: "Филе куриной грудки", grams: 250, kcal: 113, p: 23.6, f: 1.9, c: 0.4 },
+          { name: "Рис белый", grams: 90, label: "сухой", kcal: 344, p: 6.7, f: 0.7, c: 78.9 },
+          { name: "Овощная смесь замороженная", grams: 150, kcal: 35, p: 2, f: 0.2, c: 6 },
+          { name: "Подсолнечное масло", grams: 5, label: "1 ч. л.", kcal: 899, p: 0, f: 99.9, c: 0 },
+          { name: "Соевый соус", grams: 15, label: "1 ст. л.", kcal: 53, p: 6, f: 0, c: 6.6 },
+          { name: "Паприка, чеснок сушёный", grams: 0, label: "по вкусу", fixed: true, kcal: 0, p: 0, f: 0, c: 0 }
+        ],
+        steps: [
+          "Промой рис и отвари в подсоленной воде 15–18 минут: одна часть риса на две части воды.",
+          "Нарежь курицу кубиками 2–3 см, посыпь паприкой и сушёным чесноком.",
+          "Разогрей масло на сильном огне и обжарь курицу 6–7 минут до золотистой корочки.",
+          "Добавь овощи прямо из морозилки и жарь ещё 5 минут, помешивая.",
+          "Влей соевый соус, прогрей минуту и разложи с рисом по контейнеру."
+        ],
+        tip: "В контейнере хорошо едется и тёплым, и холодным — удобно взять с собой." },
+      { name: "Перекус", time: "15:00", title: "Творог с мёдом", minutes: 2,
+        ingredients: [
+          { name: "Творог 5%", grams: 250, label: "1 пачка", kcal: 121, p: 17.2, f: 5, c: 1.8 },
+          { name: "Мёд", grams: 15, label: "1 ст. л.", kcal: 329, p: 0.8, f: 0, c: 81.5 }
+        ],
+        steps: ["Выложи творог в миску.", "Полей мёдом и перемешай."],
+        tip: "Если творог суховат, добавь пару ложек молока и взбей вилкой." },
+      { name: "Ужин", time: "19:00", title: "Макароны с тунцом, томатами и сыром", minutes: 20,
+        ingredients: [
+          { name: "Макароны из твёрдых сортов", grams: 80, label: "сухие", kcal: 344, p: 11, f: 1.3, c: 71 },
+          { name: "Тунец в собственном соку", grams: 150, label: "1 банка", fixed: true, kcal: 96, p: 21, f: 1, c: 0 },
+          { name: "Помидоры", grams: 150, label: "1–2 шт", kcal: 20, p: 0.6, f: 0.2, c: 4.2 },
+          { name: "Лук репчатый", grams: 50, label: "½ шт", kcal: 41, p: 1.4, f: 0.2, c: 8.2 },
+          { name: "Кетчуп", grams: 20, label: "1 ст. л.", kcal: 100, p: 1.5, f: 0.1, c: 23 },
+          { name: "Оливковое масло", grams: 5, label: "1 ч. л.", kcal: 898, p: 0, f: 99.8, c: 0 },
+          { name: "Сыр твёрдый", grams: 30, kcal: 350, p: 25, f: 27, c: 0 },
+          { name: "Орегано, соль", grams: 0, label: "по вкусу", fixed: true, kcal: 0, p: 0, f: 0, c: 0 }
+        ],
+        steps: [
+          "Отвари макароны в подсоленной воде по времени на упаковке.",
+          "Мелко нарежь лук, помидоры — кубиком.",
+          "Обжарь лук на оливковом масле 3 минуты, добавь помидоры и туши 5 минут.",
+          "Добавь кетчуп, тунец без жидкости и орегано, прогрей 2 минуты.",
+          "Смешай соус с макаронами и натри сверху сыр."
+        ],
+        tip: "" }
+    ]
+  };
+  if (!S.plan) S.plan = EXAMPLE;
+
+  // ---------- расчёты ----------
+  function computeTarget(pr) {
+    pr = pr || S.profile;
+    const w = +pr.weight || 0, h = +pr.height || 0, a = +pr.age || 0, act = +pr.act || 1.2;
+    const bmr = 10 * w + 6.25 * h - 5 * a + (pr.sex === "f" ? -161 : 5);
+    const tdee = bmr * act;
+    const g = GOALS[pr.goal] || GOALS.keep;
+    if (pr.manual) {
+      return { kcal: Math.round(+pr.mk || 0), p: Math.round(+pr.mp || 0), f: Math.round(+pr.mf || 0), c: Math.round(+pr.mc || 0), manual: true, bmr: Math.round(bmr), tdee: Math.round(tdee) };
+    }
+    const kcal = Math.round(tdee * g.k / 10) * 10;
+    const p = Math.round(w * g.p);
+    const f = Math.round(w * g.f);
+    const c = Math.max(50, Math.round((kcal - p * 4 - f * 9) / 4));
+    return { kcal, p, f, c, bmr: Math.round(bmr), tdee: Math.round(tdee) };
+  }
+  function ingMacro(i) {
+    const g = (+i.grams || 0) / 100;
+    return { kcal: g * (+i.kcal || 0), p: g * (+i.p || 0), f: g * (+i.f || 0), c: g * (+i.c || 0) };
+  }
+  function addM(a, b) { return { kcal: a.kcal + b.kcal, p: a.p + b.p, f: a.f + b.f, c: a.c + b.c }; }
+  const ZERO = () => ({ kcal: 0, p: 0, f: 0, c: 0 });
+  function mealTotals(m) { return (m.ingredients || []).reduce((a, i) => addM(a, ingMacro(i)), ZERO()); }
+  function dayTotals(plan) { return (plan.meals || []).reduce((a, m) => addM(a, mealTotals(m)), ZERO()); }
+  const R = x => Math.round(x);
+
+  // Подгонка граммовок: покоординатный спуск с шагом 5 г, в пределах 50–160% исходного веса.
+  function fitPlan(plan, T) {
+    const items = [];
+    plan.meals.forEach(m => m.ingredients.forEach(i => {
+      if (!i.fixed && (+i.kcal || 0) > 0 && (+i.grams || 0) > 0) {
+        const g0 = +i.grams;
+        items.push({ i, lo: Math.max(5, Math.round(g0 * 0.5 / 5) * 5), hi: Math.max(10, Math.round(g0 * 1.6 / 5) * 5) });
+      }
+    }));
+    const sq = x => x * x;
+    const err = () => {
+      const t = dayTotals(plan);
+      return 2 * sq((t.kcal - T.kcal) / Math.max(T.kcal, 1)) + 2 * sq((t.p - T.p) / Math.max(T.p, 1)) + sq((t.f - T.f) / Math.max(T.f, 1)) + sq((t.c - T.c) / Math.max(T.c, 1));
+    };
+    let best = err();
+    for (let it = 0; it < 400; it++) {
+      let improved = false;
+      for (const x of items) {
+        for (const step of [5, -5]) {
+          const g = x.i.grams + step;
+          if (g < x.lo || g > x.hi) continue;
+          x.i.grams = g;
+          const e = err();
+          if (e < best - 1e-9) { best = e; improved = true; break; }
+          x.i.grams -= step;
+        }
+      }
+      if (!improved) break;
+    }
+    return plan;
+  }
+  function inTol(key, v, t) {
+    if (!t) return true;
+    const d = Math.abs(v - t) / t;
+    return key === "kcal" ? d <= 0.04 : key === "p" ? (v >= t - 5 && d <= 0.12) : d <= 0.12;
+  }
+
+  // ---------- утилиты ----------
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
+  const fmt = x => R(x).toLocaleString("ru-RU");
+  const signed = x => (x > 0 ? "+" : x < 0 ? "−" : "±") + Math.abs(R(x)).toLocaleString("ru-RU");
+  function plural(n, a, b, c) { const m10 = n % 10, m100 = n % 100; return m10 === 1 && m100 !== 11 ? a : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? b : c; }
+  function save() {
+    store.set("profile", S.profile); store.set("staples", S.staples); store.set("products", S.products);
+    store.set("meals", S.meals); store.set("firstTime", S.firstTime); store.set("cookMax", S.cookMax);
+    store.set("wishes", S.wishes); store.set("wishText", S.wishText);
+    store.set("plan", S.plan && !S.plan.example ? S.plan : null);
+  }
+  function mealNames(n) {
+    return ({ 3: ["Завтрак", "Обед", "Ужин"], 4: ["Завтрак", "Обед", "Перекус", "Ужин"], 5: ["Завтрак", "Перекус", "Обед", "Перекус", "Ужин"], 6: ["Завтрак", "Перекус", "Обед", "Перекус", "Ужин", "Перед сном"] })[n] || [];
+  }
+  const reduceMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Кольцо: сегменты [{frac, color}], frac — доля окружности.
+  function ring(size, sw, segs, cls) {
+    const cx = size / 2, r = (size - sw) / 2, C = 2 * Math.PI * r;
+    const gap = segs.length > 1 ? sw + 5 : 0;
+    let off = 0, arcs = "";
+    segs.forEach(s => {
+      const full = Math.max(0, Math.min(1, s.frac)) * C;
+      const len = Math.max(0, full - gap);
+      if (len > 0.5) arcs += `<circle cx="${cx}" cy="${cx}" r="${r}" fill="none" style="stroke:${s.color}" stroke-width="${sw}" stroke-linecap="round" stroke-dasharray="${len.toFixed(2)} ${(C - len).toFixed(2)}" stroke-dashoffset="${(-(off + gap / 2)).toFixed(2)}"/>`;
+      off += full;
+    });
+    return `<svg class="ring${cls ? " " + cls : ""}" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" aria-hidden="true"><g transform="rotate(-90 ${cx} ${cx})"><circle cx="${cx}" cy="${cx}" r="${r}" fill="none" style="stroke:var(--track)" stroke-width="${sw}"/>${arcs}</g></svg>`;
+  }
+
+  // ---------- ИИ ----------
+  let sample = null, imgLim = null, aiState = "loading", ctl = null;
+  const ERR = {
+    not_granted: "Доступ к Claude для этой страницы не разрешён. Обнови страницу и нажми «Разрешить», когда спросит.",
+    sampling_disabled: "Claude недоступен для этого аккаунта.",
+    rate_limited: "Слишком много запросов или закончился лимит Claude. Попробуй чуть позже.",
+    session_expired: "Нужно заново войти в Claude.",
+    image_rejected: "Одно из фото не подошло по формату или размеру. Удали его и попробуй снова.",
+    images_unavailable: "В этом окне нельзя отправлять фото. Добавь продукты вручную.",
+    refused: "Запрос отклонён. Поменяй пожелания и попробуй снова.",
+    empty_completion: "ИИ ничего не ответил. Попробуй ещё раз.",
+    invalid_json: "ИИ ответил в неверном формате. Нажми ещё раз.",
+    prompt_too_large: "Слишком много данных. Убери часть продуктов и попробуй снова."
+  };
+  const errText = e => ERR[e && e.code] || "Не получилось связаться с ИИ. Попробуй ещё раз.";
+  const hardFail = e => e && ["not_granted", "sampling_disabled", "not_declared", "capability_disabled", "capability_removed"].includes(e.code);
+
+  (async () => {
+    try {
+      if (!window.claude || !window.claude.use) throw 0;
+      sample = await window.claude.use("sample");
+      if (!sample) throw 0;
+      const lim = await sample.limits().catch(() => null);
+      imgLim = lim && lim.images ? lim.images : null;
+      aiState = "ready";
+    } catch (e) { aiState = "off"; }
+    renderAiState();
+  })();
+
+  function renderAiState() {
+    const off = $("#aiOff");
+    if (aiState === "off") {
+      off.hidden = false;
+      off.innerHTML = ic("alert") + "<span>ИИ здесь недоступен. Открой приложение в Claude — тогда заработают распознавание фото и составление рациона. Цель и список продуктов работают и так.</span>";
+    } else off.hidden = true;
+    renderPhotos(); renderGenBtn();
+  }
+
+  function setStatus(el, kind, html, stoppable) {
+    if (!el) return;
+    const icon = kind === "busy" ? '<span class="spin"></span>' : kind === "ok" ? ic("check") : kind === "err" ? ic("alert") : ic("info");
+    el.innerHTML = html ? `<div class="status ${kind || ""}" role="status"><span class="si">${icon}</span><span class="st">${html}</span>${stoppable ? '<button class="stop" data-act="stop">Стоп</button>' : ""}</div>` : "";
+  }
+
+  function productLines() {
+    return S.products.map(p => {
+      let s = `- ${p.name}${p.brand ? " (" + p.brand + ")" : ""}${p.amount ? " — " + p.amount : ""}${p.place ? " — " + p.place : ""}`;
+      if (p.kcal != null && p.kcal !== "") s += ` — на 100 г: ${p.kcal} ккал, Б ${p.p}, Ж ${p.f}, У ${p.c}${p.src === "этикетка" || p.src === "своё" ? " (точно, с этикетки — бери эти цифры)" : ""}`;
+      return s;
+    }).join("\n");
+  }
+  const stapleList = () => S.staples.filter(s => s.on).map(s => s.name).join(", ");
+
+  async function recognize() {
+    if (!sample || !imgLim) return;
+    const todo = S.photos.filter(p => !p.done);
+    if (!todo.length) return;
+    const max = Math.max(1, imgLim.maxCount || 1);
+    const batches = [];
+    for (let i = 0; i < todo.length; i += max) batches.push(todo.slice(i, i + max));
+    const box = $("#recStatus");
+    S.busy = "rec"; renderPhotos();
+    let added = 0, seen = 0;
+    try {
+      for (let b = 0; b < batches.length; b++) {
+        const batch = batches[b];
+        ctl = new AbortController();
+        setStatus(box, "busy", batches.length > 1 ? `Смотрю фото: часть ${b + 1} из ${batches.length}…` : "Смотрю фото, читаю этикетки и считаю КБЖУ…", true);
+        const places = batch.map((p, i) => `фото ${i + 1} — ${p.place}`).join("; ");
+        const have = S.products.map(p => p.name).join(", ") || "пока ничего";
+        const prompt = `На фото — продукты, которые есть у человека дома. Где сделано каждое фото: ${places}.
+Перечисли все съедобные продукты, которые видно: мясо, птица, рыба, яйца, молочное, крупы, макароны, хлеб, овощи, фрукты, замороженные продукты, консервы, орехи, сладкое, калорийные напитки.
+НЕ перечисляй соль, специи, приправы и то, что уже есть в списке «всегда есть дома»: ${stapleList()}.
+Уже записано в списке продуктов (не повторяй): ${have}.
+Для каждого продукта дай: название по-русски, конкретно («Филе куриной грудки», «Рис длиннозёрный», «Творог 5%», «Пельмени»), бренд, если его видно на упаковке (как написано, латиницей или кириллицей), примерное количество словами, вес в граммах (с упаковки, если указан, иначе на глаз), место (одно из: ${PLACES.join(", ")}) и КБЖУ на 100 г.
+КБЖУ определяй в таком порядке:
+1) если на фото видна таблица пищевой ценности (Nutrition Facts / «Пищевая ценность») — перепиши цифры с неё; если там указано на порцию (per serving), пересчитай на 100 г по весу порции; "src":"этикетка";
+2) иначе, если узнаёшь бренд и продукт (например, конкретный творог, протеиновый батончик, хлопья), — используй известные тебе цифры именно этого продукта; "src":"бренд";
+3) иначе — стандартные таблицы для такого продукта; "src":"таблица". Для круп и макарон — в сухом виде, для мяса — в сыром.
+Одинаковые продукты объединяй в одну позицию. Если продукт виден плохо — всё равно запиши свою лучшую догадку.
+Ответь ТОЛЬКО JSON: {"products":[{"name":"Рис длиннозёрный","brand":"Mahatma","amount":"1 пачка","grams":907,"place":"Шкаф","kcal":356,"p":7.1,"f":0,"c":80,"src":"этикетка"}]}`;
+        const data = await sample.json(prompt, { images: batch.map(p => p.file), signal: ctl.signal });
+        const list = Array.isArray(data) ? data : (data && Array.isArray(data.products) ? data.products : []);
+        seen += list.length;
+        added += mergeProducts(list);
+        batch.forEach(p => p.done = true);
+        renderPhotos(); renderProducts();
+      }
+      setStatus(box, "ok", added ? `Добавлено ${added} ${plural(added, "продукт", "продукта", "продуктов")}. Проверь список ниже — можно поправить количество или КБЖУ.` : (seen ? "Новых продуктов не нашёл — всё уже в списке." : "Не нашёл продуктов на этих фото. Сними ближе и при хорошем свете."));
+    } catch (e) {
+      if (e && e.code === "cancelled") setStatus(box, "", "Остановлено.");
+      else { setStatus(box, "err", esc(errText(e))); if (hardFail(e)) { aiState = "off"; renderAiState(); } }
+    } finally {
+      S.busy = null; ctl = null; renderPhotos(); save();
+    }
+  }
+
+  function mergeProducts(list) {
+    let n = 0;
+    const names = new Set(S.products.map(p => p.name.trim().toLowerCase()));
+    for (const x of list) {
+      if (!x || !x.name) continue;
+      const name = String(x.name).trim().slice(0, 80);
+      const key = name.toLowerCase();
+      if (names.has(key)) continue;
+      names.add(key);
+      const num = v => (v === "" || v == null || isNaN(+v)) ? null : Math.round(+v * 10) / 10;
+      const src = ["этикетка", "бренд", "таблица"].includes(x.src) ? x.src : (x.kcal != null ? "таблица" : "");
+      S.products.push({
+        id: newId(), name,
+        brand: String(x.brand || "").slice(0, 40),
+        amount: String(x.amount || (x.grams ? "≈ " + x.grams + " г" : "")).slice(0, 40),
+        place: PLACES.includes(x.place) ? x.place : "",
+        kcal: num(x.kcal), p: num(x.p), f: num(x.f), c: num(x.c), src
+      });
+      n++;
+    }
+    return n;
+  }
+
+  function planPrompt(T, extra) {
+    const names = mealNames(S.meals);
+    const wishes = [...S.wishes, S.wishText.trim()].filter(Boolean);
+    if (S.cookMax) wishes.push(`каждое блюдо готовится не дольше ${S.cookMax} минут`);
+    return `Ты — спортивный нутрициолог и повар. Составь рацион на один день ТОЛЬКО из продуктов, которые есть у человека дома.
+
+ЦЕЛЬ НА ДЕНЬ: ${T.kcal} ккал; белки ${T.p} г; жиры ${T.f} г; углеводы ${T.c} г. Задача: ${S.profile.manual ? "свои цифры" : GOALS[S.profile.goal].label}.
+Допуск по сумме дня: калории ±4%, белок не меньше ${Math.max(0, T.p - 5)} г, жиры и углеводы ±10%.
+Приёмов пищи: ${S.meals} (${names.join(", ")}). Первый приём в ${S.firstTime || "07:00"}, следующие через 3–4 часа.
+Пожелания: ${wishes.length ? wishes.join("; ") : "нет"}.
+
+ПРОДУКТЫ В НАЛИЧИИ (название — количество — где лежит — КБЖУ на 100 г, если известно):
+${productLines() || "- (список пуст)"}
+
+ВСЕГДА ЕСТЬ ДОМА (специи, соусы, масла — можно брать без ограничений): ${stapleList() || "соль"}.
+${extra || ""}
+ПРАВИЛА:
+- Используй только продукты из этих двух списков. Не добавляй ничего, чего там нет.
+- Не превышай доступное количество продукта.
+- Вес — в граммах сырого или сухого продукта (крупы, макароны, мясо — до готовки).
+- КБЖУ каждого ингредиента — на 100 г, по данным из списка, а если их нет — по стандартным таблицам. Специи без калорий — нули.
+- Калории масел, майонеза, кетчупа, сахара и мёда обязательно учитывай как ингредиенты.
+- Блюда разные, вкусные, по-домашнему. Рецепт — 3–7 понятных шагов с огнём, временем и температурой.
+- В шагах НЕ пиши граммовки, только названия ингредиентов (граммы — в таблице).
+- "label" — понятная мера: «2 шт», «1 ст. л.», «сухой», «по вкусу» или пустая строка.
+- "fixed": true — для штучных продуктов (яйца, банан, банка консервов) и специй; для остального false.
+- Перед ответом сложи КБЖУ всех ингредиентов и проверь, что день попадает в цель.
+- Если из имеющихся продуктов цель по белку не добрать — составь лучший вариант, а в "buy" коротко перечисли, что докупить; иначе "buy": [].
+
+Ответь ТОЛЬКО JSON такой формы:
+{"note":"1–2 предложения про день","meals":[{"name":"Завтрак","time":"07:00","title":"Название блюда","minutes":15,"ingredients":[{"name":"Яйцо куриное","grams":110,"label":"2 шт","fixed":true,"kcal":157,"p":12.7,"f":11.5,"c":0.7}],"steps":["..."],"tip":"короткий совет или пустая строка"}],"buy":[]}`;
+  }
+
+  function normMeal(m, i) {
+    const n = v => (isNaN(+v) ? 0 : +v);
+    return {
+      name: String(m.name || mealNames(S.meals)[i] || "Приём " + (i + 1)),
+      time: String(m.time || ""),
+      title: String(m.title || "Блюдо"),
+      minutes: n(m.minutes) || null,
+      ingredients: (Array.isArray(m.ingredients) ? m.ingredients : []).filter(x => x && x.name).map(x => ({
+        name: String(x.name), grams: Math.max(0, Math.round(n(x.grams))), label: String(x.label || ""),
+        fixed: !!x.fixed, kcal: n(x.kcal), p: n(x.p), f: n(x.f), c: n(x.c)
+      })),
+      steps: (Array.isArray(m.steps) ? m.steps : []).map(String).filter(Boolean),
+      tip: String(m.tip || "")
+    };
+  }
+
+  function progressFromText(text) {
+    const n = (text.match(/"title"\s*:/g) || []).length;
+    return n ? `Пишу рецепты: ${Math.min(n, S.meals)} из ${S.meals}…` : "Подбираю блюда и считаю КБЖУ…";
+  }
+
+  async function generatePlan() {
+    const box = $("#genStatus");
+    if (!S.products.length) { setStatus(box, "err", "Сначала добавь продукты: сфоткай запасы или впиши вручную во вкладке «Продукты»."); return; }
+    if (!sample) { setStatus(box, "err", "ИИ ещё подключается или недоступен в этом окне."); return; }
+    const T = computeTarget();
+    ctl = new AbortController();
+    S.busy = "gen"; renderGenBtn();
+    $("#planOut").innerHTML = '<div class="skel"><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div></div>';
+    setStatus(box, "busy", "Подбираю блюда и считаю КБЖУ… обычно 30–90 секунд.", true);
+    try {
+      const data = await sample.json(planPrompt(T), {
+        signal: ctl.signal, cache: false,
+        onText: ({ text }) => setStatus(box, "busy", progressFromText(text), true)
+      });
+      const meals = (data && Array.isArray(data.meals) ? data.meals : []).map(normMeal).filter(m => m.ingredients.length);
+      if (!meals.length) throw { code: "invalid_json" };
+      S.plan = { target: T, note: String(data.note || ""), buy: Array.isArray(data.buy) ? data.buy.map(String).filter(Boolean) : [], meals, created: Date.now() };
+      S.page = 0; S.done = {};
+      setStatus(box, "", "");
+      save();
+    } catch (e) {
+      if (e && e.code === "cancelled") setStatus(box, "", "Остановлено.");
+      else { setStatus(box, "err", esc(errText(e))); if (hardFail(e)) { aiState = "off"; renderAiState(); } }
+    } finally {
+      S.busy = null; ctl = null; renderGenBtn(); renderPlan();
+      if (S.plan && !S.plan.example && !box.innerHTML) $("#planOut").scrollIntoView({ behavior: reduceMotion() ? "auto" : "smooth", block: "start" });
+    }
+  }
+
+  async function replaceMeal(idx) {
+    const plan = S.plan; if (!plan || plan.example || !sample) return;
+    const T = computeTarget();
+    const m = plan.meals[idx];
+    const others = plan.meals.filter((_, i) => i !== idx);
+    const ot = others.reduce((a, x) => addM(a, mealTotals(x)), ZERO());
+    const b = { kcal: Math.max(150, R(T.kcal - ot.kcal)), p: Math.max(5, R(T.p - ot.p)), f: Math.max(3, R(T.f - ot.f)), c: Math.max(5, R(T.c - ot.c)) };
+    ctl = new AbortController();
+    S.busy = "meal"; renderPlan();
+    setStatus($("#mealStatus"), "busy", "Придумываю другое блюдо…", true);
+    const extra = `\nСЕЙЧАС НУЖНО ЗАМЕНИТЬ ОДИН ПРИЁМ: «${m.name}» в ${m.time}. Сейчас там «${m.title}» — придумай другое блюдо, не похожее на него и на остальные блюда дня: ${others.map(x => "«" + x.title + "»").join(", ") || "нет"}.
+Этот приём должен дать примерно: ${b.kcal} ккал, Б ${b.p} г, Ж ${b.f} г, У ${b.c} г.
+Ответь ТОЛЬКО JSON одного приёма: {"meal":{"name":"${m.name}","time":"${m.time}","title":"...","minutes":15,"ingredients":[...],"steps":["..."],"tip":""}}\n(Форма ниже — для целого дня, для этого ответа используй форму одного приёма.)\n`;
+    try {
+      const data = await sample.json(planPrompt(T, extra), { signal: ctl.signal, cache: false });
+      const raw = data && data.meal ? data.meal : (data && Array.isArray(data.meals) ? data.meals[0] : data);
+      const nm = raw ? normMeal(raw, idx) : null;
+      if (!nm || !nm.ingredients.length) throw { code: "invalid_json" };
+      plan.meals[idx] = nm;
+      Object.keys(S.done).forEach(k => { if (k.startsWith(idx + ":")) delete S.done[k]; });
+      S.busy = null; save(); renderPlan();
+      setStatus($("#mealStatus"), "ok", "Блюдо заменено.");
+    } catch (e) {
+      S.busy = null; renderPlan();
+      if (e && e.code === "cancelled") setStatus($("#mealStatus"), "", "Остановлено.");
+      else setStatus($("#mealStatus"), "err", esc(errText(e)));
+    } finally { ctl = null; }
+  }
+
+  // ---------- отрисовка ----------
+  function renderTabs() {
+    document.querySelectorAll(".nav button").forEach(b => b.setAttribute("aria-selected", String(b.dataset.tab === S.tab)));
+    ["goal", "food", "plan"].forEach(t => { $("#view-" + t).hidden = t !== S.tab; });
+  }
+
+  function renderHero() {
+    const pr = S.profile, T = computeTarget();
+    const g = GOALS[pr.goal];
+    const fromM = Math.max(T.p * 4 + T.f * 9 + T.c * 4, 1);
+    const fp = T.p * 4 / fromM, ff = T.f * 9 / fromM, fc = T.c * 4 / fromM;
+    const pct = x => R(x * 100) + "%";
+    const intro = !introDone && !reduceMotion();
+    introDone = true;
+    $("#heroCard").innerHTML = `
+      <div class="hero-top"><span class="eyebrow">Цель на день</span><span class="pill">${pr.manual ? "свои цифры" : ic(g.icon) .replace('class="i"', 'class="i" style="width:14px;height:14px"') + esc(g.label)}</span></div>
+      <div class="ringbox">
+        ${ring(232, 16, [{ frac: fp, color: "var(--prot)" }, { frac: ff, color: "var(--fat)" }, { frac: fc, color: "var(--carb)" }], intro ? "intro" : "")}
+        <div class="ringc"><div class="big">${fmt(T.kcal)}</div><div class="u">ккал в день</div></div>
+      </div>
+      <div class="macros3">
+        <div class="mt"><div class="n"><span class="dot p"></span>Белки</div><div class="v">${fmt(T.p)}<small>г</small></div><div class="pc">${pct(fp)} калорий</div></div>
+        <div class="mt"><div class="n"><span class="dot f"></span>Жиры</div><div class="v">${fmt(T.f)}<small>г</small></div><div class="pc">${pct(ff)} калорий</div></div>
+        <div class="mt"><div class="n"><span class="dot c"></span>Углеводы</div><div class="v">${fmt(T.c)}<small>г</small></div><div class="pc">${pct(fc)} калорий</div></div>
+      </div>
+      <div class="hero-foot"><span>Обмен в покое <b>${fmt(T.bmr)}</b></span><span>Расход за день <b>${fmt(T.tdee)}</b></span></div>`;
+    $("#goalHint").textContent = pr.manual
+      ? "Включены свои цифры — приложение берёт их как есть."
+      : `Белок ${String(g.p).replace(".", ",")} г и жиры ${String(g.f).replace(".", ",")} г на каждый килограмм веса, остальные калории — углеводы.`;
+    const mw = $("#manualWarn");
+    if (pr.manual) {
+      const diff = T.kcal ? (fromM - T.kcal) / T.kcal : 0;
+      mw.className = Math.abs(diff) > 0.05 ? "warnline" : "okline";
+      mw.textContent = `По БЖУ выходит ${fmt(fromM)} ккал` + (Math.abs(diff) > 0.05 ? ` — не совпадает с ${fmt(T.kcal)}. ИИ будет держаться белка и калорий.` : ".");
+    }
+    $("#planTarget").innerHTML = `Цель: <b style="color:var(--text)">${fmt(T.kcal)} ккал</b> · Б ${T.p} · Ж ${T.f} · У ${T.c}`;
+  }
+
+  function renderProfile() {
+    const pr = S.profile;
+    $("#goalSeg").innerHTML = Object.entries(GOALS).map(([k, g]) => `<button class="goal" data-goal="${k}" aria-pressed="${k === pr.goal && !pr.manual}"><span class="ic">${ic(g.icon)}</span><span><b>${g.label}</b><small>${g.short}</small></span></button>`).join("");
+    document.querySelectorAll("#sexSeg button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.sex === pr.sex)));
+    document.querySelectorAll("[data-pf]").forEach(el => { if (document.activeElement !== el) el.value = pr[el.dataset.pf]; });
+    document.querySelectorAll("[data-mf]").forEach(el => { if (document.activeElement !== el) el.value = pr[el.dataset.mf]; });
+    let ai = ACTS.findIndex(a => Math.abs(a.v - (+pr.act)) < 0.01); if (ai < 0) ai = 2;
+    const r = $("#f-act"); r.value = ai; r.style.setProperty("--pct", (ai / 4 * 100) + "%");
+    $("#actLabel").textContent = ACTS[ai].l + " · ×" + String(ACTS[ai].v).replace(".", ",");
+    $("#actDesc").textContent = ACTS[ai].d;
+    $("#f-manual").checked = !!pr.manual;
+    $("#manualBox").hidden = !pr.manual;
+  }
+
+  function renderPhotos() {
+    $("#placeChips").innerHTML = PLACES.map(p => `<button class="place" data-place="${p}" aria-pressed="${p === S.place}">${ic(PLACE_IC[p])}${p}</button>`).join("");
+    const canImg = aiState === "ready" && !!imgLim;
+    const strip = $("#photos");
+    strip.hidden = !S.photos.length;
+    strip.innerHTML = S.photos.map(p => `
+      <div class="ph">
+        <img src="${p.url}" alt="Фото: ${esc(p.place)}">
+        ${p.done ? `<span class="ok" title="Распознано">${ic("check")}</span>` : ""}
+        <button class="rm" data-rmph="${p.id}" aria-label="Удалить фото">${ic("x")}</button>
+        <button class="tag" data-cycle="${p.id}" title="Сменить место">${esc(p.place)} ▾</button>
+      </div>`).join("");
+    const todo = S.photos.filter(p => !p.done).length;
+    $("#photoCount").textContent = S.photos.length ? `${S.photos.length} фото` : "";
+    const btn = $("#recBtn");
+    btn.hidden = !S.photos.length;
+    btn.disabled = !canImg || !todo || S.busy === "rec";
+    btn.classList.toggle("busy", S.busy === "rec");
+    btn.innerHTML = ic("spark") + (S.busy === "rec" ? "Распознаю…" : todo ? `Распознать продукты · ${todo} фото` : "Все фото распознаны");
+    if (aiState === "ready" && !imgLim && S.photos.length && !$("#recStatus").innerHTML) setStatus($("#recStatus"), "err", "В этом окне фото отправлять нельзя — добавь продукты вручную ниже.");
+  }
+
+  function productRow(p) {
+    const est = p.src === "этикетка" || p.src === "своё";
+    return `<div class="prow">
+      <input class="pn" id="pn-${p.id}" data-pid="${p.id}" data-k="name" value="${esc(p.name)}" aria-label="Название">
+      <input class="pa" id="pa-${p.id}" data-pid="${p.id}" data-k="amount" value="${esc(p.amount)}" placeholder="сколько" aria-label="Количество">
+      <button class="del" data-delp="${p.id}" aria-label="Удалить ${esc(p.name)}">${ic("x")}</button>
+      <div class="pmeta">
+        ${p.brand ? `<span>${esc(p.brand)}</span>` : ""}
+        ${p.kcal != null ? `<span class="kb">${fmt(p.kcal)} ккал · <span style="color:var(--prot)">Б ${p.p}</span> · <span style="color:var(--fat)">Ж ${p.f}</span> · <span style="color:var(--carb)">У ${p.c}</span> / 100 г</span>` : "<span>КБЖУ подберёт ИИ</span>"}
+        ${p.src ? `<span class="badge${est ? " ok" : ""}">${esc(SRC_LABEL[p.src] || p.src)}</span>` : ""}
+        <button class="editk" data-editp="${p.id}" aria-expanded="${EDITING.has(p.id)}">${EDITING.has(p.id) ? ic("check") + "готово" : ic("pen") + "КБЖУ"}</button>
+      </div>
+      ${EDITING.has(p.id) ? `<div class="kedit">${[["kcal", "Ккал", "k"], ["p", "Белки", "p"], ["f", "Жиры", "f"], ["c", "Углев.", "c"]].map(([k, l, d]) => `<div class="mbox"><label for="k-${k}-${p.id}"><span class="dot ${d}"></span>${l}</label><input id="k-${k}-${p.id}" type="number" inputmode="decimal" step="0.1" data-kp="${p.id}" data-kk="${k}" value="${p[k] == null ? "" : p[k]}"></div>`).join("")}</div>` : ""}
+    </div>`;
+  }
+
+  function renderProducts() {
+    const list = $("#plist");
+    const n = S.products.length;
+    $("#prodCount").textContent = n ? `${n} ${plural(n, "позиция", "позиции", "позиций")}` : "";
+    const nc = $("#navCount"); nc.hidden = !n; nc.textContent = n;
+    if (!n) {
+      list.innerHTML = `<div class="empty">${ic("box")}<div>Пока пусто. Сфоткай запасы — ИИ сам перечислит продукты. Или впиши их вручную.</div></div>`;
+      return;
+    }
+    const groups = {};
+    S.products.forEach(p => { const k = p.place || "Вручную"; (groups[k] = groups[k] || []).push(p); });
+    const order = [...PLACES, "Вручную"];
+    list.innerHTML = order.filter(k => groups[k]).map(k => `
+      <div class="group">
+        <div class="gh">${ic(PLACE_IC[k] || "pen")}${k} <span>${groups[k].length}</span></div>
+        <div class="card plist">${groups[k].map(productRow).join("")}</div>
+      </div>`).join("");
+  }
+
+  function renderStaples() {
+    $("#staples").innerHTML = S.staples.map((s, i) => `<button class="chip st" data-staple="${i}" aria-pressed="${s.on}">${esc(s.name)}</button>`).join("");
+  }
+
+  function renderPlanSettings() {
+    document.querySelectorAll("#mealsSeg button").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.meals === S.meals)));
+    document.querySelectorAll("#cookSeg button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.cook === String(S.cookMax || ""))));
+    $("#firstTime").value = S.firstTime;
+    $("#wishChips").innerHTML = WISHES.map(w => `<button class="chip" data-wish="${esc(w)}" aria-pressed="${S.wishes.includes(w)}">${esc(w)}</button>`).join("");
+    if (document.activeElement !== $("#wishText")) $("#wishText").value = S.wishText;
+  }
+
+  function renderGenBtn() {
+    const b = $("#genBtn");
+    b.disabled = S.busy === "gen" || aiState !== "ready";
+    b.classList.toggle("busy", S.busy === "gen");
+    b.innerHTML = ic("spark") + (S.busy === "gen" ? "Составляю рацион…" : (S.plan && !S.plan.example ? "Пересобрать рацион" : "Составить рацион"));
+  }
+
+  function renderPlan() {
+    const out = $("#planOut");
+    const plan = S.plan;
+    if (S.busy === "gen") return;
+    if (!plan || !plan.meals || !plan.meals.length) { out.innerHTML = ""; return; }
+    const pages = ["Итог", ...plan.meals.map(m => m.name)];
+    if (S.page >= pages.length) S.page = 0;
+    const dir = S.page > lastPage ? "from-r" : S.page < lastPage ? "from-l" : "";
+    lastPage = S.page;
+    const strip = `<div class="ptabs" role="tablist" aria-label="Страницы рациона">` + pages.map((p, i) => {
+      const sub = i === 0 ? "весь день" : (plan.meals[i - 1].time || "");
+      return `<button class="ptab" role="tab" id="pt-${i}" data-page="${i}" aria-selected="${i === S.page}">${esc(p)}<small>${esc(sub)}</small></button>`;
+    }).join("") + `</div>`;
+    const body = S.page === 0 ? summaryPage(plan) : mealPage(plan, S.page - 1);
+    const nav = `<div class="pnav">
+      <button class="btn ghost" data-pg="-1" ${S.page === 0 ? "disabled" : ""}>${ic("left")}Назад</button>
+      <span class="cnt">${S.page + 1} / ${pages.length}</span>
+      <button class="btn ghost" data-pg="1" ${S.page === pages.length - 1 ? "disabled" : ""}>Дальше${ic("right")}</button>
+    </div>`;
+    out.innerHTML = strip + `<div class="page ${reduceMotion() ? "" : dir}" id="page">${body}</div>` + nav;
+    const act = document.getElementById("pt-" + S.page);
+    const bar = out.querySelector(".ptabs");
+    if (act && bar) bar.scrollLeft = Math.max(0, act.getBoundingClientRect().left - bar.getBoundingClientRect().left + bar.scrollLeft - 16);
+  }
+
+  function summaryPage(plan) {
+    const T = plan.example ? plan.target : computeTarget();
+    const t = dayTotals(plan);
+    const r4 = (key, name, color, unit) => {
+      const v = t[key], tg = T[key];
+      const fr = tg ? v / tg : 0;
+      const ok = inTol(key, v, tg);
+      return `<div class="r4"><div class="rb">${ring(70, 7, [{ frac: Math.min(fr, 1), color }])}<b>${R(fr * 100)}%</b></div>
+        <div class="rl">${name}</div><div class="rv">${fmt(v)} / ${fmt(tg)}${unit}</div>
+        <div class="rd ${ok ? "d-ok" : "d-warn"}">${ok ? "в цели" : signed(v - tg) + unit}</div></div>`;
+    };
+    const off = ["kcal", "p", "f", "c"].some(k => !inTol(k, t[k], T[k]));
+    const title = plan.example ? "Пример рациона" : "Рацион на " + new Date(plan.created || Date.now()).toLocaleDateString("ru-RU", { day: "numeric", month: "long" });
+    let h = `<div class="card">
+      <div class="dayhead"><div><h3>${esc(title)}</h3><div class="sub">${plan.meals.length} ${plural(plan.meals.length, "приём", "приёма", "приёмов")} пищи · ${fmt(t.kcal)} ккал</div></div>${plan.example ? '<span class="pill">пример</span>' : ""}</div>
+      <div class="rings4">${r4("kcal", "Калории", "var(--accent)", "")}${r4("p", "Белки", "var(--prot)", " г")}${r4("f", "Жиры", "var(--fat)", " г")}${r4("c", "Углеводы", "var(--carb)", " г")}</div>
+      ${plan.note ? `<p class="note">${esc(plan.note)}</p>` : ""}
+    </div>`;
+    h += `<div><div class="bh"><span class="eyebrow">План дня</span><span class="aside">нажми, чтобы открыть рецепт</span></div><div class="tl">` + plan.meals.map((m, i) => {
+      const mt = mealTotals(m);
+      const kp = mt.p * 4, kf = mt.f * 9, kc = mt.c * 4, ks = Math.max(kp + kf + kc, 1);
+      return `<button class="tli" data-page="${i + 1}">
+        <span class="tt">${esc(m.time || "")}</span><span class="td"></span>
+        <span class="tc"><span class="tn">${esc(m.name)}</span><span class="tti" style="display:block">${esc(m.title)}</span>
+          <span class="tk"><b>${fmt(mt.kcal)}</b>ккал<span>Б ${fmt(mt.p)} · Ж ${fmt(mt.f)} · У ${fmt(mt.c)}</span>${m.minutes ? `<span>${R(m.minutes)} мин</span>` : ""}</span>
+          <span class="mbar"><i style="width:${kp / ks * 100}%;background:var(--prot)"></i><i style="width:${kf / ks * 100}%;background:var(--fat)"></i><i style="width:${kc / ks * 100}%;background:var(--carb)"></i></span>
+        </span></button>`;
+    }).join("") + `</div></div>`;
+    h += `<div><div class="bh"><span class="eyebrow">Таблица КБЖУ</span></div><div class="card tcard"><div class="tablewrap"><table>
+      <thead><tr><th>Приём</th><th>Ккал</th><th class="p">Б</th><th class="f">Ж</th><th class="c">У</th></tr></thead><tbody>` +
+      plan.meals.map((m, i) => { const mt = mealTotals(m); return `<tr class="click" data-page="${i + 1}"><td>${esc(m.name)}<span class="lbl">${esc(m.time)}</span></td><td>${fmt(mt.kcal)}</td><td class="p">${fmt(mt.p)}</td><td class="f">${fmt(mt.f)}</td><td class="c">${fmt(mt.c)}</td></tr>`; }).join("") +
+      `<tr class="total"><td>Итого</td><td>${fmt(t.kcal)}</td><td>${fmt(t.p)}</td><td>${fmt(t.f)}</td><td>${fmt(t.c)}</td></tr>
+       <tr><td style="color:var(--dim)">Цель</td><td style="color:var(--dim)">${fmt(T.kcal)}</td><td style="color:var(--dim)">${fmt(T.p)}</td><td style="color:var(--dim)">${fmt(T.f)}</td><td style="color:var(--dim)">${fmt(T.c)}</td></tr>
+      </tbody></table></div></div></div>`;
+    if (plan.buy && plan.buy.length) h += `<div class="buy">${ic("bag")}<span><b>Докупить, чтобы добрать цель</b>${plan.buy.map(esc).join(", ")}</span></div>`;
+    h += `<div class="row2 even">`;
+    if (off && !plan.example) h += `<button class="btn sm" data-act="fit">${ic("tune")}Подогнать граммы</button>`;
+    h += `<button class="btn sm" data-act="copy" ${off && !plan.example ? "" : 'style="grid-column:1/-1"'}>${ic("copy")}Скопировать текстом</button></div>
+      <div id="sumStatus"></div><div class="copybox" id="copyBox" hidden><p class="hint">Не удалось скопировать автоматически — выдели текст и скопируй:</p><textarea id="copyText" readonly></textarea></div>`;
+    return h;
+  }
+
+  function mealPage(plan, idx) {
+    const m = plan.meals[idx];
+    const mt = mealTotals(m);
+    let h = `<div class="card mhero">
+      <div class="mtime"><span class="tm">${esc(m.time || "")}</span>${m.time ? '<span class="sep"></span>' : ""}<span>${esc(m.name)}</span>${m.minutes ? `<span class="sep"></span><span class="min">${ic("clock")}${R(m.minutes)} мин</span>` : ""}</div>
+      <h2 class="mtitle">${esc(m.title)}</h2>
+      <div class="mstats">
+        <div class="ms"><div class="v">${fmt(mt.kcal)}</div><div class="n"><span class="dot k"></span>ккал</div></div>
+        <div class="ms"><div class="v">${fmt(mt.p)}</div><div class="n"><span class="dot p"></span>белки</div></div>
+        <div class="ms"><div class="v">${fmt(mt.f)}</div><div class="n"><span class="dot f"></span>жиры</div></div>
+        <div class="ms"><div class="v">${fmt(mt.c)}</div><div class="n"><span class="dot c"></span>углев.</div></div>
+      </div>
+    </div>
+    <div><div class="bh"><span class="eyebrow">Ингредиенты</span><span class="aside">вес до готовки</span></div>
+    <div class="card tcard"><div class="tablewrap"><table>
+      <thead><tr><th>Продукт</th><th>Г</th><th>Ккал</th><th class="p">Б</th><th class="f">Ж</th><th class="c">У</th></tr></thead><tbody>` +
+      m.ingredients.map(i => { const x = ingMacro(i); const z = !(+i.grams); return `<tr><td>${esc(i.name)}${i.label ? `<span class="lbl">${esc(i.label)}</span>` : ""}</td><td>${z ? "—" : fmt(i.grams)}</td><td>${z ? "" : fmt(x.kcal)}</td><td class="p">${z ? "" : fmt(x.p)}</td><td class="f">${z ? "" : fmt(x.f)}</td><td class="c">${z ? "" : fmt(x.c)}</td></tr>`; }).join("") +
+      `<tr class="total"><td>Итого</td><td></td><td>${fmt(mt.kcal)}</td><td>${fmt(mt.p)}</td><td>${fmt(mt.f)}</td><td>${fmt(mt.c)}</td></tr></tbody></table></div></div></div>`;
+    if (m.steps.length) h += `<div><div class="bh"><span class="eyebrow">Как готовить</span><span class="aside">отмечай готовые шаги</span></div><ol class="steps">${m.steps.map((s, k) => `<li><button class="step" data-stepdone="${idx}:${k}" aria-pressed="${!!S.done[idx + ":" + k]}"><span class="sn"><span>${k + 1}</span>${ic("check")}</span><span class="stx">${esc(s)}</span></button></li>`).join("")}</ol></div>`;
+    if (m.tip) h += `<div class="tip">${ic("bulb")}<span>${esc(m.tip)}</span></div>`;
+    if (!plan.example) h += `<button class="btn${S.busy === "meal" ? " busy" : ""}" data-replace="${idx}" ${S.busy || aiState !== "ready" ? "disabled" : ""}>${ic("swap")}${S.busy === "meal" ? "Придумываю…" : "Заменить это блюдо"}</button>`;
+    h += `<div id="mealStatus"></div>`;
+    return h;
+  }
+
+  function planText(plan) {
+    const t = dayTotals(plan), T = plan.example ? plan.target : computeTarget();
+    const L = [];
+    L.push(`РАЦИОН — ${fmt(t.kcal)} ккал · Б ${fmt(t.p)} · Ж ${fmt(t.f)} · У ${fmt(t.c)}`);
+    L.push(`Цель: ${fmt(T.kcal)} ккал · Б ${T.p} · Ж ${T.f} · У ${T.c}`);
+    plan.meals.forEach(m => {
+      const mt = mealTotals(m);
+      L.push("", `${m.time ? m.time + " " : ""}${m.name.toUpperCase()} — ${m.title}${m.minutes ? " (" + R(m.minutes) + " мин)" : ""}`);
+      L.push(`${fmt(mt.kcal)} ккал · Б ${fmt(mt.p)} · Ж ${fmt(mt.f)} · У ${fmt(mt.c)}`);
+      m.ingredients.forEach(i => L.push(`• ${i.name} — ${+i.grams ? fmt(i.grams) + " г" : ""}${i.label ? (+i.grams ? " (" + i.label + ")" : i.label) : ""}`));
+      m.steps.forEach((s, k) => L.push(`${k + 1}. ${s}`));
+      if (m.tip) L.push(`Совет: ${m.tip}`);
+    });
+    if (plan.buy && plan.buy.length) L.push("", "Докупить: " + plan.buy.join(", "));
+    return L.join("\n");
+  }
+
+  function renderAll() {
+    renderTabs(); renderProfile(); renderHero(); renderPhotos(); renderProducts(); renderStaples(); renderPlanSettings(); renderGenBtn(); renderPlan();
+  }
+
+  function goTab(t) {
+    S.tab = t; renderTabs();
+    const v = $("#view-" + t); v.style.animation = "none"; void v.offsetWidth; v.style.animation = "";
+    window.scrollTo(0, 0);
+  }
+
+  // ---------- события ----------
+  const LIM = { age: [14, 90], height: [120, 230], weight: [35, 250] };
+  document.addEventListener("click", async e => {
+    const t = e.target.closest("button, tr.click");
+    if (!t) return;
+    const d = t.dataset;
+    if (d.tab) { goTab(d.tab); return; }
+    if (d.go) { goTab(d.go); return; }
+    if (d.goal) { S.profile.goal = d.goal; S.profile.manual = false; save(); renderProfile(); renderHero(); return; }
+    if (d.sex) { S.profile.sex = d.sex; save(); renderProfile(); renderHero(); return; }
+    if (d.step) {
+      const k = d.step, [lo, hi] = LIM[k];
+      const v = Math.min(hi, Math.max(lo, Math.round(((+S.profile[k] || 0) + +d.d) * 10) / 10));
+      S.profile[k] = v; save(); renderProfile(); renderHero(); return;
+    }
+    if (d.place) { S.place = d.place; renderPhotos(); return; }
+    if (d.cycle) { const p = S.photos.find(x => x.id === d.cycle); if (p) { p.place = PLACES[(PLACES.indexOf(p.place) + 1) % PLACES.length]; p.done = false; renderPhotos(); } return; }
+    if (d.rmph) { const i = S.photos.findIndex(x => x.id === d.rmph); if (i >= 0) { URL.revokeObjectURL(S.photos[i].url); S.photos.splice(i, 1); renderPhotos(); } return; }
+    if (d.delp) { S.products = S.products.filter(p => p.id !== d.delp); EDITING.delete(d.delp); save(); renderProducts(); return; }
+    if (d.editp) { if (EDITING.has(d.editp)) EDITING.delete(d.editp); else EDITING.add(d.editp); renderProducts(); if (EDITING.has(d.editp)) { const f = document.getElementById("k-kcal-" + d.editp); if (f) f.focus(); } return; }
+    if (d.staple != null && d.staple !== "") { const s = S.staples[+d.staple]; if (s) { s.on = !s.on; save(); renderStaples(); } return; }
+    if (d.wish) { const i = S.wishes.indexOf(d.wish); if (i >= 0) S.wishes.splice(i, 1); else S.wishes.push(d.wish); save(); renderPlanSettings(); return; }
+    if (d.meals) { S.meals = +d.meals; save(); renderPlanSettings(); return; }
+    if (d.cook != null && t.closest("#cookSeg")) { S.cookMax = d.cook; save(); renderPlanSettings(); return; }
+    if (d.page != null && d.page !== "") { S.page = +d.page; renderPlan(); $("#planOut").scrollIntoView({ block: "start" }); return; }
+    if (d.pg) { S.page = Math.max(0, S.page + +d.pg); renderPlan(); $("#planOut").scrollIntoView({ block: "start" }); return; }
+    if (d.stepdone) { S.done[d.stepdone] = !S.done[d.stepdone]; t.setAttribute("aria-pressed", String(!!S.done[d.stepdone])); return; }
+    if (d.replace != null && d.replace !== "") { replaceMeal(+d.replace); return; }
+    if (d.act === "stop") { if (ctl) ctl.abort(); return; }
+    if (d.act === "fit") {
+      fitPlan(S.plan, computeTarget()); save(); renderPlan();
+      setStatus($("#sumStatus"), "ok", "Граммы подогнаны под цель — проверь таблицы приёмов.");
+      return;
+    }
+    if (d.act === "copy") {
+      const txt = planText(S.plan);
+      try { await navigator.clipboard.writeText(txt); setStatus($("#sumStatus"), "ok", "Рацион скопирован — можно вставить в заметки или сообщение."); }
+      catch (err) { $("#copyBox").hidden = false; const ta = $("#copyText"); ta.value = txt; ta.focus(); ta.select(); }
+      return;
+    }
+    if (t.id === "recBtn") { recognize(); return; }
+    if (t.id === "genBtn") { generatePlan(); return; }
+    if (t.id === "clearProds") {
+      if (t.dataset.confirm) { S.products = []; EDITING.clear(); save(); renderProducts(); delete t.dataset.confirm; t.textContent = "Очистить список"; }
+      else { t.dataset.confirm = "1"; t.textContent = "Точно очистить? Нажми ещё раз"; setTimeout(() => { delete t.dataset.confirm; t.textContent = "Очистить список"; }, 3500); }
+      return;
+    }
+  });
+
+  document.addEventListener("input", e => {
+    const el = e.target;
+    if (el.id === "f-act") {
+      const a = ACTS[+el.value] || ACTS[2];
+      S.profile.act = a.v; save();
+      el.style.setProperty("--pct", (+el.value / 4 * 100) + "%");
+      $("#actLabel").textContent = a.l + " · ×" + String(a.v).replace(".", ",");
+      $("#actDesc").textContent = a.d;
+      renderHero(); return;
+    }
+    if (el.dataset.pf) { S.profile[el.dataset.pf] = el.value === "" ? "" : +el.value; save(); renderHero(); return; }
+    if (el.dataset.mf) { S.profile[el.dataset.mf] = el.value === "" ? "" : +el.value; save(); renderHero(); return; }
+    if (el.dataset.pid) { const p = S.products.find(x => x.id === el.dataset.pid); if (p) { p[el.dataset.k] = el.value; save(); } return; }
+    if (el.dataset.kp) {
+      const p = S.products.find(x => x.id === el.dataset.kp);
+      if (p) { p[el.dataset.kk] = el.value === "" ? null : Math.round(+el.value * 10) / 10; p.src = p.kcal == null ? "" : "своё"; save(); }
+      return;
+    }
+    if (el.id === "wishText") { S.wishText = el.value; save(); return; }
+  });
+  document.addEventListener("change", e => {
+    const el = e.target;
+    if (el.id === "f-manual") {
+      S.profile.manual = el.checked;
+      if (el.checked) { const T = computeTarget(Object.assign({}, S.profile, { manual: false })); Object.assign(S.profile, { mk: T.kcal, mp: T.p, mf: T.f, mc: T.c }); }
+      save(); renderProfile(); renderHero(); return;
+    }
+    if (el.id === "firstTime") { S.firstTime = el.value || "07:00"; save(); return; }
+    if (el.id === "camIn" || el.id === "galIn") {
+      const files = Array.from(el.files || []).filter(f => /^image\//.test(f.type) || /\.(jpe?g|png|webp|gif|heic|heif)$/i.test(f.name));
+      files.forEach(f => S.photos.push({ id: newId(), file: f, url: URL.createObjectURL(f), place: S.place, done: false }));
+      el.value = "";
+      setStatus($("#recStatus"), "", "");
+      renderPhotos();
+      return;
+    }
+  });
+  $("#addForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const n = $("#addName").value.trim(); if (!n) return;
+    mergeProducts([{ name: n, amount: $("#addAmt").value.trim() }]);
+    $("#addName").value = ""; $("#addAmt").value = "";
+    save(); renderProducts(); $("#addName").focus();
+  });
+  $("#stapleForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const n = $("#stapleName").value.trim(); if (!n) return;
+    if (!S.staples.some(s => s.name.toLowerCase() === n.toLowerCase())) S.staples.push({ name: n, on: true });
+    $("#stapleName").value = ""; save(); renderStaples();
+  });
+
+  // свайп между страницами рациона
+  let sx = null, sy = null;
+  document.addEventListener("touchstart", e => { if (e.target.closest("#page")) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; } else sx = null; }, { passive: true });
+  document.addEventListener("touchend", e => {
+    if (sx == null || !S.plan) return;
+    const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+    sx = null;
+    if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.5 && !e.target.closest(".tablewrap")) {
+      const max = S.plan.meals.length;
+      const np = Math.min(max, Math.max(0, S.page + (dx < 0 ? 1 : -1)));
+      if (np !== S.page) { S.page = np; renderPlan(); }
+    }
+  }, { passive: true });
+
+  $("#today").textContent = new Date().toLocaleDateString("ru-RU", { weekday: "short", day: "numeric", month: "long" });
+
+  function start(d) {
+    d = d || {};
+    if (d.tab && ["goal", "food", "plan"].includes(d.tab)) S.tab = d.tab;
+    if (typeof d.page === "number") { S.page = d.page; lastPage = d.page; }
+    renderAll();
+  }
+  try { window.claude && window.claude.hot && window.claude.hot.snapshot && window.claude.hot.snapshot(() => ({ tab: S.tab, page: S.page })); } catch (e) {}
+  const hot = window.claude && window.claude.hot;
+  if (hot && hot.ready) hot.ready(start); else start(hot && hot.data ? hot.data : {});
+
+  window.__rh = { computeTarget, dayTotals, fitPlan, EXAMPLE, S };
+})();
+</script>
+</body>
+</html>

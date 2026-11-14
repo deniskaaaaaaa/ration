@@ -1,0 +1,49 @@
+# XcodeGen: проект «Рациона» для облачной сборки (.github/workflows/build.yml).
+# Локально: `brew install xcodegen && xcodegen generate`, затем открыть Ratsion.xcodeproj.
+# База продуктов Resources/foods.sqlite собирается в облаке (tools/build_db.py) и в репозиторий не кладётся.
+name: Ratsion
+options:
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+targets:
+  Ratsion:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: App
+      - path: Core/Sources/RationCore
+      - path: Resources/Assets.xcassets
+      - path: Resources/foods.sqlite
+        buildPhase: resources
+        optional: true
+    info:
+      path: Resources/Info.plist
+      properties:
+        CFBundleDisplayName: Рацион
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSCameraUsageDescription: "Камера читает штрихкоды и этикетки продуктов, чтобы узнать их КБЖУ."
+        NSPhotoLibraryUsageDescription: "Фото полок и этикеток можно выбрать из галереи."
+        UILaunchScreen:
+          UIColorName: LaunchBG
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        UIUserInterfaceStyle: Dark
+        ITSAppUsesNonExemptEncryption: false
+        LSRequiresIPhoneOS: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.denys.ratsion
+        PRODUCT_NAME: Ratsion
+        PRODUCT_MODULE_NAME: Ratsion
+        TARGETED_DEVICE_FAMILY: "1"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        GENERATE_INFOPLIST_FILE: NO
+        CODE_SIGN_STYLE: Automatic
+        ENABLE_PREVIEWS: NO

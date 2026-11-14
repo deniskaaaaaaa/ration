@@ -1,0 +1,174 @@
+name: Build Ratsion
+# 1) core — тесты движка рациона на Linux (дёшево) и пример дней для проверки текста рецептов;
+# 2) database — база продуктов из Open Food Facts (раз в месяц, дальше из кэша);
+# 3) ios — сборка .ipa на Mac, выпуск в Releases («latest»);
+# 4) report — отчёты всех шагов в ветку dist.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  core:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - id: sw
+        run: if command -v swift >/dev/null; then echo "has=true" >> "$GITHUB_OUTPUT"; else echo "has=false" >> "$GITHUB_OUTPUT"; fi
+      - if: steps.sw.outputs.has != 'true'
+        uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: "6.0"
+      - name: Core tests
+        run: |
+          set -o pipefail
+          mkdir -p report
+          swift --version | tee report/core-tests.log
+          cd Core
+          REPORT_DIR="$GITHUB_WORKSPACE/report" swift test 2>&1 | tee -a ../report/core-tests.log
+      - name: Database builder self-test
+        if: always()
+        run: python3 tools/build_db.py --selftest 2>&1 | tee -a report/core-tests.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: core
+          path: report/
+          retention-days: 3
+
+  database:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    outputs:
+      key: ${{ steps.key.outputs.key }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: key
+        run: echo "key=foods-v1-$(date +%Y-%m)-${{ hashFiles('tools/build_db.py', 'Core/Sources/RationCore/RoleMap.swift') }}" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@v4
+        id: cache
+        with:
+          path: data/foods.sqlite.gz
+          key: ${{ steps.key.outputs.key }}
+          enableCrossOsArchive: true
+      - name: Download Open Food Facts
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          curl -fL --retry 5 --retry-delay 15 -o off.csv.gz https://static.openfoodfacts.org/data/en.openfoodfacts.org.products.csv.gz
+          ls -la off.csv.gz
+      - name: Build database
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          set -o pipefail
+          mkdir -p data report
+          python3 tools/build_db.py off.csv.gz data/foods.sqlite 2>&1 | tee report/db.log
+          rm -f off.csv.gz
+          gzip -6 -c data/foods.sqlite > data/foods.sqlite.gz
+          rm -f data/foods.sqlite
+          ls -la data | tee -a report/db.log
+      - name: Cached database
+        if: steps.cache.outputs.cache-hit == 'true'
+        run: |
+          mkdir -p report
+          echo "База взята из кэша: ${{ steps.key.outputs.key }}" > report/db.log
+          ls -la data >> report/db.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: database
+          path: report/
+          retention-days: 3
+
+  ios:
+    needs: [core, database]
+    if: ${{ always() && needs.core.result == 'success' }}
+    runs-on: macos-15
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Xcode 26
+        run: |
+          X=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -z "$X" ]; then X=$(ls -d /Applications/Xcode*.app | sort -V | tail -1); fi
+          sudo xcode-select -s "$X"
+          xcodebuild -version
+      - uses: actions/cache/restore@v4
+        if: ${{ needs.database.outputs.key != '' }}
+        with:
+          path: data/foods.sqlite.gz
+          key: ${{ needs.database.outputs.key }}
+          enableCrossOsArchive: true
+      - name: Put the database into the app
+        run: |
+          mkdir -p report
+          if [ -f data/foods.sqlite.gz ]; then
+            gunzip -c data/foods.sqlite.gz > Resources/foods.sqlite
+            echo "База в приложении: $(du -h Resources/foods.sqlite | cut -f1)" | tee report/ios.txt
+          else
+            echo "База продуктов не попала в сборку (нет в кэше)" | tee report/ios.txt
+          fi
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate project
+        run: xcodegen generate
+      - name: Build for iPhone (unsigned)
+        run: |
+          set -o pipefail
+          xcodebuild -project Ratsion.xcodeproj -scheme Ratsion -configuration Release \
+            -sdk iphoneos -destination 'generic/platform=iOS' -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            build 2>&1 | tee build.log | grep -E "error:|BUILD (SUCCEEDED|FAILED)" || true
+          grep -E "error:" build.log | sort -u | head -60 > report/errors.txt || true
+          grep -E "error:" build.log | sort -u | head -40 | while IFS= read -r l; do echo "::error title=build::${l##*/ratsion/}"; done || true
+          tail -c 2000000 build.log > report/build.log
+          test -d build/Build/Products/Release-iphoneos/Ratsion.app
+      - name: Make .ipa
+        run: |
+          mkdir -p Payload
+          cp -R build/Build/Products/Release-iphoneos/Ratsion.app Payload/
+          zip -qry Ratsion.ipa Payload
+          ls -la Ratsion.ipa | tee -a report/ios.txt
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete latest --cleanup-tag -y -R "$GITHUB_REPOSITORY" || true
+          gh release create latest Ratsion.ipa -R "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
+            --title "Рацион — последняя сборка" \
+            --notes "Сборка ${GITHUB_SHA::7}. Установка: скачай Ratsion.ipa и поставь через Sideloadly." --prerelease
+          echo "Release: https://github.com/$GITHUB_REPOSITORY/releases/tag/latest" | tee -a report/ios.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ios
+          path: report/
+          retention-days: 3
+
+  report:
+    needs: [core, database, ios]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+      - name: Publish reports to the dist branch
+        run: |
+          cd dist
+          {
+            echo "commit: $GITHUB_SHA"
+            echo "core: ${{ needs.core.result }}"
+            echo "database: ${{ needs.database.result }}"
+            echo "ios: ${{ needs.ios.result }}"
+          } > STATUS
+          git init -q -b dist
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A && git commit -qm "Build of ${GITHUB_SHA::7}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" dist

@@ -1,0 +1,9 @@
+*.xcodeproj/
+build/
+DerivedData/
+Resources/foods.sqlite
+data/
+*.csv.gz
+.build/
+Core/.build/
+report/
