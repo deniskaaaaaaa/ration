@@ -44,8 +44,9 @@ final class AppStore: ObservableObject {
 
     init() {
         let dir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-        fileURL = dir.appendingPathComponent("state.json")
-        if let data = try? Data(contentsOf: fileURL), let s = try? JSONDecoder().decode(SavedState.self, from: data) {
+        let url = dir.appendingPathComponent("state.json")
+        fileURL = url
+        if let data = try? Data(contentsOf: url), let s = try? JSONDecoder().decode(SavedState.self, from: data) {
             profile = s.profile
             pantry = s.pantry
             staples = s.staples
