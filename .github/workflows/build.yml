@@ -1,7 +1,7 @@
 name: Build Ratsion
 # 1) core — тесты движка рациона на Linux (дёшево) и пример дней для проверки текста рецептов;
 # 2) database — база продуктов из Open Food Facts (раз в месяц, дальше из кэша);
-# 3) ios — сборка .ipa на Mac, выпуск в Releases («latest»);
+# 3) ios — сборка .ipa на Mac, проверка zip, выпуск в Releases («latest») и копия в ветке ipa;
 # 4) report — отчёты всех шагов в ветку dist.
 on:
   push:
@@ -139,12 +139,31 @@ jobs:
           grep -E "error:" build.log | sort -u | head -40 | sed -E 's#^.*/(App|Core)/#\1/#' | while IFS= read -r l; do echo "::error title=build::$l"; done || true
           tail -c 2000000 build.log > report/build.log
           test -d build/Build/Products/Release-iphoneos/Ratsion.app
-      - name: Make .ipa
+      - name: Make .ipa and check it opens as a zip
         run: |
+          set -e
           mkdir -p Payload
           cp -R build/Build/Products/Release-iphoneos/Ratsion.app Payload/
-          zip -qry Ratsion.ipa Payload
-          ls -la Ratsion.ipa | tee -a report/ios.txt
+          zip -qry -X Ratsion.ipa Payload
+          unzip -tq Ratsion.ipa
+          python3 -I -c "import zipfile,sys; z=zipfile.ZipFile(sys.argv[1]); b=z.testzip(); assert b is None, b; n=z.namelist(); assert any(x.endswith('Ratsion.app/Info.plist') for x in n); print('zip ok:', len(n), 'files')" Ratsion.ipa | tee -a report/ios.txt
+          SIZE=$(stat -f%z Ratsion.ipa)
+          SHA=$(shasum -a 256 Ratsion.ipa | cut -d' ' -f1)
+          echo "Ratsion.ipa: $SIZE bytes, sha256 $SHA" | tee -a report/ios.txt
+          echo "IPA_SIZE=$SIZE" >> "$GITHUB_ENV"
+          echo "IPA_SHA=$SHA" >> "$GITHUB_ENV"
+      - name: Copy .ipa to the ipa branch (in parts under 100 MB)
+        run: |
+          set -e
+          mkdir ipa-out && cd ipa-out
+          split -b 90m ../Ratsion.ipa Ratsion.ipa.part-
+          { echo "commit: $GITHUB_SHA"; echo "size: $IPA_SIZE"; echo "sha256: $IPA_SHA"; } > INFO
+          git init -q -b ipa
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A && git commit -qm "IPA of ${GITHUB_SHA::7}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" ipa
+          cd .. && rm -rf ipa-out
       - name: Publish release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -152,7 +171,7 @@ jobs:
           gh release delete latest --cleanup-tag -y -R "$GITHUB_REPOSITORY" || true
           gh release create latest Ratsion.ipa -R "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
             --title "Рацион — последняя сборка" \
-            --notes "Сборка ${GITHUB_SHA::7}. Установка: скачай Ratsion.ipa и поставь через Sideloadly." --prerelease
+            --notes "Сборка ${GITHUB_SHA::7}. Установка: скачай Ratsion.ipa и поставь через Sideloadly. Целый файл весит ровно ${IPA_SIZE} байт (≈$((IPA_SIZE/1000000)) МБ); если меньше — он недокачался, скачай ещё раз. SHA-256: ${IPA_SHA}" --prerelease
           echo "Release: https://github.com/$GITHUB_REPOSITORY/releases/tag/latest" | tee -a report/ios.txt
       - uses: actions/upload-artifact@v4
         if: always()
