@@ -125,7 +125,7 @@ jobs:
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
             build 2>&1 | tee build.log | grep -E "error:|BUILD (SUCCEEDED|FAILED)" || true
           grep -E "error:" build.log | sort -u | head -60 > report/errors.txt || true
-          grep -E "error:" build.log | sort -u | head -40 | while IFS= read -r l; do echo "::error title=build::${l##*/ratsion/}"; done || true
+          grep -E "error:" build.log | sort -u | head -40 | sed -E 's#^.*/(App|Core)/#\1/#' | while IFS= read -r l; do echo "::error title=build::$l"; done || true
           tail -c 2000000 build.log > report/build.log
           test -d build/Build/Products/Release-iphoneos/Ratsion.app
       - name: Make .ipa
