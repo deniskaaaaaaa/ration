@@ -201,7 +201,7 @@ extension Templates {
         t.append(T("cottage_herbs", [.snack, .evening, .breakfast], minutes: 5,
             slots: [S("y", [.cottage], range: 150...300, main: true),
                     S("h", [.greens], tags: ["herb"], range: 5...15),
-                    S("v", [.vegetable], req: false, tags: ["salad", "raw"], no: ["fatty", "pickled"]),
+                    S("v", [.vegetable], req: false, tags: ["raw", "tomato"], no: ["fatty", "pickled"]),
                     S("b", [.bread], req: false, tags: ["crisp", "slice"], range: 20...60)],
             extras: [X("sc", ["c:sour_cream_10", "c:sour_cream"], 15...30)],
             spices: ["c:salt", "c:pepper", "c:garlic"], portable: true,

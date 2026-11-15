@@ -40,7 +40,7 @@ extension Templates {
                     S("e", [.eggs], range: 50...120),
                     PR(15...35),
                     S("cb", [.snack], req: false, tags: ["biscuit"], range: 20...50),
-                    S("fr", [.berries, .fruit], req: false, no: ["dried"], range: 50...120)],
+                    S("fr", [.berries, .fruit], req: false, tags: ["bake"], range: 50...120)],
             extras: [X("st", ["c:starch", "c:semolina", "c:flour"], 10...20), X("sw", RK.sweet, 5...25)],
             spices: ["c:vanilla"], oven: true,
             title: { f in "Протеиновый чизкейк" + (f["fr"].map { " " + Say.with($0.words.ins) } ?? "") },
@@ -66,7 +66,7 @@ extension Templates {
                     S("liq", [.milk, .yogurt], no: ["rtd", "dessert_ready"], range: 120...250),
                     S("e", [.eggs], no: ["quail"], range: 50...100),
                     PR(15...35),
-                    S("fr", [.berries, .fruit], req: false, no: ["dried"], range: 50...150)],
+                    S("fr", [.berries, .fruit], req: false, tags: ["bake"], range: 50...150)],
             extras: [X("sw", RK.sweet, 10...30)],
             spices: ["c:baking_powder", "c:vanilla", "c:salt"], oven: true,
             title: { f in
@@ -90,7 +90,7 @@ extension Templates {
         t.append(T("zapekanka", [.breakfast, .snack, .evening], minutes: 50,
             slots: [S("y", [.cottage], range: 200...450, main: true),
                     S("e", [.eggs], no: ["quail"], range: 50...120),
-                    S("fr", [.berries, .fruit], req: false, range: 40...150),
+                    S("fr", [.berries, .fruit], req: false, tags: ["bake", "dried"], range: 40...150),
                     PR(15...30),
                     S("sc", [.sauce, .yogurt], req: false, tags: ["dairy", "greek"], no: ["cream"], range: 30...80)],
             extras: [X("sm", ["c:semolina", "c:oats", "c:oat_flour", "c:flour"], 20...45, req: true), X("sw", RK.sweet, 10...25)],
@@ -116,7 +116,7 @@ extension Templates {
 
         t.append(T("semolina_porridge", [.breakfast, .evening], minutes: 10,
             slots: [S("sm", [.oats], tags: ["semolina"], range: 40...80, main: true),
-                    S("m", [.milk], no: ["rtd"], range: 200...350),
+                    S("m", [.milk], no: ["rtd", "kefir"], range: 200...350),
                     PR(15...30),
                     S("fr", [.berries, .fruit], req: false),
                     S("n", [.nuts], req: false, no: ["spread"], range: 10...20)],
@@ -147,7 +147,7 @@ extension Templates {
                     S("e", [.eggs], no: ["quail"], range: 50...60),
                     S("o", [.oats], req: false, tags: ["oats"], range: 20...30),
                     S("liq", [.milk, .yogurt], req: false, no: ["rtd", "dessert_ready"], range: 30...60),
-                    S("fr", [.fruit, .berries], req: false, no: ["dried"], range: 40...100),
+                    S("fr", [.fruit, .berries], req: false, tags: ["bake"], range: 40...100),
                     S("n", [.nuts], req: false, tags: ["spread"], range: 10...15)],
             extras: [X("cc", ["c:cocoa"], 5...10), X("sw", RK.sweet, 5...15)],
             spices: ["c:baking_powder", "c:vanilla"], portable: true,
@@ -398,13 +398,13 @@ extension Templates {
             tip: { _ in "Чем дольше тирамису стоит в холодильнике, тем он нежнее." }))
 
         t.append(T("baked_apples", [.snack, .evening, .breakfast], minutes: 30,
-            slots: [S("fr", [.fruit], tags: ["bake"], no: ["banana"], range: 180...360),
+            slots: [S("fr", [.fruit], tags: ["apple", "pear"], range: 180...360),
                     S("y", [.cottage], range: 80...180, main: true),
                     S("n", [.nuts], req: false, no: ["spread", "seeds", "topping"], range: 10...20),
                     S("dr", [.fruit], req: false, tags: ["dried"], range: 10...25)],
             extras: [X("sw", ["c:honey", "c:maple_syrup", "c:sweetener", "c:sugar"], 5...15)],
             spices: ["c:cinnamon", "c:vanilla"], oven: true,
-            title: { f in f["fr"]?.isKind("c:pear") == true ? "Печёные груши с творогом" : "Печёные яблоки с творогом" },
+            title: { f in f["fr"]?.has("pear") == true ? "Печёные груши с творогом" : "Печёные яблоки с творогом" },
             steps: { f in
                 guard let y = f["y"] else { return [] }
                 var s = ["Разогрей духовку до 180 °C.",
@@ -464,7 +464,7 @@ extension Templates {
                     S("e", [.eggs], no: ["quail"], range: 50...150),
                     S("y", [.yogurt, .cottage], no: ["dessert_ready"], range: 100...200),
                     PR(20...40, main: true),
-                    S("fr", [.berries, .fruit], req: false, no: ["dried"], range: 50...120)],
+                    S("fr", [.berries, .fruit], req: false, tags: ["bake"], range: 50...120)],
             extras: [X("sw", RK.sweet, 10...20)],
             spices: ["c:baking_powder", "c:vanilla", "c:salt"], oven: true, portable: true,
             title: { f in

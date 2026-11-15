@@ -160,7 +160,7 @@ public enum Templates {
 
         t.append(T("porridge", [.breakfast], minutes: 10,
             slots: [S("o", [.oats], tags: ["oats"], range: 40...110, main: true),
-                    S("m", [.milk], req: false, no: ["rtd"], range: 150...300),
+                    S("m", [.milk], req: false, no: ["rtd", "kefir"], range: 150...300),
                     S("fr", [.fruit, .berries], req: false, no: ["dried"]),
                     S("n", [.nuts], req: false, range: 10...25)],
             extras: [X("sw", ["c:honey", "c:jam", "c:sugar"], 5...15), X("but", ["c:butter"], 3...6)],

@@ -272,12 +272,12 @@ public enum Catalog {
             g("apple", "Яблоко", .fruit, 52, 0.3, 0.2, 13.8, ("Яблоко", "яблоко", "яблоком"), tags: ["apple", "bake"], piece: 180, cook: .noCook, en: ["apple", "apples", "granny smith"]),
             g("orange", "Апельсин", .fruit, 47, 0.9, 0.1, 11.8, ("Апельсин", "апельсин", "апельсином"), piece: 150, cook: .noCook, en: ["orange", "oranges"]),
             g("mandarin", "Мандарин", .fruit, 53, 0.8, 0.3, 13.3, ("Мандарины", "мандарины", "мандаринами"), piece: 80, cook: .noCook, en: ["mandarin", "clementine", "tangerine"]),
-            g("pear", "Груша", .fruit, 57, 0.4, 0.1, 15.2, ("Груша", "грушу", "грушей"), tags: ["bake"], piece: 180, cook: .noCook, en: ["pear"]),
+            g("pear", "Груша", .fruit, 57, 0.4, 0.1, 15.2, ("Груша", "грушу", "грушей"), tags: ["bake", "pear"], piece: 180, cook: .noCook, en: ["pear"]),
             g("grapes", "Виноград", .fruit, 69, 0.7, 0.2, 18.1, ("Виноград", "виноград", "виноградом"), cook: .noCook, en: ["grapes", "grape"]),
             g("kiwi", "Киви", .fruit, 61, 1.1, 0.5, 14.7, ("Киви", "киви", "киви"), piece: 75, cook: .noCook, en: ["kiwi"]),
             g("mango", "Манго", .fruit, 60, 0.8, 0.4, 15, ("Манго", "манго", "манго"), piece: 200, cook: .noCook, en: ["mango"]),
             g("pineapple", "Ананас", .fruit, 50, 0.5, 0.1, 13.1, ("Ананас", "ананас", "ананасом"), cook: .noCook, en: ["pineapple"]),
-            g("peach", "Персик", .fruit, 39, 0.9, 0.3, 9.5, ("Персик", "персик", "персиком"), piece: 150, cook: .noCook, en: ["peach", "nectarine"]),
+            g("peach", "Персик", .fruit, 39, 0.9, 0.3, 9.5, ("Персик", "персик", "персиком"), tags: ["bake"], piece: 150, cook: .noCook, en: ["peach", "nectarine"]),
             g("watermelon", "Арбуз", .fruit, 30, 0.6, 0.2, 7.6, ("Арбуз", "арбуз", "арбузом"), cook: .noCook, en: ["watermelon"]),
             g("dates", "Финики", .fruit, 282, 2.5, 0.4, 75, ("Финики", "финики", "финиками"), tags: ["dried"], piece: 8, cook: .noCook, en: ["dates"]),
             g("raisins", "Изюм", .fruit, 299, 3.1, 0.5, 79, ("Изюм", "изюм", "изюмом"), tags: ["dried"], cook: .noCook, en: ["raisins"]),
@@ -286,10 +286,10 @@ public enum Catalog {
 
         // Ягоды
         a += [
-            g("strawberries", "Клубника", .berries, 32, 0.7, 0.3, 7.7, ("Клубника", "клубнику", "клубникой"), cook: .noCook, en: ["strawberry", "strawberries"]),
-            g("blueberries", "Черника / голубика", .berries, 57, 0.7, 0.3, 14.5, ("Голубика", "голубику", "голубикой"), cook: .noCook, en: ["blueberries", "blueberry"]),
-            g("raspberries", "Малина", .berries, 52, 1.2, 0.7, 11.9, ("Малина", "малину", "малиной"), cook: .noCook, en: ["raspberries", "raspberry"]),
-            g("berries_frozen", "Ягодная смесь (заморож.)", .berries, 50, 0.8, 0.3, 12, ("Ягоды", "ягоды", "ягодами"), tags: ["frozen"], cook: .noCook, en: ["frozen berries", "mixed berries"])
+            g("strawberries", "Клубника", .berries, 32, 0.7, 0.3, 7.7, ("Клубника", "клубнику", "клубникой"), tags: ["bake"], cook: .noCook, en: ["strawberry", "strawberries"]),
+            g("blueberries", "Черника / голубика", .berries, 57, 0.7, 0.3, 14.5, ("Голубика", "голубику", "голубикой"), tags: ["bake"], cook: .noCook, en: ["blueberries", "blueberry"]),
+            g("raspberries", "Малина", .berries, 52, 1.2, 0.7, 11.9, ("Малина", "малину", "малиной"), tags: ["bake"], cook: .noCook, en: ["raspberries", "raspberry"]),
+            g("berries_frozen", "Ягодная смесь (заморож.)", .berries, 50, 0.8, 0.3, 12, ("Ягоды", "ягоды", "ягодами"), tags: ["frozen", "bake"], cook: .noCook, en: ["frozen berries", "mixed berries"])
         ]
 
         // Орехи и семечки
@@ -458,18 +458,18 @@ public enum Catalog {
 
         // Фрукты и ягоды
         a += [
-            g("plum", "Слива", .fruit, 46, 0.7, 0.3, 11.4, ("Сливы", "сливы", "сливами"), piece: 65, cook: .noCook, en: ["plum"]),
+            g("plum", "Слива", .fruit, 46, 0.7, 0.3, 11.4, ("Сливы", "сливы", "сливами"), tags: ["bake"], piece: 65, cook: .noCook, en: ["plum"]),
             g("pomegranate", "Гранат", .fruit, 83, 1.7, 1.2, 18.7, ("Гранат", "гранат", "гранатом"), piece: 250, cook: .noCook, en: ["pomegranate"]),
             g("grapefruit", "Грейпфрут", .fruit, 42, 0.8, 0.1, 10.7, ("Грейпфрут", "грейпфрут", "грейпфрутом"), piece: 250, cook: .noCook, en: ["grapefruit"]),
             g("melon", "Дыня", .fruit, 34, 0.8, 0.2, 8.2, ("Дыня", "дыню", "дыней"), cook: .noCook, en: ["melon", "cantaloupe", "honeydew"]),
-            g("apricot", "Абрикос", .fruit, 48, 1.4, 0.4, 11.1, ("Абрикосы", "абрикосы", "абрикосами"), piece: 35, cook: .noCook, en: ["apricot"]),
+            g("apricot", "Абрикос", .fruit, 48, 1.4, 0.4, 11.1, ("Абрикосы", "абрикосы", "абрикосами"), tags: ["bake"], piece: 35, cook: .noCook, en: ["apricot"]),
             g("prunes", "Чернослив", .fruit, 240, 2.2, 0.4, 63.9, ("Чернослив", "чернослив", "черносливом"), tags: ["dried"], cook: .noCook, en: ["prunes"]),
             g("dried_cranberries", "Клюква сушёная", .fruit, 308, 0.2, 1.1, 82.8, ("Клюква", "сушёную клюкву", "клюквой"), tags: ["dried"], cook: .noCook, en: ["dried cranberries", "craisins"]),
-            g("cherries", "Черешня / вишня", .berries, 63, 1.1, 0.2, 16, ("Вишня", "вишню", "вишней"), cook: .noCook, en: ["cherries", "cherry"]),
-            g("blackberries", "Ежевика", .berries, 43, 1.4, 0.5, 9.6, ("Ежевика", "ежевику", "ежевикой"), cook: .noCook, en: ["blackberries"]),
-            g("cherries_frozen", "Вишня (заморож.)", .berries, 46, 0.9, 0.4, 11, ("Вишня", "вишню", "вишней"), tags: ["frozen"], cook: .noCook, en: ["frozen cherries"]),
-            g("strawberries_frozen", "Клубника (заморож.)", .berries, 35, 0.4, 0.1, 9.1, ("Клубника", "клубнику", "клубникой"), tags: ["frozen"], cook: .noCook, en: ["frozen strawberries"]),
-            g("blueberries_frozen", "Черника (заморож.)", .berries, 51, 0.4, 0.6, 12.2, ("Черника", "чернику", "черникой"), tags: ["frozen"], cook: .noCook, en: ["frozen blueberries"])
+            g("cherries", "Черешня / вишня", .berries, 63, 1.1, 0.2, 16, ("Вишня", "вишню", "вишней"), tags: ["bake"], cook: .noCook, en: ["cherries", "cherry"]),
+            g("blackberries", "Ежевика", .berries, 43, 1.4, 0.5, 9.6, ("Ежевика", "ежевику", "ежевикой"), tags: ["bake"], cook: .noCook, en: ["blackberries"]),
+            g("cherries_frozen", "Вишня (заморож.)", .berries, 46, 0.9, 0.4, 11, ("Вишня", "вишню", "вишней"), tags: ["frozen", "bake"], cook: .noCook, en: ["frozen cherries"]),
+            g("strawberries_frozen", "Клубника (заморож.)", .berries, 35, 0.4, 0.1, 9.1, ("Клубника", "клубнику", "клубникой"), tags: ["frozen", "bake"], cook: .noCook, en: ["frozen strawberries"]),
+            g("blueberries_frozen", "Черника (заморож.)", .berries, 51, 0.4, 0.6, 12.2, ("Черника", "чернику", "черникой"), tags: ["frozen", "bake"], cook: .noCook, en: ["frozen blueberries"])
         ]
 
         // Орехи, семена, пасты
