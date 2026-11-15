@@ -1,0 +1,405 @@
+Command line invocation:
+    /Applications/Xcode_26.3.app/Contents/Developer/usr/bin/xcodebuild -project Ratsion.xcodeproj -scheme Ratsion -configuration Release -sdk iphoneos -destination generic/platform=iOS -derivedDataPath build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY= build
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = 
+    CODE_SIGNING_ALLOWED = NO
+    CODE_SIGNING_REQUIRED = NO
+    SDKROOT = iphoneos26.2
+
+2026-11-15 00:46:32.790 xcodebuild[6188:22670] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+note: Using codesigning identity override: 
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (1 target)
+    Target 'Ratsion' in project 'Ratsion' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode_26.3.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode_26.3.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/runner/work/ration/ration/Resources/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode_26.3.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: de137fd159f3dc21785c5c90db72aabb
+Build description path: /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/XCBuildData/de137fd159f3dc21785c5c90db72aabb.xcbuilddata
+ClangStatCache /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode_26.3.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk /Users/runner/work/ration/ration/build/SDKStatCaches.noindex/iphoneos26.2-23C57-dc75598d0054f22ec865fa860f139d722dd23b4ebda140f7210d155ff1243552.sdkstatcache
+    cd /Users/runner/work/ration/ration/Ratsion.xcodeproj
+    /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode_26.3.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk -o /Users/runner/work/ration/ration/build/SDKStatCaches.noindex/iphoneos26.2-23C57-dc75598d0054f22ec865fa860f139d722dd23b4ebda140f7210d155ff1243552.sdkstatcache
+
+CreateBuildDirectory /Users/runner/work/ration/ration/build/Build/Products
+    cd /Users/runner/work/ration/ration/Ratsion.xcodeproj
+    builtin-create-build-directory /Users/runner/work/ration/ration/build/Build/Products
+
+CreateBuildDirectory /Users/runner/work/ration/ration/build/Build/Intermediates.noindex
+    cd /Users/runner/work/ration/ration/Ratsion.xcodeproj
+    builtin-create-build-directory /Users/runner/work/ration/ration/build/Build/Intermediates.noindex
+
+WriteAuxiliaryFile /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion-044cda8fcb2365a2da0b3002c86839b8-VFS-iphoneos/all-product-headers.yaml
+    cd /Users/runner/work/ration/ration/Ratsion.xcodeproj
+    write-file /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion-044cda8fcb2365a2da0b3002c86839b8-VFS-iphoneos/all-product-headers.yaml
+
+CreateBuildDirectory /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos
+    cd /Users/runner/work/ration/ration/Ratsion.xcodeproj
+    builtin-create-build-directory /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos
+
+CreateBuildDirectory /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+    cd /Users/runner/work/ration/ration/Ratsion.xcodeproj
+    builtin-create-build-directory /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+CreateBuildDirectory /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/ExplicitPrecompiledModules
+    cd /Users/runner/work/ration/ration/Ratsion.xcodeproj
+    builtin-create-build-directory /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+CreateBuildDirectory /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/EagerLinkingTBDs/Release-iphoneos
+    cd /Users/runner/work/ration/ration/Ratsion.xcodeproj
+    builtin-create-build-directory /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/EagerLinkingTBDs/Release-iphoneos
+
+WriteAuxiliaryFile /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion.hmap (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    write-file /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion.hmap
+
+WriteAuxiliaryFile /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion.DependencyStaticMetadataFileList (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    write-file /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion.DependencyMetadataFileList (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    write-file /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion-project-headers.hmap (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    write-file /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion-project-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion-own-target-headers.hmap (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    write-file /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion-own-target-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion-generated-files.hmap (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    write-file /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion-generated-files.hmap
+
+WriteAuxiliaryFile /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion-all-target-headers.hmap (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    write-file /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion-all-target-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion-all-non-framework-target-headers.hmap (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    write-file /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion-all-non-framework-target-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion_const_extract_protocols.json (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    write-file /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.SwiftFileList (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    write-file /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.SwiftFileList
+
+WriteAuxiliaryFile /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.SwiftConstValuesFileList (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    write-file /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.LinkFileList (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    write-file /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.LinkFileList
+
+WriteAuxiliaryFile /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion-OutputFileMap.json (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    write-file /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion-OutputFileMap.json
+
+MkDir /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    /bin/mkdir -p /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app
+
+MkDir /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/assetcatalog_output/unthinned (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    /bin/mkdir -p /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/assetcatalog_output/unthinned
+
+MkDir /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/assetcatalog_output/thinned (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    /bin/mkdir -p /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/assetcatalog_output/thinned
+
+GenerateAssetSymbols /Users/runner/work/ration/ration/Resources/Assets.xcassets (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    /Applications/Xcode_26.3.app/Contents/Developer/usr/bin/actool /Users/runner/work/ration/ration/Resources/Assets.xcassets --compile /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app --output-format human-readable-text --notices --warnings --export-dependency-info /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/assetcatalog_dependencies --output-partial-info-plist /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/assetcatalog_generated_info.plist --app-icon AppIcon --compress-pngs --enable-on-demand-resources YES --development-region en --target-device iphone --minimum-deployment-target 17.0 --platform iphoneos --bundle-identifier com.denys.ratsion --generate-swift-asset-symbol-extensions NO --generate-swift-asset-symbols /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/DerivedSources/GeneratedAssetSymbols.swift --generate-objc-asset-symbols /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/DerivedSources/GeneratedAssetSymbols.h --generate-asset-symbol-index /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/DerivedSources/GeneratedAssetSymbols-Index.plist
+/* com.apple.actool.compilation-results */
+/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/DerivedSources/GeneratedAssetSymbols-Index.plist
+/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/DerivedSources/GeneratedAssetSymbols.h
+/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/DerivedSources/GeneratedAssetSymbols.swift
+
+
+CpResource /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app/foods.sqlite /Users/runner/work/ration/ration/Resources/foods.sqlite (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/runner/work/ration/ration/Resources/foods.sqlite /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app
+
+CompileAssetCatalogVariant thinned /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app /Users/runner/work/ration/ration/Resources/Assets.xcassets (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    /Applications/Xcode_26.3.app/Contents/Developer/usr/bin/actool /Users/runner/work/ration/ration/Resources/Assets.xcassets --compile /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/assetcatalog_output/thinned --output-format human-readable-text --notices --warnings --export-dependency-info /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/assetcatalog_dependencies_thinned --output-partial-info-plist /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/assetcatalog_generated_info.plist_thinned --app-icon AppIcon --compress-pngs --enable-on-demand-resources YES --development-region en --target-device iphone --minimum-deployment-target 17.0 --platform iphoneos
+/* com.apple.actool.compilation-results */
+/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/assetcatalog_generated_info.plist_thinned
+/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/assetcatalog_output/thinned/AppIcon60x60@2x.png
+/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/assetcatalog_output/thinned/AppIcon76x76@2x~ipad.png
+/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/assetcatalog_output/thinned/Assets.car
+
+
+SwiftDriver Ratsion normal arm64 com.apple.xcode.tools.swift.compiler (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    builtin-SwiftDriver -- /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Ratsion -O -whole-module-optimization -enforce-exclusivity\=checked @/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.SwiftFileList -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.3.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk -target arm64-apple-ios17.0 -g -module-cache-path /Users/runner/work/ration/ration/build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -swift-version 5 -I /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos -F /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos -c -num-threads 3 -Xcc -ivfsstatcache -Xcc /Users/runner/work/ration/ration/build/SDKStatCaches.noindex/iphoneos26.2-23C57-dc75598d0054f22ec865fa860f139d722dd23b4ebda140f7210d155ff1243552.sdkstatcache -output-file-map /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/runner/work/ration/ration/build/ModuleCache.noindex -sdk-module-cache-path /Users/runner/work/ration/ration/build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/work/ration/ration/build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion-generated-files.hmap -Xcc -I/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion-own-target-headers.hmap -Xcc -I/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion-project-headers.hmap -Xcc -I/Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/include -Xcc -I/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion-Swift.h -working-directory /Users/runner/work/ration/ration -no-emit-module-separately-wmo
+
+SwiftDriver\ Compilation Ratsion normal arm64 com.apple.xcode.tools.swift.compiler (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    builtin-Swift-Compilation -- /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Ratsion -O -whole-module-optimization -enforce-exclusivity\=checked @/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.SwiftFileList -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.3.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk -target arm64-apple-ios17.0 -g -module-cache-path /Users/runner/work/ration/ration/build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -swift-version 5 -I /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos -F /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos -c -num-threads 3 -Xcc -ivfsstatcache -Xcc /Users/runner/work/ration/ration/build/SDKStatCaches.noindex/iphoneos26.2-23C57-dc75598d0054f22ec865fa860f139d722dd23b4ebda140f7210d155ff1243552.sdkstatcache -output-file-map /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/runner/work/ration/ration/build/ModuleCache.noindex -sdk-module-cache-path /Users/runner/work/ration/ration/build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/work/ration/ration/build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion-generated-files.hmap -Xcc -I/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion-own-target-headers.hmap -Xcc -I/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion-project-headers.hmap -Xcc -I/Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/include -Xcc -I/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion-Swift.h -working-directory /Users/runner/work/ration/ration -no-emit-module-separately-wmo
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/DeveloperToolsSupport-561T8R6VV2VD2S8LXHKHINOEZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/_Builtin_stddef-14URGBRCOQ1Q11I3I2XETOW8J.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/ptrauth-B409Y0FEIEPJDH7L829XYY5OT.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/_Builtin_float-61NDM5N7COX5FIWAOSD1H9MLH.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/_Builtin_stdbool-BKN2QCNS9JZ1TK22C3B95DRBX.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/_Builtin_stdarg-EUBVEF4J8EMFPU8MRUGF7SXUD.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/_SwiftConcurrencyShims-52TZJ01RKFV27SUG829R9D3QE.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/ptrcheck-5DNLHOIWO7QX9917F7Y8K2G9.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/SwiftShims-A0XTCQ5AU2TUTDOD19LHTVG28.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/_AvailabilityInternal-8ESX3DGUZ5QHWSRV8CS7SD2JO.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/_DarwinFoundation1-ATMX7K93D0RUPRORPLGYWXMMB.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/SQLite3-ENO6QEWTC4IEJ2FF2J2F89UA1.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/_Builtin_limits-6RI64WPZ9PWA5IK4G4DTYU4M3.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/_DarwinFoundation2-879AE7G64E1QMEGEJNYNJMWHZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/ExtensionFoundation-UXJZUTB69CUPZ2JJ8XEK71MS.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/sys_types-BESHO82U04V4ZMUI17WAHKAU6.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/_Builtin_stdint-1A0KF6YD70S2E825RH2TFDM41.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/_Builtin_tgmath-DGKC9P005A9YWGH850OGZD72T.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/_Builtin_stdatomic-CNM2RPGGWJHNVS5A0S93STMFS.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/_Builtin_intrinsics-8OEHDGUVTAZ2D587DCD34FGCD.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/_DarwinFoundation3-AEKPDLK91RSNQY3WHC5DSNN0C.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/_Builtin_inttypes-8CKMHUGY9FLQFAP89ZHWKZ1BP.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/Darwin-BW4B4LS43J43X45S1BH7YXASV.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/simd-6LV6CO8KK2SLM95WX0CX8QJHE.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/ObjectiveC-44FHZV4ZLLSPCEFWFD7LTPILM.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/MachO-16D9Y76J62XXEQFQKTML316DC.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/os_object-CV6JZCRJ0O3FY3KK4SQ0JJ3NQ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/os_workgroup-DOW47S2AITJZ2PD78TWXDZDVT.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/Dispatch-7ORTMEVU0D8CM94KIZ7F35OC0.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/Spatial-A6IYLQG96F3GQ3B5LQFHGBBLW.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreFoundation-6FKCR7SGTMM7YM3J3WZNZHTOQ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/XPC-AK9OBDCCOGHXIR25XF2LYEHC7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/Security-BPLZS80QOX99QK81RHNV8WBE4.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/CFNetwork-F0ZHWX8FNPP5P7SR5ODFQO1TL.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/dnssd-CHTLMDJ8E4RF9G25X3CMY8REL.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/os-C9TZTZTJEGCA0AAEBQ0Q2JCBO.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/Foundation-60M5OPHG6LW3GUFGLY0GSZJSE.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreAudioTypes-1BTUKK1P75O3DPAMR6Y8FOIPA.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreGraphics-CQNM0HTJAP305ATUVS0XHILW2.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreAudio-43BILXFEZYLCKTX75P52T6X1D.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreText-6TBKDZT55O9M93RBQ5YM40WC4.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/ImageIO-AL0RI1B3KZ1FD6YMJKQBA6D37.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/_LocationEssentials-6Z0DIOGP9ETWDY7W8GRUJLMKR.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/UserNotifications-4HI8KFCRDQQFGVV63AD3E8YY6.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreData-1B48GXBT5DSW1RSUBCQGWBQE2.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreTransferable-DQFMQANKCODV6SJHYJRXAPC2M.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/FileProvider-3KPO8709XRXEQ6HU412THOOA5.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreLocation-EM4T2DGDC8RF7KD9Y9BWFV4U9.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/UniformTypeIdentifiers-8CR55RWZ6U9AE3V1QP13LSEFR.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/OSLog-BFGGUHZKWDHYB7IXLJ2JK6YD5.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/UIUtilities-1RQ9Q0XXT8KQYNY5DRH2UDRWT.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/DataDetection-3WDL206F1MDEEN2RRKMTBAS15.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/Network-8RVUZ5CIAAKLJRW9QUEKWJECU.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreMIDI-6FVH9Z7676G1Y5HF107K2LZ6T.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/Symbols-9PT2OR24B7BGT86HZGJCEXEX4.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/AVRouting-2EKZJ1P00JXGHDPZML8EF5C8Q.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/AudioToolbox-F0GBOYO7I9ULFWSX8ZQ5M9CQ7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/Accessibility-1V5LTOF3TR564045SU313X3OO.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/IOSurface-1LMV7J6J5WF1SI14F508RRPD7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/OpenGLES-5N38V9LFHYLKVIJ0LB9EQP5N1.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/Metal-60ZR6XH2AWPLE35DYRQQ6FA67.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreVideo-CZFF65MSAWP6IZCRZV393V4EU.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreMedia-80A4DG6OUPBVH6X25GFX7YTAZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreImage-3YTR79YGITWD76PYNDMPSNLPN.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/Accelerate-588KN9EQMCGYBR5M8L10F7NCQ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/QuartzCore-AGR9GYMVLAHX4MQ8MQ6UIIZ8A.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreML-DJ67MPNFZIG0235BNXFW9HDHW.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/AVFAudio-OQBNJL9E6LVHV9CBTTH8BAOA.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/Vision-44MOG9XDJ44BSTIWZHGAQF047.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/SwiftUICore-1XX3NNOHFGRPZR1CDBTU2PBKW.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/UIKit-A6BBFFUJ6YZO4JDTDN52RN9Z5.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/MediaToolbox-6AV5LECJ5LBSDOG6CT9SUUAS3.pcm
+
+LinkAssetCatalog /Users/runner/work/ration/ration/Resources/Assets.xcassets (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    builtin-linkAssetCatalog --thinned /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/assetcatalog_output/thinned --thinned-dependencies /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/assetcatalog_dependencies_thinned --thinned-info-plist-content /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/assetcatalog_generated_info.plist_thinned --unthinned /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/assetcatalog_output/unthinned --unthinned-dependencies /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/assetcatalog_dependencies_unthinned --unthinned-info-plist-content /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/assetcatalog_generated_info.plist_unthinned --output /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app --plist-output /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/assetcatalog_generated_info.plist
+note: Emplaced /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app/Assets.car (in target 'Ratsion' from project 'Ratsion')
+note: Emplaced /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app/AppIcon76x76@2x~ipad.png (in target 'Ratsion' from project 'Ratsion')
+note: Emplaced /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app/AppIcon60x60@2x.png (in target 'Ratsion' from project 'Ratsion')
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/AVFoundation-33YAMAQS950WVE2TEU9A0ROM7.pcm
+
+ProcessInfoPlistFile /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app/Info.plist /Users/runner/work/ration/ration/Resources/Info.plist (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    builtin-infoPlistUtility /Users/runner/work/ration/ration/Resources/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app/PkgInfo -expandbuildsettings -format binary -platform iphoneos -additionalcontentfile /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/assetcatalog_generated_info.plist -requiredArchitecture arm64 -o /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app/Info.plist
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/Photos-A3AQVLGV2WDO9BLRJKU42F5EE.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/PhotosUI-DYAPYFWULI8VMYOQ3CIS8L6IO.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/SwiftUI-7NKWBI3U1EW3UG66H8ILDLRT7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ration/ration/build/ModuleCache.noindex/VisionKit-886TD6RIP7KSDRYEPN7KVPYNN.pcm
+
+SwiftCompile normal arm64 Compiling\ AddFoodViews.swift,\ AppStore.swift,\ Camera.swift,\ Catalog.swift,\ FoodDB.swift,\ GoalView.swift,\ LabelParser.swift,\ Models.swift,\ PantryView.swift,\ PlanView.swift,\ Planner.swift,\ RationApp.swift,\ RecipeKit.swift,\ RecipesBreakfast.swift,\ RecipesDesserts.swift,\ RecipesMains.swift,\ RoleMap.swift,\ Targets.swift,\ Templates.swift,\ Text.swift,\ Theme.swift,\ GeneratedAssetSymbols.swift /Users/runner/work/ration/ration/App/Views/AddFoodViews.swift /Users/runner/work/ration/ration/App/Store/AppStore.swift /Users/runner/work/ration/ration/App/Vision/Camera.swift /Users/runner/work/ration/ration/Core/Sources/RationCore/Catalog.swift /Users/runner/work/ration/ration/App/Data/FoodDB.swift /Users/runner/work/ration/ration/App/Views/GoalView.swift /Users/runner/work/ration/ration/Core/Sources/RationCore/LabelParser.swift /Users/runner/work/ration/ration/Core/Sources/RationCore/Models.swift /Users/runner/work/ration/ration/App/Views/PantryView.swift /Users/runner/work/ration/ration/App/Views/PlanView.swift /Users/runner/work/ration/ration/Core/Sources/RationCore/Planner.swift /Users/runner/work/ration/ration/App/RationApp.swift /Users/runner/work/ration/ration/Core/Sources/RationCore/RecipeKit.swift /Users/runner/work/ration/ration/Core/Sources/RationCore/RecipesBreakfast.swift /Users/runner/work/ration/ration/Core/Sources/RationCore/RecipesDesserts.swift /Users/runner/work/ration/ration/Core/Sources/RationCore/RecipesMains.swift /Users/runner/work/ration/ration/Core/Sources/RationCore/RoleMap.swift /Users/runner/work/ration/ration/Core/Sources/RationCore/Targets.swift /Users/runner/work/ration/ration/Core/Sources/RationCore/Templates.swift /Users/runner/work/ration/ration/Core/Sources/RationCore/Text.swift /Users/runner/work/ration/ration/App/Design/Theme.swift /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/DerivedSources/GeneratedAssetSymbols.swift /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/Dispatch.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/Metal.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/VisionKit.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/ObjectiveC.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/CoreImage.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/CoreAudio.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/_StringProcessing.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/PhotosUI.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/_PhotosUI_SwiftUI.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/Symbols.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/UIKit.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/_Concurrency.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/Combine.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/Darwin.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/DataDetection.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/FileProvider.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/CoreVideo.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/Network.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/CoreMIDI.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/_DarwinFoundation2.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/SwiftUICore.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/AVFAudio.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/Distributed.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/CoreText.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/CoreGraphics.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/CoreData.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/os.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/_DarwinFoundation1.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/DeveloperToolsSupport.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/Photos.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/Accessibility.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/Observation.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/CoreFoundation.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/_Builtin_float.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/Synchronization.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/XPC.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/Accelerate.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/Swift.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/UniformTypeIdentifiers.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/CoreLocation.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/SwiftUI.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/Vision.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/CoreTransferable.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/System.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/simd.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/QuartzCore.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/AudioToolbox.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/_DarwinFoundation3.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/Foundation.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/AVFoundation.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/OSLog.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/ExtensionFoundation.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/CoreMedia.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/CoreML.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.2/Spatial.swiftmodule/arm64e-apple-ios.swiftmodule /Users/runner/work/ration/ration/build/ModuleCache.noindex/Security-BPLZS80QOX99QK81RHNV8WBE4.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/_Builtin_float-61NDM5N7COX5FIWAOSD1H9MLH.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreData-1B48GXBT5DSW1RSUBCQGWBQE2.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/FileProvider-3KPO8709XRXEQ6HU412THOOA5.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/QuartzCore-AGR9GYMVLAHX4MQ8MQ6UIIZ8A.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/Dispatch-7ORTMEVU0D8CM94KIZ7F35OC0.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/_Builtin_intrinsics-8OEHDGUVTAZ2D587DCD34FGCD.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/VisionKit-886TD6RIP7KSDRYEPN7KVPYNN.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/SQLite3-ENO6QEWTC4IEJ2FF2J2F89UA1.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/UserNotifications-4HI8KFCRDQQFGVV63AD3E8YY6.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreFoundation-6FKCR7SGTMM7YM3J3WZNZHTOQ.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/Darwin-BW4B4LS43J43X45S1BH7YXASV.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreLocation-EM4T2DGDC8RF7KD9Y9BWFV4U9.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/PhotosUI-DYAPYFWULI8VMYOQ3CIS8L6IO.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/os_object-CV6JZCRJ0O3FY3KK4SQ0JJ3NQ.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreText-6TBKDZT55O9M93RBQ5YM40WC4.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/_Builtin_stddef-14URGBRCOQ1Q11I3I2XETOW8J.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/UIKit-A6BBFFUJ6YZO4JDTDN52RN9Z5.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/_Builtin_limits-6RI64WPZ9PWA5IK4G4DTYU4M3.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/OSLog-BFGGUHZKWDHYB7IXLJ2JK6YD5.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/SwiftUI-7NKWBI3U1EW3UG66H8ILDLRT7.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/UIUtilities-1RQ9Q0XXT8KQYNY5DRH2UDRWT.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/_SwiftConcurrencyShims-52TZJ01RKFV27SUG829R9D3QE.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/dnssd-CHTLMDJ8E4RF9G25X3CMY8REL.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/AVRouting-2EKZJ1P00JXGHDPZML8EF5C8Q.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/DataDetection-3WDL206F1MDEEN2RRKMTBAS15.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreMIDI-6FVH9Z7676G1Y5HF107K2LZ6T.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/Symbols-9PT2OR24B7BGT86HZGJCEXEX4.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/simd-6LV6CO8KK2SLM95WX0CX8QJHE.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/XPC-AK9OBDCCOGHXIR25XF2LYEHC7.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/SwiftShims-A0XTCQ5AU2TUTDOD19LHTVG28.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/os_workgroup-DOW47S2AITJZ2PD78TWXDZDVT.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/_Builtin_stdatomic-CNM2RPGGWJHNVS5A0S93STMFS.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/_LocationEssentials-6Z0DIOGP9ETWDY7W8GRUJLMKR.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/ObjectiveC-44FHZV4ZLLSPCEFWFD7LTPILM.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/OpenGLES-5N38V9LFHYLKVIJ0LB9EQP5N1.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/ExtensionFoundation-UXJZUTB69CUPZ2JJ8XEK71MS.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/os-C9TZTZTJEGCA0AAEBQ0Q2JCBO.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/_DarwinFoundation3-AEKPDLK91RSNQY3WHC5DSNN0C.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/Accessibility-1V5LTOF3TR564045SU313X3OO.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/AudioToolbox-F0GBOYO7I9ULFWSX8ZQ5M9CQ7.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/_Builtin_tgmath-DGKC9P005A9YWGH850OGZD72T.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/CFNetwork-F0ZHWX8FNPP5P7SR5ODFQO1TL.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/Accelerate-588KN9EQMCGYBR5M8L10F7NCQ.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreVideo-CZFF65MSAWP6IZCRZV393V4EU.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/_Builtin_stdarg-EUBVEF4J8EMFPU8MRUGF7SXUD.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/Photos-A3AQVLGV2WDO9BLRJKU42F5EE.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/UniformTypeIdentifiers-8CR55RWZ6U9AE3V1QP13LSEFR.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/_Builtin_inttypes-8CKMHUGY9FLQFAP89ZHWKZ1BP.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/sys_types-BESHO82U04V4ZMUI17WAHKAU6.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreAudioTypes-1BTUKK1P75O3DPAMR6Y8FOIPA.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreMedia-80A4DG6OUPBVH6X25GFX7YTAZ.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/Spatial-A6IYLQG96F3GQ3B5LQFHGBBLW.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreAudio-43BILXFEZYLCKTX75P52T6X1D.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/AVFAudio-OQBNJL9E6LVHV9CBTTH8BAOA.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/DeveloperToolsSupport-561T8R6VV2VD2S8LXHKHINOEZ.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/MediaToolbox-6AV5LECJ5LBSDOG6CT9SUUAS3.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/AVFoundation-33YAMAQS950WVE2TEU9A0ROM7.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/Foundation-60M5OPHG6LW3GUFGLY0GSZJSE.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/_DarwinFoundation1-ATMX7K93D0RUPRORPLGYWXMMB.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreGraphics-CQNM0HTJAP305ATUVS0XHILW2.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/_Builtin_stdbool-BKN2QCNS9JZ1TK22C3B95DRBX.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/Metal-60ZR6XH2AWPLE35DYRQQ6FA67.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/SwiftUICore-1XX3NNOHFGRPZR1CDBTU2PBKW.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/IOSurface-1LMV7J6J5WF1SI14F508RRPD7.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/_Builtin_stdint-1A0KF6YD70S2E825RH2TFDM41.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/ptrauth-B409Y0FEIEPJDH7L829XYY5OT.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/Network-8RVUZ5CIAAKLJRW9QUEKWJECU.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/_AvailabilityInternal-8ESX3DGUZ5QHWSRV8CS7SD2JO.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/Vision-44MOG9XDJ44BSTIWZHGAQF047.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/ImageIO-AL0RI1B3KZ1FD6YMJKQBA6D37.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreML-DJ67MPNFZIG0235BNXFW9HDHW.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreTransferable-DQFMQANKCODV6SJHYJRXAPC2M.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/CoreImage-3YTR79YGITWD76PYNDMPSNLPN.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/ptrcheck-5DNLHOIWO7QX9917F7Y8K2G9.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/MachO-16D9Y76J62XXEQFQKTML316DC.pcm /Users/runner/work/ration/ration/build/ModuleCache.noindex/_DarwinFoundation2-879AE7G64E1QMEGEJNYNJMWHZ.pcm /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion-dependencies-1.json (in target 'Ratsion' from project 'Ratsion')
+
+CompileSwift normal arm64 (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    
+
+SwiftDriverJobDiscovery normal arm64 Compiling AddFoodViews.swift, AppStore.swift, Camera.swift, Catalog.swift, FoodDB.swift, GoalView.swift, LabelParser.swift, Models.swift, PantryView.swift, PlanView.swift, Planner.swift, RationApp.swift, RecipeKit.swift, RecipesBreakfast.swift, RecipesDesserts.swift, RecipesMains.swift, RoleMap.swift, Targets.swift, Templates.swift, Text.swift, Theme.swift, GeneratedAssetSymbols.swift (in target 'Ratsion' from project 'Ratsion')
+
+SwiftDriver\ Compilation\ Requirements Ratsion normal arm64 com.apple.xcode.tools.swift.compiler (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Ratsion -O -whole-module-optimization -enforce-exclusivity\=checked @/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.SwiftFileList -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.3.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk -target arm64-apple-ios17.0 -g -module-cache-path /Users/runner/work/ration/ration/build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -swift-version 5 -I /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos -F /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos -c -num-threads 3 -Xcc -ivfsstatcache -Xcc /Users/runner/work/ration/ration/build/SDKStatCaches.noindex/iphoneos26.2-23C57-dc75598d0054f22ec865fa860f139d722dd23b4ebda140f7210d155ff1243552.sdkstatcache -output-file-map /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/runner/work/ration/ration/build/ModuleCache.noindex -sdk-module-cache-path /Users/runner/work/ration/ration/build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/work/ration/ration/build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion-generated-files.hmap -Xcc -I/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion-own-target-headers.hmap -Xcc -I/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion-project-headers.hmap -Xcc -I/Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/include -Xcc -I/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion-Swift.h -working-directory /Users/runner/work/ration/ration -no-emit-module-separately-wmo
+
+SwiftMergeGeneratedHeaders /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/DerivedSources/Ratsion-Swift.h /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion-Swift.h (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    builtin-swiftHeaderTool -arch arm64 /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion-Swift.h -o /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/DerivedSources/Ratsion-Swift.h
+
+Copy /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.swiftmodule/arm64-apple-ios.swiftdoc /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.swiftdoc (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.swiftdoc /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.swiftmodule/arm64-apple-ios.swiftdoc
+
+Copy /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.swiftmodule/arm64-apple-ios.swiftmodule /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.swiftmodule (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.swiftmodule /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.swiftmodule/arm64-apple-ios.swiftmodule
+
+Copy /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.swiftmodule/arm64-apple-ios.abi.json /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.abi.json (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.abi.json /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.swiftmodule/arm64-apple-ios.abi.json
+
+Copy /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.swiftsourceinfo (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.swiftsourceinfo /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo
+
+Ld /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app/Ratsion normal (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0 -isysroot /Applications/Xcode_26.3.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk -Os -L/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/EagerLinkingTBDs/Release-iphoneos -L/Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos -F/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/EagerLinkingTBDs/Release-iphoneos -F/Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos -filelist /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @executable_path/Frameworks -dead_strip -Xlinker -object_path_lto -Xlinker /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion_lto.o -Xlinker -dependency_info -Xlinker /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.swiftmodule @/Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion-linker-args.resp -o /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app/Ratsion
+
+CopySwiftLibs /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app/Ratsion --scan-folder /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app/Frameworks --scan-folder /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app/PlugIns --scan-folder /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app/SystemExtensions --scan-folder /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app/Extensions --platform iphoneos --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.3.7003.10.71f2U8/Metal.xctoolchain --toolchain /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+ExtractAppIntentsMetadata (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.3.7003.10.71f2U8/Metal.xctoolchain --module-name Ratsion --sdk-root /Applications/Xcode_26.3.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk --xcode-version 17C529 --platform-family iOS --deployment-target 17.0 --bundle-identifier com.denys.ratsion --output /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app --target-triple arm64-apple-ios17.0 --binary-file /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app/Ratsion --dependency-file /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion_dependency_info.dat --stringsdata-file /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.SwiftFileList --metadata-file-list /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion.DependencyMetadataFileList --static-metadata-file-list /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion.DependencyStaticMetadataFileList --swift-const-vals-list /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Objects-normal/arm64/Ratsion.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-11-15 00:49:20.514 appintentsmetadataprocessor[11910:38221] Starting appintentsmetadataprocessor export
+2026-11-15 00:49:20.522 appintentsmetadataprocessor[11910:38221] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+GenerateDSYMFile /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app.dSYM /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app/Ratsion (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app/Ratsion -o /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app.dSYM
+
+AppIntentsSSUTraining (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    /Applications/Xcode_26.3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsnltrainingprocessor --infoplist-path /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app/Info.plist --temp-dir-path /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/ssu --bundle-id com.denys.ratsion --product-path /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app --extracted-metadata-path /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app/Metadata.appintents --metadata-file-list /Users/runner/work/ration/ration/build/Build/Intermediates.noindex/Ratsion.build/Release-iphoneos/Ratsion.build/Ratsion.DependencyMetadataFileList --archive-ssu-assets
+2026-11-15 00:49:20.586 appintentsnltrainingprocessor[11912:38228] Parsing options for appintentsnltrainingprocessor
+2026-11-15 00:49:20.587 appintentsnltrainingprocessor[11912:38228] No AppShortcuts found - Skipping.
+
+RegisterExecutionPolicyException /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    builtin-RegisterExecutionPolicyException /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app
+
+Validate /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    builtin-validationUtility /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app -shallow-bundle -infoplist-subpath Info.plist
+
+Touch /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app (in target 'Ratsion' from project 'Ratsion')
+    cd /Users/runner/work/ration/ration
+    /usr/bin/touch -c /Users/runner/work/ration/ration/build/Build/Products/Release-iphoneos/Ratsion.app
+
+** BUILD SUCCEEDED **
+

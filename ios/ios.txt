@@ -1,0 +1,4 @@
+База в приложении: 508M
+zip ok: 9 files
+Ratsion.ipa: 231265014 bytes, sha256 d377ed505e908e919f5024640727e2516a721f0e1be8671568d923f7d0d2c00e
+Release: https://github.com/deniskaaaaaaa/ration/releases/tag/latest
