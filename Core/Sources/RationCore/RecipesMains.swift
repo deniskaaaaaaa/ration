@@ -951,7 +951,7 @@ extension Templates {
                     S("h", [.greens], req: false, tags: ["herb"], range: 5...15),
                     S("b", [.bread], req: false, tags: ["slice", "pocket", "wrap"], range: 40...80)],
             extras: [X("fat", fat, 6...10)],
-            spices: ["c:salt", "c:khmeli_suneli", "c:coriander", "c:garlic", "c:chili", "c:vinegar"], onePan: true, portable: true,
+            spices: ["c:salt", "c:khmeli_suneli", "c:coriander", "c:garlic", "c:chili", "c:vinegar"], portable: true, onePan: true,
             title: { f in "Лобио" + (f["n"].map { " " + Say.with($0.words.ins) } ?? "") },
             steps: { f in
                 guard let l = f["l"] else { return [] }
