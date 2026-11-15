@@ -15,7 +15,20 @@ public enum Catalog {
         "c:basil", "c:chicken_spice", "c:bay_leaf", "c:italian_herbs", "c:cinnamon",
         "c:sunflower_oil", "c:olive_oil", "c:butter",
         "c:ketchup", "c:mayo", "c:mustard", "c:soy_sauce", "c:tomato_paste",
-        "c:sugar", "c:flour", "c:honey", "c:vinegar", "c:lemon_juice"
+        "c:sugar", "c:flour", "c:honey", "c:vinegar", "c:lemon_juice",
+        "c:chili", "c:cumin", "c:garlic",
+        "c:curry", "c:ginger", "c:nutmeg", "c:khmeli_suneli", "c:coriander", "c:dill_dry", "c:smoked_paprika",
+        "c:vanilla", "c:baking_powder", "c:baking_soda", "c:sweetener", "c:cocoa", "c:starch"
+    ]
+
+    /// Версия списка «всегда есть дома». При обновлении приложения новые продукты добавляются один раз.
+    public static let stapleVersion = 2
+
+    /// Что добавилось в «всегда есть дома» во второй версии.
+    public static let newStapleIDs: [String] = [
+        "c:chili", "c:cumin", "c:garlic",
+        "c:curry", "c:ginger", "c:nutmeg", "c:khmeli_suneli", "c:coriander", "c:dill_dry", "c:smoked_paprika",
+        "c:vanilla", "c:baking_powder", "c:baking_soda", "c:sweetener", "c:cocoa", "c:starch"
     ]
 
     /// Продукт из базы штрихкодов: слова для рецепта, способ готовки и вес штуки берутся у вида из каталога.
@@ -94,7 +107,7 @@ public enum Catalog {
             g("lamb", "Баранина", .meat, 282, 16.6, 23.4, 0, ("Баранина", "баранину", "бараниной"), tags: ["lamb"], cook: .beef, en: ["lamb"]),
             g("beef_liver", "Говяжья печень", .meat, 135, 20.4, 3.6, 3.9, ("Печень", "печень", "печенью"), tags: ["liver"], cook: .liver, en: ["beef liver"]),
             g("chicken_liver", "Куриная печень", .meat, 119, 16.9, 4.8, 0.7, ("Печень", "куриную печень", "печенью"), tags: ["liver", "chicken"], cook: .liver, en: ["chicken liver"]),
-            g("rotisserie_chicken", "Курица-гриль (готовая)", .meat, 190, 27, 9, 0, ("Курица-гриль", "курицу-гриль", "курицей-гриль"), tags: ["chicken", "cooked"], cook: .cookedMeat, en: ["rotisserie chicken"]),
+            g("rotisserie_chicken", "Курица-гриль (готовая)", .meat, 190, 27, 9, 0, ("Курица-гриль", "курицу-гриль", "курицей-гриль"), tags: ["chicken", "cooked", "skin"], cook: .cookedMeat, en: ["rotisserie chicken"]),
             g("bacon", "Бекон", .sausage, 458, 11.6, 45, 1.3, ("Бекон", "бекон", "беконом"), tags: ["pork", "bacon"], cook: .bacon, en: ["bacon"])
         ]
 
@@ -102,7 +115,7 @@ public enum Catalog {
         a += [
             g("hot_dogs", "Сосиски", .sausage, 280, 11, 25, 2, ("Сосиски", "сосиски", "сосисками"), tags: ["pork"], piece: 45, cook: .sausage, en: ["hot dog", "sausages", "frankfurter"]),
             g("smoked_sausage", "Колбаса полукопчёная", .sausage, 330, 14, 29, 2, ("Колбаса", "колбасу", "колбасой"), tags: ["pork", "sliced"], cook: .sausage, en: ["kielbasa", "smoked sausage"]),
-            g("ham", "Ветчина (нарезка)", .sausage, 120, 17, 4.5, 2, ("Ветчина", "ветчину", "ветчиной"), tags: ["pork", "sliced", "deli"], cook: .noCook, en: ["ham", "deli ham"]),
+            g("ham", "Ветчина (нарезка)", .sausage, 120, 17, 4.5, 2, ("Ветчина", "ветчину", "ветчиной"), tags: ["pork", "sliced", "deli", "olivier"], cook: .noCook, en: ["ham", "deli ham"]),
             g("turkey_deli", "Индейка (нарезка)", .sausage, 105, 17, 2, 3.5, ("Индейка", "индейку", "индейкой"), tags: ["turkey", "sliced", "deli"], cook: .noCook, en: ["turkey deli", "sliced turkey"]),
             g("chicken_sausage", "Куриные колбаски", .sausage, 170, 14, 11, 3, ("Колбаски", "колбаски", "колбасками"), tags: ["chicken"], piece: 85, cook: .sausage, en: ["chicken sausage"])
         ]
@@ -119,8 +132,8 @@ public enum Catalog {
             g("tuna_oil", "Тунец в масле (конс.)", .fish, 198, 29, 8.2, 0, ("Тунец", "тунец", "тунцом"), tags: ["canned"], piece: 140, cook: .cannedFish, en: ["tuna in oil"]),
             g("sardines", "Сардины в масле (конс.)", .fish, 208, 24.6, 11.5, 0, ("Сардины", "сардины", "сардинами"), tags: ["canned"], piece: 90, cook: .cannedFish, en: ["sardines"]),
             g("canned_salmon", "Лосось консервированный", .fish, 139, 23, 5, 0, ("Лосось", "лосось", "лососем"), tags: ["canned"], piece: 140, cook: .cannedFish, en: ["canned salmon"]),
-            g("herring", "Сельдь слабосолёная", .fish, 217, 19.8, 15.4, 0, ("Сельдь", "сельдь", "сельдью"), tags: ["salted"], cook: .noCook, en: ["herring"]),
-            g("crab_sticks", "Крабовые палочки", .fish, 95, 7.6, 0.5, 15, ("Крабовые палочки", "крабовые палочки", "крабовыми палочками"), tags: ["ready"], piece: 17, cook: .noCook, en: ["imitation crab", "crab sticks"])
+            g("herring", "Сельдь слабосолёная", .fish, 217, 19.8, 15.4, 0, ("Сельдь", "сельдь", "сельдью"), tags: ["salted", "herring"], cook: .noCook, en: ["herring"]),
+            g("crab_sticks", "Крабовые палочки", .fish, 95, 7.6, 0.5, 15, ("Крабовые палочки", "крабовые палочки", "крабовыми палочками"), tags: ["ready", "crab"], piece: 17, cook: .noCook, en: ["imitation crab", "crab sticks"])
         ]
 
         // Яйца
@@ -146,18 +159,18 @@ public enum Catalog {
             g("milk_skim", "Молоко обезжиренное", .milk, 34, 3.4, 0.1, 5, ("Молоко", "молоко", "молоком"), cook: .noCook, en: ["skim milk", "fat free milk"]),
             g("milk_25", "Молоко 2,5%", .milk, 52, 2.8, 2.5, 4.7, ("Молоко", "молоко", "молоком"), cook: .noCook, en: ["milk 2.5"]),
             g("almond_milk", "Миндальное молоко без сахара", .milk, 15, 0.6, 1.2, 0.3, ("Миндальное молоко", "миндальное молоко", "миндальным молоком"), cook: .noCook, en: ["almond milk"]),
-            g("cheddar", "Сыр чеддер", .cheese, 403, 24.9, 33.1, 1.3, ("Сыр", "сыр", "сыром"), cook: .noCook, en: ["cheddar", "cheese"]),
-            g("mozzarella", "Моцарелла (полужирная)", .cheese, 254, 24.3, 15.9, 2.8, ("Моцарелла", "моцареллу", "моцареллой"), cook: .noCook, en: ["mozzarella"]),
-            g("hard_cheese", "Сыр твёрдый", .cheese, 360, 24, 29, 0, ("Сыр", "сыр", "сыром"), cook: .noCook, en: ["hard cheese", "gouda", "swiss cheese"]),
+            g("cheddar", "Сыр чеддер", .cheese, 403, 24.9, 33.1, 1.3, ("Сыр", "сыр", "сыром"), tags: ["melt"], cook: .noCook, en: ["cheddar", "cheese"]),
+            g("mozzarella", "Моцарелла (полужирная)", .cheese, 254, 24.3, 15.9, 2.8, ("Моцарелла", "моцареллу", "моцареллой"), tags: ["melt"], cook: .noCook, en: ["mozzarella"]),
+            g("hard_cheese", "Сыр твёрдый", .cheese, 360, 24, 29, 0, ("Сыр", "сыр", "сыром"), tags: ["melt"], cook: .noCook, en: ["hard cheese", "gouda", "swiss cheese"]),
             g("feta", "Фета", .cheese, 264, 14.2, 21.3, 4.1, ("Фета", "фету", "фетой"), tags: ["salad"], cook: .noCook, en: ["feta"]),
-            g("parmesan", "Пармезан", .cheese, 392, 35.8, 25.8, 3.2, ("Пармезан", "пармезан", "пармезаном"), cook: .noCook, en: ["parmesan"]),
+            g("parmesan", "Пармезан", .cheese, 392, 35.8, 25.8, 3.2, ("Пармезан", "пармезан", "пармезаном"), tags: ["grate"], cook: .noCook, en: ["parmesan"]),
             g("cream_cheese", "Сливочный сыр", .cheese, 342, 5.9, 34.2, 4.1, ("Сливочный сыр", "сливочный сыр", "сливочным сыром"), tags: ["spread"], cook: .noCook, en: ["cream cheese"]),
             g("sour_cream", "Сметана 20%", .sauce, 206, 2.8, 20, 3.2, ("Сметана", "сметану", "сметаной"), tags: ["dairy"], cook: .noCook, en: ["sour cream"])
         ]
 
         // Крупы (сухие)
         a += [
-            g("rice_white", "Рис белый", .grain, 365, 7.1, 0.7, 80, ("Рис", "рис", "рисом"), tags: ["rice"], cook: .rice, en: ["rice", "white rice", "jasmine rice", "basmati"]),
+            g("rice_white", "Рис белый", .grain, 365, 7.1, 0.7, 80, ("Рис", "рис", "рисом"), tags: ["rice", "white_rice"], cook: .rice, en: ["rice", "white rice", "jasmine rice", "basmati"]),
             g("rice_brown", "Рис бурый", .grain, 370, 7.9, 2.9, 77.2, ("Бурый рис", "бурый рис", "бурым рисом"), tags: ["rice"], cook: .rice, en: ["brown rice"]),
             g("buckwheat", "Гречка", .grain, 343, 13.3, 3.4, 71.5, ("Гречка", "гречку", "гречкой"), tags: ["buckwheat"], cook: .buckwheat, en: ["buckwheat"]),
             g("quinoa", "Киноа", .grain, 368, 14.1, 6.1, 64.2, ("Киноа", "киноа", "киноа"), tags: ["quinoa"], cook: .quinoa, en: ["quinoa"]),
@@ -195,7 +208,7 @@ public enum Catalog {
 
         // Картофель
         a += [
-            g("potato", "Картофель", .potato, 77, 2, 0.1, 17.5, ("Картошка", "картофель", "картошкой"), piece: 170, cook: .potato, en: ["potato", "potatoes"]),
+            g("potato", "Картофель", .potato, 77, 2, 0.1, 17.5, ("Картошка", "картофель", "картошкой"), tags: ["potato"], piece: 170, cook: .potato, en: ["potato", "potatoes"]),
             g("sweet_potato", "Батат", .potato, 86, 1.6, 0.1, 20.1, ("Батат", "батат", "бататом"), piece: 200, cook: .sweetPotato, en: ["sweet potato", "yam"]),
             g("fries_frozen", "Картофель фри (заморож.)", .potato, 150, 2.4, 5, 24, ("Картофель фри", "картофель фри", "картофелем фри"), tags: ["frozen"], cook: .fries, en: ["french fries", "frozen fries"])
         ]
@@ -215,29 +228,29 @@ public enum Catalog {
         a += [
             g("tomato", "Помидоры", .vegetable, 18, 0.9, 0.2, 3.9, ("Помидоры", "помидоры", "помидорами"), tags: ["tomato", "salad"], piece: 120, cook: .freshVeg, en: ["tomato", "tomatoes"]),
             g("cherry_tomato", "Черри", .vegetable, 18, 0.9, 0.2, 3.9, ("Черри", "черри", "черри"), tags: ["tomato", "salad"], cook: .freshVeg, en: ["cherry tomatoes", "cherry tomato"]),
-            g("cucumber", "Огурцы", .vegetable, 15, 0.7, 0.1, 3.6, ("Огурцы", "огурцы", "огурцами"), tags: ["salad", "raw"], piece: 150, cook: .freshVeg, en: ["cucumber"]),
+            g("cucumber", "Огурцы", .vegetable, 15, 0.7, 0.1, 3.6, ("Огурцы", "огурцы", "огурцами"), tags: ["salad", "raw", "cucumber"], piece: 150, cook: .freshVeg, en: ["cucumber"]),
             g("onion", "Лук репчатый", .vegetable, 40, 1.1, 0.1, 9.3, ("Лук", "лук", "луком"), tags: ["onion", "base"], piece: 110, cook: .freshVeg, en: ["onion", "onions"]),
             g("carrot", "Морковь", .vegetable, 41, 0.9, 0.2, 9.6, ("Морковь", "морковь", "морковью"), tags: ["carrot", "base"], piece: 70, cook: .freshVeg, en: ["carrot", "carrots"]),
-            g("bell_pepper", "Перец болгарский", .vegetable, 26, 1, 0.3, 6, ("Перец", "болгарский перец", "перцем"), tags: ["pepper", "salad"], piece: 150, cook: .freshVeg, en: ["bell pepper", "pepper"]),
-            g("zucchini", "Кабачок", .vegetable, 17, 1.2, 0.3, 3.1, ("Кабачок", "кабачок", "кабачком"), tags: ["stew"], piece: 200, cook: .freshVeg, en: ["zucchini", "courgette"]),
+            g("bell_pepper", "Перец болгарский", .vegetable, 26, 1, 0.3, 6, ("Перец", "болгарский перец", "перцем"), tags: ["pepper", "salad", "stuff"], piece: 150, cook: .freshVeg, en: ["bell pepper", "pepper"]),
+            g("zucchini", "Кабачок", .vegetable, 17, 1.2, 0.3, 3.1, ("Кабачок", "кабачок", "кабачком"), tags: ["stew", "zucchini", "cream"], piece: 200, cook: .freshVeg, en: ["zucchini", "courgette"]),
             g("eggplant", "Баклажан", .vegetable, 25, 1, 0.2, 5.9, ("Баклажан", "баклажан", "баклажаном"), tags: ["stew"], piece: 300, cook: .freshVeg, en: ["eggplant"]),
-            g("broccoli", "Брокколи", .vegetable, 34, 2.8, 0.4, 6.6, ("Брокколи", "брокколи", "брокколи"), tags: ["green"], cook: .freshVeg, en: ["broccoli"]),
+            g("broccoli", "Брокколи", .vegetable, 34, 2.8, 0.4, 6.6, ("Брокколи", "брокколи", "брокколи"), tags: ["green", "cream"], cook: .freshVeg, en: ["broccoli"]),
             g("broccoli_frozen", "Брокколи (заморож.)", .vegetable, 28, 3, 0.3, 5.3, ("Брокколи", "брокколи", "брокколи"), tags: ["green", "frozen"], cook: .frozenVeg, en: ["frozen broccoli"]),
-            g("cauliflower", "Цветная капуста", .vegetable, 25, 1.9, 0.3, 5, ("Цветная капуста", "цветную капусту", "цветной капустой"), cook: .freshVeg, en: ["cauliflower"]),
-            g("cabbage", "Капуста белокочанная", .vegetable, 25, 1.3, 0.1, 5.8, ("Капуста", "капусту", "капустой"), tags: ["salad", "stew"], cook: .freshVeg, en: ["cabbage"]),
+            g("cauliflower", "Цветная капуста", .vegetable, 25, 1.9, 0.3, 5, ("Цветная капуста", "цветную капусту", "цветной капустой"), tags: ["cream"], cook: .freshVeg, en: ["cauliflower"]),
+            g("cabbage", "Капуста белокочанная", .vegetable, 25, 1.3, 0.1, 5.8, ("Капуста", "капусту", "капустой"), tags: ["salad", "stew", "cabbage"], cook: .freshVeg, en: ["cabbage"]),
             g("mushrooms", "Шампиньоны", .vegetable, 22, 3.1, 0.3, 3.3, ("Грибы", "грибы", "грибами"), tags: ["mushroom"], cook: .freshVeg, en: ["mushroom", "mushrooms"]),
             g("green_beans", "Стручковая фасоль", .vegetable, 31, 1.8, 0.2, 7, ("Стручковая фасоль", "стручковую фасоль", "стручковой фасолью"), tags: ["green"], cook: .freshVeg, en: ["green beans"]),
             g("veg_mix_frozen", "Овощная смесь (заморож.)", .vegetable, 65, 3, 0.5, 12, ("Овощи", "овощную смесь", "овощами"), tags: ["frozen", "mix"], cook: .frozenVeg, en: ["mixed vegetables", "frozen vegetables"]),
             g("stirfry_mix", "Овощи для жарки (заморож.)", .vegetable, 30, 1.6, 0.2, 6, ("Овощи", "овощи для жарки", "овощами"), tags: ["frozen", "mix"], cook: .frozenVeg, en: ["stir fry vegetables"]),
             g("peas_frozen", "Горошек зелёный (заморож.)", .vegetable, 77, 5.2, 0.4, 13.6, ("Горошек", "горошек", "горошком"), tags: ["frozen", "peas"], cook: .frozenVeg, en: ["green peas", "peas"]),
             g("corn", "Кукуруза (конс. или заморож.)", .vegetable, 82, 2.7, 1.2, 17, ("Кукуруза", "кукурузу", "кукурузой"), tags: ["corn", "salad"], cook: .cannedVeg, en: ["corn", "sweet corn"]),
-            g("beet", "Свёкла", .vegetable, 43, 1.6, 0.2, 9.6, ("Свёкла", "свёклу", "свёклой"), piece: 150, cook: .freshVeg, en: ["beet", "beets"]),
-            g("pumpkin", "Тыква", .vegetable, 26, 1, 0.1, 6.5, ("Тыква", "тыкву", "тыквой"), tags: ["stew"], cook: .freshVeg, en: ["pumpkin", "squash", "butternut squash"]),
+            g("beet", "Свёкла", .vegetable, 43, 1.6, 0.2, 9.6, ("Свёкла", "свёклу", "свёклой"), tags: ["beet", "root"], piece: 150, cook: .freshVeg, en: ["beet", "beets"]),
+            g("pumpkin", "Тыква", .vegetable, 26, 1, 0.1, 6.5, ("Тыква", "тыкву", "тыквой"), tags: ["stew", "cream", "pumpkin"], cook: .freshVeg, en: ["pumpkin", "squash", "butternut squash"]),
             g("celery", "Сельдерей", .vegetable, 14, 0.7, 0.2, 3, ("Сельдерей", "сельдерей", "сельдереем"), tags: ["salad"], cook: .freshVeg, en: ["celery"]),
             g("radish", "Редис", .vegetable, 16, 0.7, 0.1, 3.4, ("Редис", "редис", "редисом"), tags: ["salad", "raw"], cook: .freshVeg, en: ["radish"]),
             g("avocado", "Авокадо", .vegetable, 160, 2, 14.7, 8.5, ("Авокадо", "авокадо", "авокадо"), tags: ["salad", "raw", "fatty"], piece: 150, cook: .freshVeg, en: ["avocado"]),
-            g("pickles", "Огурцы маринованные", .vegetable, 12, 0.5, 0.2, 2.3, ("Маринованные огурцы", "маринованные огурцы", "маринованными огурцами"), tags: ["raw", "salad"], cook: .noCook, en: ["pickles"]),
-            g("sauerkraut", "Квашеная капуста", .vegetable, 19, 0.9, 0.1, 4.3, ("Квашеная капуста", "квашеную капусту", "квашеной капустой"), tags: ["raw", "nocut"], cook: .noCook, en: ["sauerkraut"]),
+            g("pickles", "Огурцы маринованные", .vegetable, 12, 0.5, 0.2, 2.3, ("Маринованные огурцы", "маринованные огурцы", "маринованными огурцами"), tags: ["raw", "salad", "pickled"], cook: .noCook, en: ["pickles"]),
+            g("sauerkraut", "Квашеная капуста", .vegetable, 19, 0.9, 0.1, 4.3, ("Квашеная капуста", "квашеную капусту", "квашеной капустой"), tags: ["raw", "nocut", "kraut"], cook: .noCook, en: ["sauerkraut"]),
             g("olives", "Оливки", .vegetable, 115, 0.8, 10.7, 6.3, ("Оливки", "оливки", "оливками"), tags: ["salad", "raw", "fatty"], cook: .noCook, en: ["olives"])
         ]
 
@@ -255,11 +268,11 @@ public enum Catalog {
 
         // Фрукты
         a += [
-            g("banana", "Банан", .fruit, 89, 1.1, 0.3, 22.8, ("Банан", "банан", "бананом"), piece: 120, cook: .noCook, en: ["banana", "bananas"]),
-            g("apple", "Яблоко", .fruit, 52, 0.3, 0.2, 13.8, ("Яблоко", "яблоко", "яблоком"), piece: 180, cook: .noCook, en: ["apple", "apples", "granny smith"]),
+            g("banana", "Банан", .fruit, 89, 1.1, 0.3, 22.8, ("Банан", "банан", "бананом"), tags: ["banana", "bake"], piece: 120, cook: .noCook, en: ["banana", "bananas"]),
+            g("apple", "Яблоко", .fruit, 52, 0.3, 0.2, 13.8, ("Яблоко", "яблоко", "яблоком"), tags: ["apple", "bake"], piece: 180, cook: .noCook, en: ["apple", "apples", "granny smith"]),
             g("orange", "Апельсин", .fruit, 47, 0.9, 0.1, 11.8, ("Апельсин", "апельсин", "апельсином"), piece: 150, cook: .noCook, en: ["orange", "oranges"]),
             g("mandarin", "Мандарин", .fruit, 53, 0.8, 0.3, 13.3, ("Мандарины", "мандарины", "мандаринами"), piece: 80, cook: .noCook, en: ["mandarin", "clementine", "tangerine"]),
-            g("pear", "Груша", .fruit, 57, 0.4, 0.1, 15.2, ("Груша", "грушу", "грушей"), piece: 180, cook: .noCook, en: ["pear"]),
+            g("pear", "Груша", .fruit, 57, 0.4, 0.1, 15.2, ("Груша", "грушу", "грушей"), tags: ["bake"], piece: 180, cook: .noCook, en: ["pear"]),
             g("grapes", "Виноград", .fruit, 69, 0.7, 0.2, 18.1, ("Виноград", "виноград", "виноградом"), cook: .noCook, en: ["grapes", "grape"]),
             g("kiwi", "Киви", .fruit, 61, 1.1, 0.5, 14.7, ("Киви", "киви", "киви"), piece: 75, cook: .noCook, en: ["kiwi"]),
             g("mango", "Манго", .fruit, 60, 0.8, 0.4, 15, ("Манго", "манго", "манго"), piece: 200, cook: .noCook, en: ["mango"]),
@@ -287,7 +300,7 @@ public enum Catalog {
             g("cashews", "Кешью", .nuts, 553, 18.2, 43.9, 30.2, ("Кешью", "кешью", "кешью"), cook: .noCook, en: ["cashews"]),
             g("peanut_butter", "Арахисовая паста", .nuts, 588, 25, 50, 20, ("Арахисовая паста", "арахисовую пасту", "арахисовой пастой"), tags: ["spread"], cook: .noCook, en: ["peanut butter"]),
             g("sunflower_seeds", "Семечки подсолнечника", .nuts, 584, 20.8, 51.5, 20, ("Семечки", "семечки", "семечками"), cook: .noCook, en: ["sunflower seeds"]),
-            g("chia", "Семена чиа", .nuts, 486, 16.5, 30.7, 42.1, ("Чиа", "семена чиа", "чиа"), cook: .noCook, en: ["chia seeds", "chia"])
+            g("chia", "Семена чиа", .nuts, 486, 16.5, 30.7, 42.1, ("Чиа", "семена чиа", "чиа"), tags: ["chia", "seeds"], cook: .noCook, en: ["chia seeds", "chia"])
         ]
 
         // Протеин, сладкое, перекусы
@@ -296,7 +309,7 @@ public enum Catalog {
             g("protein_bar", "Протеиновый батончик", .snack, 340, 33, 12, 37, ("Протеиновый батончик", "протеиновый батончик", "протеиновым батончиком"), tags: ["bar", "protein"], piece: 60, cook: .noCook, en: ["protein bar"]),
             g("dark_chocolate", "Тёмный шоколад", .sweet, 598, 7.8, 42.6, 45.9, ("Шоколад", "шоколад", "шоколадом"), cook: .noCook, en: ["dark chocolate", "chocolate"]),
             g("jam", "Варенье / джем", .sweet, 278, 0.4, 0.1, 68.9, ("Джем", "джем", "джемом"), tags: ["spread"], cook: .noCook, en: ["jam", "jelly"]),
-            g("crackers", "Крекеры", .snack, 440, 9, 14, 70, ("Крекеры", "крекеры", "крекерами"), cook: .noCook, en: ["crackers"]),
+            g("crackers", "Крекеры", .snack, 440, 9, 14, 70, ("Крекеры", "крекеры", "крекерами"), tags: ["salty"], cook: .noCook, en: ["crackers"]),
             g("hummus", "Хумус", .snack, 166, 7.9, 9.6, 14.3, ("Хумус", "хумус", "хумусом"), tags: ["spread", "dip"], cook: .noCook, en: ["hummus"])
         ]
 
@@ -337,6 +350,174 @@ public enum Catalog {
             g("flour", "Мука пшеничная", .other, 364, 10.3, 1, 76.3, ("Мука", "муку", "мукой"), tags: ["flour"], cook: .noCook, en: ["flour", "all purpose flour"])
         ]
 
+        // ───── Расширенный каталог ─────
+
+        // Мясо, птица, субпродукты
+        a += [
+            g("pork_chop", "Свиная корейка (на отбивные)", .meat, 172, 20.5, 9.6, 0, ("Свинина", "свиную корейку", "свиной корейкой"), tags: ["pork", "chop"], cook: .pork, en: ["pork chops", "pork loin chops"]),
+            g("veal", "Телятина", .meat, 112, 20.3, 2.9, 0, ("Телятина", "телятину", "телятиной"), tags: ["beef", "lean"], cook: .beef, en: ["veal"]),
+            g("chicken_whole", "Курица целая (тушка)", .meat, 215, 18.6, 15.1, 0, ("Курица", "курицу", "курицей"), tags: ["chicken", "bone"], cook: .chicken, en: ["whole chicken"]),
+            g("turkey_thigh", "Филе бедра индейки", .meat, 144, 19.5, 7.3, 0, ("Индейка", "филе бедра индейки", "индейкой"), tags: ["turkey"], cook: .chicken, en: ["turkey thigh"]),
+            g("ground_turkey_99", "Фарш индейки 99/1", .meat, 113, 24, 1.5, 0, ("Фарш", "фарш индейки", "фаршем индейки"), tags: ["turkey", "ground", "lean"], cook: .groundMeat, en: ["extra lean ground turkey", "ground turkey breast"]),
+            g("ground_mixed", "Фарш домашний (свинина и говядина)", .meat, 263, 17, 21.5, 0, ("Фарш", "фарш", "фаршем"), tags: ["pork", "beef", "ground"], cook: .groundMeat, en: ["ground meat", "meatloaf mix"]),
+            g("chicken_breast_cooked", "Куриное филе готовое (гриль, варёное)", .meat, 165, 31, 3.6, 0, ("Курица", "готовое куриное филе", "курицей"), tags: ["chicken", "cooked", "lean"], cook: .cookedMeat, en: ["grilled chicken strips", "cooked chicken breast"]),
+            g("canned_beef", "Тушёнка говяжья", .meat, 220, 15, 17.5, 0, ("Тушёнка", "тушёнку", "тушёнкой"), tags: ["beef", "canned"], piece: 325, cook: .cannedMeat, en: ["canned beef", "corned beef"]),
+            g("canned_pork", "Тушёнка свиная", .meat, 245, 14, 20.5, 0, ("Тушёнка", "тушёнку", "тушёнкой"), tags: ["pork", "canned"], piece: 325, cook: .cannedMeat, en: ["canned pork"]),
+            g("canned_chicken", "Курица консервированная", .meat, 150, 21, 7, 0, ("Курица", "консервированную курицу", "курицей"), tags: ["chicken", "canned"], piece: 140, cook: .cannedMeat, en: ["canned chicken"])
+        ]
+
+        // Колбаса и сосиски
+        a += [
+            g("doctor_sausage", "Колбаса варёная (докторская)", .sausage, 257, 12.8, 22.2, 1.5, ("Колбаса", "варёную колбасу", "варёной колбасой"), tags: ["pork", "sliced", "deli", "olivier"], cook: .noCook, en: ["bologna"]),
+            g("salami", "Салями", .sausage, 407, 22.6, 34.6, 1.6, ("Салями", "салями", "салями"), tags: ["pork", "sliced", "deli"], cook: .noCook, en: ["salami", "pepperoni"]),
+            g("sardelki", "Сардельки", .sausage, 260, 11, 23.5, 1.5, ("Сардельки", "сардельки", "сардельками"), tags: ["pork"], piece: 100, cook: .sausage, en: ["bratwurst"]),
+            g("turkey_sausage", "Сосиски из индейки", .sausage, 160, 13, 11, 3, ("Сосиски", "сосиски из индейки", "сосисками"), tags: ["turkey"], piece: 45, cook: .sausage, en: ["turkey hot dogs", "turkey franks"])
+        ]
+
+        // Рыба и морепродукты
+        a += [
+            g("trout", "Форель", .fish, 141, 19.9, 6.2, 0, ("Форель", "форель", "форелью"), tags: ["fillet", "fatty"], cook: .salmon, en: ["trout"]),
+            g("hake", "Хек", .fish, 86, 16.6, 2.2, 0, ("Хек", "хек", "хеком"), tags: ["fillet", "white"], cook: .fishFillet, en: ["hake", "whiting"]),
+            g("catfish", "Сом", .fish, 119, 15.2, 6, 0, ("Сом", "сома", "сомом"), tags: ["fillet", "white"], cook: .fishFillet, en: ["catfish"]),
+            g("smoked_salmon", "Лосось слабосолёный", .fish, 117, 18.3, 4.3, 0, ("Лосось", "слабосолёный лосось", "слабосолёным лососем"), tags: ["salted", "deli"], cook: .noCook, en: ["smoked salmon", "lox"]),
+            g("smoked_mackerel", "Скумбрия копчёная", .fish, 221, 23.4, 13.9, 0, ("Скумбрия", "копчёную скумбрию", "копчёной скумбрией"), tags: ["salted"], cook: .noCook, en: ["smoked mackerel"]),
+            g("canned_mackerel", "Скумбрия в томате (конс.)", .fish, 155, 13, 10, 3, ("Скумбрия", "скумбрию в томате", "скумбрией"), tags: ["canned"], piece: 250, cook: .cannedFish, en: ["canned mackerel"]),
+            g("fish_sticks", "Рыбные палочки (заморож.)", .ready, 230, 12, 11, 21, ("Рыбные палочки", "рыбные палочки", "рыбными палочками"), tags: ["oven"], cook: .readyFrozen, en: ["fish sticks"])
+        ]
+
+        // Яйца и молочное
+        a += [
+            g("quail_eggs", "Яйца перепелиные", .eggs, 158, 13.1, 11.1, 0.4, ("Перепелиные яйца", "перепелиные яйца", "перепелиными яйцами"), tags: ["quail"], piece: 10, cook: .egg, en: ["quail eggs"]),
+            g("cottage_2", "Творог 2%", .cottage, 103, 18, 2, 3.3, ("Творог", "творог", "творогом"), cook: .noCook, en: ["tvorog 2"]),
+            g("cottage_cheese_4", "Зернёный творог 4%", .cottage, 98, 11.1, 4.3, 3.4, ("Зернёный творог", "зернёный творог", "зернёным творогом"), tags: ["grainy"], cook: .noCook, en: ["cottage cheese 4"]),
+            g("ryazhenka", "Ряженка 4%", .milk, 67, 2.9, 4, 4.2, ("Ряженка", "ряженку", "ряженкой"), tags: ["kefir"], cook: .noCook, en: ["ryazhenka", "baked milk"]),
+            g("protein_drink", "Протеиновый коктейль готовый (бутылка)", .milk, 49, 9.2, 0.9, 1.2, ("Протеиновый коктейль", "протеиновый коктейль", "протеиновым коктейлем"), tags: ["protein", "rtd"], piece: 325, cook: .noCook, en: ["protein shake", "premier protein", "fairlife core power"]),
+            g("protein_pudding", "Протеиновый пудинг (готовый)", .yogurt, 90, 10, 1.5, 9, ("Протеиновый пудинг", "протеиновый пудинг", "протеиновым пудингом"), tags: ["protein", "dessert_ready"], piece: 200, cook: .noCook, en: ["protein pudding"]),
+            g("cream_10", "Сливки 10%", .sauce, 118, 3, 10, 4, ("Сливки", "сливки", "сливками"), tags: ["dairy", "cream"], cook: .noCook, en: ["half and half", "light cream"]),
+            g("cream_33", "Сливки 33%", .sauce, 340, 2.8, 36, 2.9, ("Сливки", "жирные сливки", "сливками"), tags: ["dairy", "cream", "fatty"], cook: .noCook, en: ["heavy cream", "whipping cream"]),
+            g("sour_cream_10", "Сметана 10%", .sauce, 115, 3, 10, 2.9, ("Сметана", "сметану", "сметаной"), tags: ["dairy"], cook: .noCook, en: ["light sour cream"]),
+            g("condensed_milk", "Сгущёнка", .sweet, 321, 7.9, 8.7, 54.4, ("Сгущёнка", "сгущёнку", "сгущёнкой"), tags: ["spread"], cook: .noCook, en: ["sweetened condensed milk", "condensed milk"]),
+            g("ricotta", "Рикотта", .cheese, 174, 11.3, 13, 3, ("Рикотта", "рикотту", "рикоттой"), tags: ["soft", "dessert"], cook: .noCook, en: ["ricotta"]),
+            g("mascarpone", "Маскарпоне", .cheese, 412, 5, 42, 3.5, ("Маскарпоне", "маскарпоне", "маскарпоне"), tags: ["spread", "dessert", "fatty"], cook: .noCook, en: ["mascarpone"]),
+            g("cheese_light", "Сыр лёгкий 17%", .cheese, 270, 29, 17, 0, ("Сыр", "лёгкий сыр", "лёгким сыром"), tags: ["melt"], cook: .noCook, en: ["reduced fat cheese", "light cheese"]),
+            g("string_cheese", "Сыр-косичка / стринг", .cheese, 280, 24, 17, 3.3, ("Сыр-косичка", "сыр-косичку", "сыром-косичкой"), tags: ["stick"], piece: 28, cook: .noCook, en: ["string cheese"]),
+            g("processed_cheese", "Сыр плавленый (ломтики)", .cheese, 300, 16, 24, 6, ("Плавленый сыр", "плавленый сыр", "плавленым сыром"), tags: ["melt", "slice"], piece: 20, cook: .noCook, en: ["american cheese", "processed cheese"]),
+            g("suluguni", "Сулугуни", .cheese, 290, 20, 24, 0, ("Сулугуни", "сулугуни", "сулугуни"), tags: ["melt"], cook: .noCook, en: ["suluguni"]),
+            g("adyghe", "Адыгейский сыр", .cheese, 240, 18.5, 14, 1.5, ("Адыгейский сыр", "адыгейский сыр", "адыгейским сыром"), tags: ["salad", "grill"], cook: .noCook, en: ["adyghe cheese", "paneer"]),
+            g("halloumi", "Халуми", .cheese, 321, 21, 25, 2, ("Халуми", "халуми", "халуми"), tags: ["grill"], cook: .noCook, en: ["halloumi"]),
+            g("ice_cream", "Мороженое пломбир", .snack, 227, 3.2, 15, 20.8, ("Мороженое", "мороженое", "мороженым"), tags: ["sweet", "frozen"], cook: .noCook, en: ["ice cream"])
+        ]
+
+        // Крупы, макароны, мука
+        a += [
+            g("semolina", "Манная крупа", .oats, 360, 12.7, 1.1, 72.8, ("Манка", "манку", "манкой"), tags: ["semolina"], cook: .noCook, en: ["semolina", "cream of wheat", "farina"]),
+            g("oat_bran", "Овсяные отруби", .oats, 246, 17.3, 7, 50, ("Отруби", "овсяные отруби", "отрубями"), tags: ["bran"], cook: .noCook, en: ["oat bran"]),
+            g("instant_oats", "Овсянка быстрого приготовления", .oats, 375, 12, 6.5, 68, ("Овсянка", "овсяные хлопья", "овсянкой"), tags: ["oats", "instant"], cook: .noCook, en: ["instant oatmeal", "quick oats"]),
+            g("rice_round", "Рис круглый", .grain, 360, 7, 1, 79, ("Рис", "круглый рис", "рисом"), tags: ["rice", "round"], cook: .rice, en: ["short grain rice", "arborio", "sushi rice"]),
+            g("protein_pasta", "Паста из нута или чечевицы", .pasta, 339, 19.6, 6.3, 57, ("Паста", "пасту из нута", "пастой"), tags: ["protein"], cook: .pasta, en: ["chickpea pasta", "banza", "lentil pasta", "protein pasta"]),
+            g("vermicelli", "Вермишель", .pasta, 371, 13, 1.5, 75, ("Вермишель", "вермишель", "вермишелью"), tags: ["noodles", "thin"], cook: .noodles, en: ["vermicelli", "angel hair"]),
+            g("soba", "Гречневая лапша (соба)", .pasta, 336, 14.4, 0.7, 74.6, ("Соба", "гречневую лапшу", "гречневой лапшой"), tags: ["noodles"], cook: .noodles, en: ["soba"]),
+            g("bread_crumbs", "Панировочные сухари", .other, 395, 13.4, 5.3, 71.9, ("Сухари", "панировочные сухари", "панировочными сухарями"), tags: ["crumbs"], cook: .noCook, en: ["bread crumbs", "panko"]),
+            g("almond_flour", "Миндальная мука", .other, 571, 21.4, 50, 21.4, ("Миндальная мука", "миндальную муку", "миндальной мукой"), tags: ["flour"], cook: .noCook, en: ["almond flour"]),
+            g("oat_flour", "Овсяная мука", .other, 404, 14.7, 9.1, 65.7, ("Овсяная мука", "овсяную муку", "овсяной мукой"), tags: ["flour"], cook: .noCook, en: ["oat flour"]),
+            g("rice_flour", "Рисовая мука", .other, 366, 6, 1.4, 80, ("Рисовая мука", "рисовую муку", "рисовой мукой"), tags: ["flour"], cook: .noCook, en: ["rice flour"]),
+            g("starch", "Крахмал", .other, 381, 0.3, 0.1, 91, ("Крахмал", "крахмал", "крахмалом"), tags: ["starch"], cook: .noCook, en: ["corn starch", "cornstarch", "potato starch"]),
+            g("gelatin", "Желатин", .other, 335, 85.6, 0.1, 0, ("Желатин", "желатин", "желатином"), tags: ["gelatin"], cook: .noCook, en: ["gelatin"]),
+            g("cocoa", "Какао-порошок", .other, 228, 19.6, 13.7, 28, ("Какао", "какао", "какао"), tags: ["cocoa"], cook: .noCook, en: ["cocoa powder", "cocoa"])
+        ]
+
+        // Хлеб
+        a += [
+            g("english_muffin", "Английский маффин", .bread, 227, 8.9, 1.7, 44, ("Маффин", "английский маффин", "маффином"), tags: ["bun"], piece: 57, cook: .noCook, en: ["english muffin"]),
+            g("tortilla_low_carb", "Тортилья низкоуглеводная", .bread, 155, 11, 6.7, 42, ("Тортилья", "тортилью", "тортильей"), tags: ["wrap"], piece: 45, cook: .noCook, en: ["low carb tortilla", "carb balance tortilla"]),
+            g("baguette", "Багет", .bread, 270, 9, 1.5, 54, ("Багет", "багет", "багетом"), tags: ["slice"], cook: .noCook, en: ["baguette"]),
+            g("cookies", "Печенье", .snack, 450, 6.5, 17, 68, ("Печенье", "печенье", "печеньем"), tags: ["biscuit", "sweet"], cook: .noCook, en: ["cookies", "biscuits"]),
+            g("savoiardi", "Печенье савоярди", .snack, 365, 10.6, 9.1, 59.7, ("Савоярди", "савоярди", "савоярди"), tags: ["biscuit", "sweet", "dessert_base"], piece: 10, cook: .noCook, en: ["ladyfingers", "savoiardi"])
+        ]
+
+        // Овощи и зелень
+        a += [
+            g("brussels", "Брюссельская капуста", .vegetable, 43, 3.4, 0.3, 9, ("Брюссельская капуста", "брюссельскую капусту", "брюссельской капустой"), tags: ["green"], cook: .freshVeg, en: ["brussels sprouts"]),
+            g("asparagus", "Спаржа", .vegetable, 20, 2.2, 0.1, 3.9, ("Спаржа", "спаржу", "спаржей"), tags: ["green"], cook: .freshVeg, en: ["asparagus"]),
+            g("napa_cabbage", "Пекинская капуста", .vegetable, 16, 1.2, 0.2, 3.2, ("Пекинская капуста", "пекинскую капусту", "пекинской капустой"), tags: ["salad", "stew"], cook: .freshVeg, en: ["napa cabbage", "chinese cabbage"]),
+            g("peas_canned", "Горошек зелёный (конс.)", .vegetable, 69, 4.4, 0.4, 12.6, ("Горошек", "консервированный горошек", "горошком"), tags: ["peas", "salad", "olivier"], cook: .cannedVeg, en: ["canned peas"]),
+            g("spinach_frozen", "Шпинат (заморож.)", .greens, 29, 3.6, 0.5, 4.5, ("Шпинат", "шпинат", "шпинатом"), tags: ["leaf", "cookable", "frozen"], cook: .frozenVeg, en: ["frozen spinach"]),
+            g("kale", "Кейл", .greens, 35, 2.9, 1.5, 4.4, ("Кейл", "кейл", "кейлом"), tags: ["leaf", "cookable"], cook: .leafy, en: ["kale"]),
+            g("arugula", "Руккола", .greens, 25, 2.6, 0.7, 3.7, ("Руккола", "рукколу", "рукколой"), tags: ["leaf"], cook: .leafy, en: ["arugula", "rocket"]),
+            g("cauliflower_frozen", "Цветная капуста (заморож.)", .vegetable, 25, 1.9, 0.3, 5, ("Цветная капуста", "цветную капусту", "цветной капустой"), tags: ["frozen", "cream"], cook: .frozenVeg, en: ["frozen cauliflower"]),
+            g("hot_pepper", "Перец халапеньо", .vegetable, 29, 0.9, 0.4, 6.5, ("Халапеньо", "халапеньо", "халапеньо"), tags: ["hot"], cook: .freshVeg, en: ["jalapeno"])
+        ]
+
+        // Бобовые
+        a += [
+            g("red_lentils", "Чечевица красная", .legumes, 358, 24, 2.2, 63, ("Чечевица", "красную чечевицу", "чечевицей"), tags: ["lentils", "dry"], cook: .lentils, en: ["red lentils"]),
+            g("split_peas", "Горох колотый", .legumes, 341, 24.6, 1.2, 60, ("Горох", "колотый горох", "горохом"), tags: ["peas_dry", "dry"], cook: .dryBeans, en: ["split peas"]),
+            g("white_beans_can", "Фасоль белая (конс.)", .legumes, 92, 6, 0.3, 16, ("Фасоль", "белую фасоль", "фасолью"), tags: ["beans", "canned"], cook: .cannedLegumes, en: ["white beans", "cannellini", "navy beans"]),
+            g("chickpeas_dry", "Нут сухой", .legumes, 378, 20.5, 6, 63, ("Нут", "нут", "нутом"), tags: ["chickpeas", "dry"], cook: .dryBeans, en: ["dry chickpeas"])
+        ]
+
+        // Фрукты и ягоды
+        a += [
+            g("plum", "Слива", .fruit, 46, 0.7, 0.3, 11.4, ("Сливы", "сливы", "сливами"), piece: 65, cook: .noCook, en: ["plum"]),
+            g("pomegranate", "Гранат", .fruit, 83, 1.7, 1.2, 18.7, ("Гранат", "гранат", "гранатом"), piece: 250, cook: .noCook, en: ["pomegranate"]),
+            g("grapefruit", "Грейпфрут", .fruit, 42, 0.8, 0.1, 10.7, ("Грейпфрут", "грейпфрут", "грейпфрутом"), piece: 250, cook: .noCook, en: ["grapefruit"]),
+            g("melon", "Дыня", .fruit, 34, 0.8, 0.2, 8.2, ("Дыня", "дыню", "дыней"), cook: .noCook, en: ["melon", "cantaloupe", "honeydew"]),
+            g("apricot", "Абрикос", .fruit, 48, 1.4, 0.4, 11.1, ("Абрикосы", "абрикосы", "абрикосами"), piece: 35, cook: .noCook, en: ["apricot"]),
+            g("prunes", "Чернослив", .fruit, 240, 2.2, 0.4, 63.9, ("Чернослив", "чернослив", "черносливом"), tags: ["dried"], cook: .noCook, en: ["prunes"]),
+            g("dried_cranberries", "Клюква сушёная", .fruit, 308, 0.2, 1.1, 82.8, ("Клюква", "сушёную клюкву", "клюквой"), tags: ["dried"], cook: .noCook, en: ["dried cranberries", "craisins"]),
+            g("cherries", "Черешня / вишня", .berries, 63, 1.1, 0.2, 16, ("Вишня", "вишню", "вишней"), cook: .noCook, en: ["cherries", "cherry"]),
+            g("blackberries", "Ежевика", .berries, 43, 1.4, 0.5, 9.6, ("Ежевика", "ежевику", "ежевикой"), cook: .noCook, en: ["blackberries"]),
+            g("cherries_frozen", "Вишня (заморож.)", .berries, 46, 0.9, 0.4, 11, ("Вишня", "вишню", "вишней"), tags: ["frozen"], cook: .noCook, en: ["frozen cherries"]),
+            g("strawberries_frozen", "Клубника (заморож.)", .berries, 35, 0.4, 0.1, 9.1, ("Клубника", "клубнику", "клубникой"), tags: ["frozen"], cook: .noCook, en: ["frozen strawberries"]),
+            g("blueberries_frozen", "Черника (заморож.)", .berries, 51, 0.4, 0.6, 12.2, ("Черника", "чернику", "черникой"), tags: ["frozen"], cook: .noCook, en: ["frozen blueberries"])
+        ]
+
+        // Орехи, семена, пасты
+        a += [
+            g("hazelnuts", "Фундук", .nuts, 628, 15, 60.8, 16.7, ("Фундук", "фундук", "фундуком"), cook: .noCook, en: ["hazelnuts"]),
+            g("pistachios", "Фисташки", .nuts, 562, 20.2, 45.3, 27.2, ("Фисташки", "фисташки", "фисташками"), cook: .noCook, en: ["pistachios"]),
+            g("pumpkin_seeds", "Тыквенные семечки", .nuts, 559, 30.2, 49, 10.7, ("Тыквенные семечки", "тыквенные семечки", "тыквенными семечками"), tags: ["seeds"], cook: .noCook, en: ["pumpkin seeds", "pepitas"]),
+            g("flax", "Семена льна", .nuts, 534, 18.3, 42.2, 28.9, ("Лён", "семена льна", "семенами льна"), tags: ["seeds"], cook: .noCook, en: ["flaxseed", "flax seeds"]),
+            g("sesame", "Кунжут", .nuts, 573, 17.7, 49.7, 23.4, ("Кунжут", "кунжут", "кунжутом"), tags: ["seeds", "topping"], cook: .noCook, en: ["sesame seeds"]),
+            g("coconut_flakes", "Кокосовая стружка", .nuts, 660, 6.9, 64.5, 23.7, ("Кокосовая стружка", "кокосовую стружку", "кокосовой стружкой"), tags: ["topping", "coconut"], cook: .noCook, en: ["shredded coconut", "coconut flakes"]),
+            g("almond_butter", "Миндальная паста", .nuts, 614, 21, 55.5, 18.8, ("Миндальная паста", "миндальную пасту", "миндальной пастой"), tags: ["spread"], cook: .noCook, en: ["almond butter"]),
+            g("choco_spread", "Шоколадная паста", .sweet, 539, 6.3, 30.9, 57.5, ("Шоколадная паста", "шоколадную пасту", "шоколадной пастой"), tags: ["spread"], cook: .noCook, en: ["nutella", "chocolate spread"])
+        ]
+
+        // Протеин и сладкое
+        a += [
+            g("casein", "Протеин казеиновый", .protein, 360, 78, 1.5, 6, ("Казеин", "казеин", "казеином"), tags: ["casein"], cook: .noCook, en: ["casein", "casein protein"]),
+            g("whey_isolate", "Протеин изолят", .protein, 370, 88, 1, 2, ("Протеин", "протеин", "протеином"), tags: ["isolate"], cook: .noCook, en: ["whey isolate", "isolate protein"]),
+            g("plant_protein", "Протеин растительный", .protein, 380, 75, 7, 8, ("Протеин", "растительный протеин", "растительным протеином"), tags: ["vegan"], cook: .noCook, en: ["plant protein", "pea protein", "vegan protein"]),
+            g("gainer", "Гейнер", .protein, 380, 18, 3, 70, ("Гейнер", "гейнер", "гейнером"), tags: ["gainer"], cook: .noCook, en: ["mass gainer", "gainer"]),
+            g("beef_jerky", "Вяленое мясо (джерки)", .snack, 410, 33, 25, 11, ("Джерки", "вяленое мясо", "вяленым мясом"), tags: ["protein", "salty"], cook: .noCook, en: ["beef jerky", "jerky"]),
+            g("glazed_curd", "Сырок глазированный", .snack, 407, 8.5, 27.8, 32, ("Сырок", "сырок", "сырком"), tags: ["sweet"], piece: 45, cook: .noCook, en: ["glazed curd snack"]),
+            g("milk_chocolate", "Молочный шоколад", .sweet, 535, 7.6, 29.7, 59.4, ("Шоколад", "молочный шоколад", "шоколадом"), cook: .noCook, en: ["milk chocolate"]),
+            g("zefir", "Зефир", .sweet, 326, 0.8, 0.1, 79.8, ("Зефир", "зефир", "зефиром"), piece: 35, cook: .noCook, en: ["zefir", "marshmallow"]),
+            g("maple_syrup", "Кленовый сироп", .sweet, 260, 0, 0.1, 67, ("Кленовый сироп", "кленовый сироп", "кленовым сиропом"), tags: ["syrup"], cook: .noCook, en: ["maple syrup", "pancake syrup"]),
+            g("chips", "Чипсы", .snack, 536, 7, 35, 53, ("Чипсы", "чипсы", "чипсами"), tags: ["salty"], cook: .noCook, en: ["chips", "potato chips"])
+        ]
+
+        // Готовое и заморозка
+        a += [
+            g("meatballs_frozen", "Фрикадельки (заморож.)", .ready, 286, 13.4, 20, 9, ("Фрикадельки", "фрикадельки", "фрикадельками"), tags: ["micro"], cook: .readyFrozen, en: ["frozen meatballs", "meatballs"]),
+            g("khinkali", "Хинкали (заморож.)", .ready, 230, 11, 10, 25, ("Хинкали", "хинкали", "хинкали"), tags: ["dumplings"], cook: .dumplings, en: ["khinkali"]),
+            g("cheese_vareniki", "Вареники с творогом", .ready, 220, 11, 5, 33, ("Вареники", "вареники с творогом", "варениками"), tags: ["dumplings", "sweetish"], cook: .dumplings, en: ["cheese pierogi"])
+        ]
+
+        // Соусы и масла
+        a += [
+            g("pesto", "Песто", .sauce, 420, 5, 42, 6, ("Песто", "песто", "песто"), tags: ["fatty", "pasta_sauce"], cook: .noCook, en: ["pesto"]),
+            g("teriyaki", "Соус терияки", .sauce, 89, 5.9, 0, 15.6, ("Терияки", "соус терияки", "соусом терияки"), tags: ["asian"], cook: .noCook, en: ["teriyaki", "teriyaki sauce"]),
+            g("sweet_chili", "Сладкий соус чили", .sauce, 222, 0.5, 0.5, 54, ("Сладкий чили", "сладкий соус чили", "сладким соусом чили"), tags: ["asian"], cook: .noCook, en: ["sweet chili sauce"]),
+            g("caesar_dressing", "Соус цезарь", .sauce, 450, 2, 46, 4, ("Соус цезарь", "соус цезарь", "соусом цезарь"), tags: ["fatty", "dressing"], cook: .noCook, en: ["caesar dressing"]),
+            g("ranch", "Соус ранч", .sauce, 430, 1.3, 44.5, 6, ("Ранч", "соус ранч", "соусом ранч"), tags: ["fatty", "dressing", "dip"], cook: .noCook, en: ["ranch", "ranch dressing"]),
+            g("mayo_light", "Майонез лёгкий", .sauce, 300, 1, 30, 7, ("Майонез", "лёгкий майонез", "лёгким майонезом"), tags: ["fatty"], cook: .noCook, en: ["light mayo", "light mayonnaise"]),
+            g("adjika", "Аджика", .sauce, 59, 1, 3.7, 5.8, ("Аджика", "аджику", "аджикой"), tags: ["tomato", "hot"], cook: .noCook, en: ["adjika"]),
+            g("ghee", "Топлёное масло", .fat, 876, 0.3, 99.5, 0, ("Топлёное масло", "топлёное масло", "топлёным маслом"), cook: .noCook, en: ["ghee"]),
+            g("coconut_oil", "Кокосовое масло", .fat, 862, 0, 100, 0, ("Кокосовое масло", "кокосовое масло", "кокосовым маслом"), cook: .noCook, en: ["coconut oil"])
+        ]
+
         // Специи (калории не считаются)
         let spices: [(String, String, String, String, String)] = [
             ("salt", "Соль", "соль", "солью", "salt"),
@@ -355,7 +536,19 @@ public enum Catalog {
             ("cumin", "Зира (кумин)", "зиру", "зирой", "cumin"),
             ("garlic", "Чеснок свежий", "чеснок", "чесноком", "garlic"),
             ("vinegar", "Уксус", "уксус", "уксусом", "vinegar"),
-            ("lemon_juice", "Лимонный сок", "лимонный сок", "лимонным соком", "lemon juice")
+            ("lemon_juice", "Лимонный сок", "лимонный сок", "лимонным соком", "lemon juice"),
+            ("curry", "Карри", "карри", "карри", "curry powder"),
+            ("ginger", "Имбирь молотый", "имбирь", "имбирём", "ginger"),
+            ("nutmeg", "Мускатный орех", "мускатный орех", "мускатным орехом", "nutmeg"),
+            ("khmeli_suneli", "Хмели-сунели", "хмели-сунели", "хмели-сунели", "khmeli suneli"),
+            ("coriander", "Кориандр", "кориандр", "кориандром", "coriander"),
+            ("dill_dry", "Укроп сушёный", "сушёный укроп", "сушёным укропом", "dried dill"),
+            ("smoked_paprika", "Копчёная паприка", "копчёную паприку", "копчёной паприкой", "smoked paprika"),
+            ("vanilla", "Ванилин", "ванилин", "ванилином", "vanilla"),
+            ("baking_powder", "Разрыхлитель", "разрыхлитель", "разрыхлителем", "baking powder"),
+            ("baking_soda", "Сода пищевая", "соду", "содой", "baking soda"),
+            ("sweetener", "Сахарозаменитель", "сахарозаменитель", "сахарозаменителем", "sweetener"),
+            ("coffee", "Кофе растворимый", "кофе", "кофе", "instant coffee")
         ]
         for s in spices {
             a.append(g(s.0, s.1, .spice, 0, 0, 0, 0, (s.1, s.2, s.3), cook: .noCook, en: [s.4]))

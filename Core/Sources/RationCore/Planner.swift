@@ -66,6 +66,7 @@ public enum Planner {
         let pool = makePool(input)
         let slots = Schedule.slots(count: input.options.mealCount, firstMeal: input.options.firstMeal)
         let T = input.target
+        let dessertAt = input.options.proteinDessert ? dessertSlot(slots) : nil
 
         var best: [Draft] = []
         var bestScore = Double.infinity
@@ -74,10 +75,10 @@ public enum Planner {
             var usedMain: [String: Int] = [:]
             var usedTpl: [String: Int] = [:]
             var missing = 0
-            for slot in slots {
+            for (si, slot) in slots.enumerated() {
                 let isLunch = slot.kind == .main && !drafts.contains { $0.slot.kind == .main }
                 if let d = draftMeal(slot: slot, pool: pool, opt: input.options, usedMain: usedMain,
-                                     usedTpl: usedTpl, isLunch: isLunch, rng: &rng) {
+                                     usedTpl: usedTpl, isLunch: isLunch, dessert: si == dessertAt, rng: &rng) {
                     drafts.append(d)
                     if let tpl = d.tpl { usedTpl[tpl.id, default: 0] += 1 }
                     for p in d.parts where isMain(p, d) { usedMain[p.food.id, default: 0] += 1 }
@@ -118,9 +119,10 @@ public enum Planner {
         var bestDraft: Draft?
         var bestScore = Double.infinity
         let isLunch = old.slot.kind == .main && !plan.meals.prefix(index).contains { $0.slot.kind == .main }
+        let wasDessert = input.options.proteinDessert && (Templates.byID(old.templateID)?.dessert ?? false)
         for _ in 0..<attempts {
             guard let d = draftMeal(slot: old.slot, pool: pool, opt: input.options, usedMain: usedMain,
-                                    usedTpl: usedTpl, isLunch: isLunch, rng: &rng) else { continue }
+                                    usedTpl: usedTpl, isLunch: isLunch, dessert: wasDessert, rng: &rng) else { continue }
             if d.tpl?.id == old.templateID && plan.meals.count > 1 && Double.random(in: 0..<1, using: &rng) < 0.85 { continue }
             var drafts: [Draft] = plan.meals.enumerated().map { i, m in
                 i == index ? d : lockedDraft(m)
@@ -193,8 +195,15 @@ public enum Planner {
 
     // MARK: Черновик одного приёма
 
+    /// Какой приём сделать десертом: вечерний, иначе последний перекус, иначе завтрак.
+    static func dessertSlot(_ slots: [MealSlot]) -> Int? {
+        if let i = slots.lastIndex(where: { $0.kind == .evening }) { return i }
+        if let i = slots.lastIndex(where: { $0.kind == .snack }) { return i }
+        return slots.firstIndex(where: { $0.kind == .breakfast })
+    }
+
     static func draftMeal(slot: MealSlot, pool: [Avail], opt: PlanOptions, usedMain: [String: Int],
-                          usedTpl: [String: Int], isLunch: Bool, rng: inout SplitMix64) -> Draft? {
+                          usedTpl: [String: Int], isLunch: Bool, dessert: Bool = false, rng: inout SplitMix64) -> Draft? {
         var kinds: [MealKind] = [slot.kind]
         if slot.kind == .evening { kinds.append(.snack) }
         var tpls = Templates.all.filter { t in
@@ -213,7 +222,16 @@ public enum Planner {
             if let n = usedTpl[t.id] { w *= pow(0.12, Double(n)) }
             if opt.fewDishes && t.onePan { w *= 2 }
             if opt.sweetSnack && slot.kind == .snack { w *= t.sweet ? 4 : 0.5 }
+            if t.dessert && !dessert { w *= opt.proteinDessert ? 0.3 : 0.6 }
             return (t, w)
+        }
+        if dessert {
+            var sweets = weighted.filter { $0.0.dessert }
+            for _ in 0..<12 {
+                guard !sweets.isEmpty, let t = pick(sweets, &rng) else { break }
+                if let d = fill(template: t, slot: slot, pool: pool, opt: opt, usedMain: usedMain, rng: &rng) { return d }
+                sweets.removeAll { $0.0.id == t.id }
+            }
         }
         for _ in 0..<12 {
             guard !weighted.isEmpty, let t = pick(weighted, &rng) else { return nil }

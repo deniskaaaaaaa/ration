@@ -68,7 +68,8 @@ public enum Say {
         case .tofu: return "Нарежь \(a) кубиками и промокни полотенцем."
         case .shrimp: return "Если \(a) замороженные — подержи их 5 минут в холодной воде."
         case .cannedFish: return "Слей жидкость из банки и разбери \(a) вилкой на кусочки."
-        case .cookedMeat: return "Сними кожу и разбери \(a) руками на кусочки."
+        case .cookedMeat: return f.has("skin") ? "Сними кожу и разбери \(a) руками на кусочки." : "Нарежь \(a) кусочками."
+        case .cannedMeat: return "Открой банку и переложи \(a) в миску — лишний жир сверху можно снять."
         case .cannedLegumes: return "Откинь \(a) на дуршлаг и промой водой."
         default: return nil
         }
@@ -85,6 +86,7 @@ public enum Say {
         case .pork: return "Обжарь \(a) 8–10 минут до полной готовности."
         case .liver: return "Обжарь \(a) по 2–3 минуты с каждой стороны — дольше не надо, иначе станет жёсткой."
         case .cookedMeat: return "Прогрей \(a) на сковороде 1–2 минуты."
+        case .cannedMeat: return "Добавь \(a) и прогрей 3–4 минуты, разминая лопаткой."
         case .bacon: return "Обжарь \(a) до хруста 4–5 минут и выложи на бумажное полотенце."
         case .sausage: return "Нарежь \(a) кружочками и обжарь 3–4 минуты."
         case .fishFillet: return "Обжарь \(a) по 3–4 минуты с каждой стороны."
@@ -130,7 +132,7 @@ public enum Say {
         case .fries: return "Запеки \(a) при 220 °C по времени на упаковке, обычно 15–20 минут."
         case .cannedLegumes: return "Откинь \(a) на дуршлаг и промой водой."
         case .lentils: return "Промой \(a) и вари 15–20 минут до мягкости."
-        case .dryBeans: return "Вари \(a) 50–60 минут — лучше замочить её с вечера."
+        case .dryBeans: return "Замочи \(a) с вечера, потом вари 50–60 минут до мягкости."
         case .dumplings: return "Опусти \(a) в кипящую подсоленную воду и вари 5–7 минут после всплытия."
         case .readyFrozen: return "Приготовь \(a) по инструкции на упаковке — в духовке или микроволновке."
         case .ready: return "Приготовь \(a) по инструкции на упаковке."

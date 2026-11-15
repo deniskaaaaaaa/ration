@@ -171,7 +171,7 @@ public struct Forms: Codable, Hashable, Sendable {
 /// Способ приготовления: от него зависят фразы в шагах рецепта.
 public enum Cook: String, Codable, Sendable {
     // мясо и птица
-    case chicken, groundMeat, beef, pork, sausage, liver, cookedMeat, bacon
+    case chicken, groundMeat, beef, pork, sausage, liver, cookedMeat, bacon, cannedMeat
     // рыба
     case fishFillet, salmon, shrimp, cannedFish
     // гарниры
@@ -360,14 +360,39 @@ public struct PlanOptions: Codable, Hashable, Sendable {
     public var noFish: Bool
     public var noPork: Bool
     public var vegetarian: Bool
+    /// Один из приёмов — протеиновый десерт (вечерний, перекус или завтрак).
+    public var proteinDessert: Bool
 
     public init(mealCount: Int = 4, firstMeal: String = "07:00", maxMinutes: Int? = nil,
                 portableLunch: Bool = false, noOven: Bool = false, fewDishes: Bool = false,
                 cookForTwoDays: Bool = false, sweetSnack: Bool = false, noFish: Bool = false,
-                noPork: Bool = false, vegetarian: Bool = false) {
+                noPork: Bool = false, vegetarian: Bool = false, proteinDessert: Bool = false) {
         self.mealCount = mealCount; self.firstMeal = firstMeal; self.maxMinutes = maxMinutes
         self.portableLunch = portableLunch; self.noOven = noOven; self.fewDishes = fewDishes
         self.cookForTwoDays = cookForTwoDays; self.sweetSnack = sweetSnack; self.noFish = noFish
-        self.noPork = noPork; self.vegetarian = vegetarian
+        self.noPork = noPork; self.vegetarian = vegetarian; self.proteinDessert = proteinDessert
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case mealCount, firstMeal, maxMinutes, portableLunch, noOven, fewDishes, cookForTwoDays
+        case sweetSnack, noFish, noPork, vegetarian, proteinDessert
+    }
+
+    /// Старые сохранения без новых полей читаются со значениями по умолчанию.
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        let d = PlanOptions()
+        mealCount = try c.decodeIfPresent(Int.self, forKey: .mealCount) ?? d.mealCount
+        firstMeal = try c.decodeIfPresent(String.self, forKey: .firstMeal) ?? d.firstMeal
+        maxMinutes = try c.decodeIfPresent(Int.self, forKey: .maxMinutes)
+        portableLunch = try c.decodeIfPresent(Bool.self, forKey: .portableLunch) ?? false
+        noOven = try c.decodeIfPresent(Bool.self, forKey: .noOven) ?? false
+        fewDishes = try c.decodeIfPresent(Bool.self, forKey: .fewDishes) ?? false
+        cookForTwoDays = try c.decodeIfPresent(Bool.self, forKey: .cookForTwoDays) ?? false
+        sweetSnack = try c.decodeIfPresent(Bool.self, forKey: .sweetSnack) ?? false
+        noFish = try c.decodeIfPresent(Bool.self, forKey: .noFish) ?? false
+        noPork = try c.decodeIfPresent(Bool.self, forKey: .noPork) ?? false
+        vegetarian = try c.decodeIfPresent(Bool.self, forKey: .vegetarian) ?? false
+        proteinDessert = try c.decodeIfPresent(Bool.self, forKey: .proteinDessert) ?? false
     }
 }

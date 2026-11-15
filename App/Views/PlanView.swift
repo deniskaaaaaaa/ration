@@ -114,6 +114,7 @@ struct PlanSettings: View {
                     wish("Минимум посуды", "frying.pan", \.fewDishes)
                     wish("Готовить сразу на 2 дня", "2.circle", \.cookForTwoDays)
                     wish("Сладкий перекус", "birthday.cake", \.sweetSnack)
+                    wish("Протеиновый десерт", "star.fill", \.proteinDessert)
                     wish("Без рыбы", "fish", \.noFish)
                     wish("Без свинины", "nosign", \.noPork)
                     wish("Вегетарианское", "leaf", \.vegetarian)

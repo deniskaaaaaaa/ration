@@ -45,6 +45,8 @@ public struct DishTemplate {
     public let portable: Bool
     public let onePan: Bool
     public let sweet: Bool
+    /// Протеиновый десерт (для пожелания «Протеиновый десерт»).
+    public let dessert: Bool
     public let weight: Double
     public let check: (Fill) -> Bool
     public let title: (Fill) -> String
@@ -70,18 +72,18 @@ private func XA(_ key: String, _ alts: [(String, ClosedRange<Double>)], req: Boo
 /// Масло нужно, только если белок блюда жарится.
 private let heatsProtein: (Fill) -> Bool = { f in
     guard let p = f["p"] else { return false }
-    return p.role != .eggs && Say.needsHeat(p)
+    return p.role != .eggs && Say.needsHeat(p) && Say.cook(p) != .cannedMeat
 }
 
 private func T(_ id: String, _ kinds: [MealKind], minutes: Int, slots: [SlotSpec], extras: [ExtraSpec] = [],
                spices: [String] = [], oven: Bool = false, portable: Bool = false, onePan: Bool = false,
-               sweet: Bool = false, weight: Double = 1,
+               sweet: Bool = false, dessert: Bool = false, weight: Double = 1,
                check: @escaping (Fill) -> Bool = { _ in true },
                title: @escaping (Fill) -> String,
                steps: @escaping (Fill) -> [String],
                tip: @escaping (Fill) -> String = { _ in "" }) -> DishTemplate {
     DishTemplate(id: id, kinds: Set(kinds), slots: slots, extras: extras, spices: spices, minutes: minutes,
-                 oven: oven, portable: portable, onePan: onePan, sweet: sweet, weight: weight,
+                 oven: oven, portable: portable, onePan: onePan, sweet: sweet || dessert, dessert: dessert, weight: weight,
                  check: check, title: title, steps: steps, tip: tip)
 }
 
@@ -158,7 +160,7 @@ public enum Templates {
 
         t.append(T("porridge", [.breakfast], minutes: 10,
             slots: [S("o", [.oats], tags: ["oats"], range: 40...110, main: true),
-                    S("m", [.milk], req: false, range: 150...300),
+                    S("m", [.milk], req: false, no: ["rtd"], range: 150...300),
                     S("fr", [.fruit, .berries], req: false, no: ["dried"]),
                     S("n", [.nuts], req: false, range: 10...25)],
             extras: [X("sw", ["c:honey", "c:jam", "c:sugar"], 5...15), X("but", ["c:butter"], 3...6)],
@@ -284,7 +286,7 @@ public enum Templates {
 
         t.append(T("yogurt_bowl", [.breakfast, .snack, .evening], minutes: 3,
             slots: [S("y", [.yogurt], range: 150...300, main: true),
-                    S("o", [.oats], req: false, range: 20...60),
+                    S("o", [.oats], req: false, no: ["semolina", "bran"], range: 20...60),
                     S("fr", [.berries, .fruit], req: false),
                     S("n", [.nuts], req: false, range: 10...20)],
             extras: [X("sw", ["c:honey", "c:jam"], 5...15)], sweet: true,

@@ -84,6 +84,15 @@ def num(v):
     return x
 
 
+def sane(role, kind, kcal, p):
+    """Поправка роли по КБЖУ: сухое молоко или протеин в порошке не должны стать «молоком»."""
+    if role == "milk" and kcal > 150:
+        return ("protein", "c:whey") if p > 40 else ("other", None)
+    if role in ("yogurt", "cottage") and kcal > 260:
+        return ("snack", None)
+    return role, kind
+
+
 SPACE = re.compile(r"\s+")
 CODE = re.compile(r"^\d{6,14}$")
 
@@ -304,6 +313,7 @@ def add_usda(best, path, clf, log=print):
             c_role, c_kind = clf.classify([tag], "")
             same = w_role == c_role or (FAMILY.get(w_role) and FAMILY.get(w_role) == FAMILY.get(c_role))
             role, kind = (w_role, w_kind) if same else (c_role, c_kind)
+        role, kind = sane(role, kind, kcal, p)
         best[code] = (code, name, brand, qty, round(kcal, 1), round(p, 1), round(f, 1), round(c, 1),
                       serving, role, kind, 5)
         added += 1
@@ -375,7 +385,7 @@ def build(src, out, log=print, usda=None):
         if abs(calc - kcal) > max(60, 0.35 * kcal) and not (kcal < 15 and calc < 25):
             continue
         cats = [x for x in get(row, i_cats).split(",") if x]
-        role, kind = clf.classify(cats, name)
+        role, kind = sane(*clf.classify(cats, name), kcal, p)
         countries = get(row, i_countries).split(",")
         prio = min([PRIORITY.get(x, 3) for x in countries if x] or [3])
         scans = int(num(get(row, i_scans)) or 0)
@@ -539,6 +549,14 @@ def selftest():
     assert nice("LAY'S CLASSIC POTATO CHIPS", 90) == "Lay's Classic Potato Chips", nice("LAY'S CLASSIC POTATO CHIPS", 90)
     assert nice("BBQ SAUCE WITH HONEY", 90) == "BBQ Sauce with Honey"
     assert nice("Kodiak Cakes Power Cakes", 90) == "Kodiak Cakes Power Cakes"
+    assert sane(*clf.classify([], "Premier Protein Shake Chocolate"), 49, 9.2) == ("milk", "c:protein_drink")
+    assert sane(*clf.classify([], "Whey Protein Shake Mix"), 380, 75) == ("protein", "c:whey")
+    assert sane(*clf.classify([], "Cream of Wheat Original"), 370, 10) == ("oats", "c:semolina")
+    assert clf.classify([], "Тушёнка говяжья высший сорт")[1] == "c:canned_beef"
+    assert clf.classify([], "Вареники с творогом")[1] == "c:cheese_vareniki"
+    assert clf.classify([], "Филе бедра индейки")[1] == "c:turkey_thigh"
+    assert clf.classify([], "Durum wheat spaghetti")[1] == "c:pasta"
+    assert clf.classify([], "Cherry tomatoes")[1] == "c:tomato"
     assert usda_code("00021000658831") == "0021000658831" and usda_code("818290012345") == "0818290012345"
     print("selftest ok")
 

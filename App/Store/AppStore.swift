@@ -19,6 +19,8 @@ struct SavedState: Codable {
     var options: PlanOptions
     var plan: DayPlan?
     var done: [String: Bool]
+    /// Версия списка «всегда есть дома»: новые продукты по умолчанию добавляются один раз.
+    var stapleVersion: Int?
 }
 
 @MainActor
@@ -49,7 +51,13 @@ final class AppStore: ObservableObject {
         if let data = try? Data(contentsOf: url), let s = try? JSONDecoder().decode(SavedState.self, from: data) {
             profile = s.profile
             pantry = s.pantry
-            staples = s.staples
+            var st = s.staples
+            if (s.stapleVersion ?? 1) < Catalog.stapleVersion {
+                for id in Catalog.newStapleIDs where !st.contains(where: { $0.id == id }) {
+                    if let f = Catalog.food(id) { st.append(StapleEntry(food: f, on: true)) }
+                }
+            }
+            staples = st
             options = s.options
             plan = s.plan
             done = s.done
@@ -70,7 +78,8 @@ final class AppStore: ObservableObject {
 
     private func scheduleSave() {
         saveTask?.cancel()
-        let state = SavedState(profile: profile, pantry: pantry, staples: staples, options: options, plan: plan, done: done)
+        let state = SavedState(profile: profile, pantry: pantry, staples: staples, options: options, plan: plan, done: done,
+                               stapleVersion: Catalog.stapleVersion)
         let url = fileURL
         saveTask = Task.detached(priority: .utility) {
             try? await Task.sleep(nanoseconds: 400_000_000)
