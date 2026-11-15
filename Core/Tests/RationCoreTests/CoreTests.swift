@@ -214,6 +214,40 @@ final class PlannerTests: XCTestCase {
         try report.write(toFile: dir + "/sample_plans.txt", atomically: true, encoding: .utf8)
     }
 
+    /// Каждый шаблон на «полном холодильнике»: текст всех рецептов в файл для проверки человеком.
+    func testEveryTemplateText() throws {
+        let everything = Catalog.all.filter { $0.role != .spice && $0.role != .drink }.map { PantryItem(food: $0, grams: nil) }
+        let input = PlannerInput(pantry: everything, staples: staples, target: Profile().computedTarget, options: PlanOptions(), seed: 1)
+        let pool = Planner.makePool(input)
+        var rng = SplitMix64(seed: 77)
+        var report = ""
+        for t in Templates.all {
+            var made = 0
+            for _ in 0..<40 where made < 3 {
+                let slot = MealSlot(name: "Проба", kind: t.kinds.first ?? .main, time: "12:00", share: 0.3)
+                guard var d = Planner.fill(template: t, slot: slot, pool: pool, opt: input.options, usedMain: [:], rng: &rng) else { continue }
+                var ds = [d]
+                Planner.solve(&ds, target: Macros(kcal: 700, p: 50, f: 25, c: 70))
+                d = ds[0]
+                guard let m = Planner.makeMeal(d, input: input) else { continue }
+                made += 1
+                XCTAssertFalse(m.title.isEmpty, t.id)
+                XCTAssertFalse(m.title.contains("  "), "\(t.id): \(m.title)")
+                for s in m.steps {
+                    XCTAssertFalse(s.contains("  ") || s.contains(" ,") || s.contains(",,") || s.contains(" .") || s.contains(".."), "\(t.id): \(s)")
+                }
+                report += "\n[\(t.id)] \(m.title)\n"
+                for i in m.ingredients where !i.locked { report += "   • \(i.food.name) — \(Int(i.grams)) г\n" }
+                let sp = m.ingredients.filter { $0.locked }.map { $0.food.name }
+                if !sp.isEmpty { report += "   • по вкусу: \(sp.joined(separator: ", "))\n" }
+                for (k, st) in m.steps.enumerated() { report += "   \(k + 1). \(st)\n" }
+            }
+            XCTAssertGreaterThan(made, 0, "шаблон \(t.id) не собрался даже из всего каталога")
+        }
+        let dir = ProcessInfo.processInfo.environment["REPORT_DIR"] ?? FileManager.default.temporaryDirectory.path
+        try report.write(toFile: dir + "/all_templates.txt", atomically: true, encoding: .utf8)
+    }
+
     func testProteinDessert() {
         let home = [item("c:cottage_5", 1000), item("c:egg", 600), item("c:whey", 500), item("c:chicken_breast", 1000),
                     item("c:rice_white", 1000), item("c:semolina", 500), item("c:oats", 500), item("c:milk_2", 1000),

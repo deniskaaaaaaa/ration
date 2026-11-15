@@ -961,7 +961,8 @@ extension Templates {
                 if !veg.isEmpty { s.append("Обжарь \(Say.list(veg.map { $0.words.acc })) на масле 4–5 минут.") }
                 else { s.append("Разогрей масло в сковороде.") }
                 let sp = Say.spiceList(f.spices.filter { !$0.isKind("c:garlic") })
-                s.append("Добавь фасоль и полстакана воды\(sp.isEmpty ? "" : ", \(Say.list(sp))"), разомни часть фасоли толкушкой.")
+                s.append(sp.isEmpty ? "Добавь фасоль и полстакана воды." : "Добавь фасоль, полстакана воды и специи: \(Say.list(sp)).")
+                s.append("Разомни часть фасоли толкушкой.")
                 s.append("Туши 10 минут, иногда помешивая.")
                 if let n = f["n"] { s.append("Измельчи \(n.words.acc) и вмешай.") }
                 var end: [String] = []
