@@ -1015,6 +1015,9 @@ public enum Templates {
                 return ["Нарежь \(Say.acc(v)) брусочками.", "Макай овощи\(f["b"].map { " и \(Say.acc($0))" } ?? "") в \(Say.acc(h))."]
             }))
 
+        t += desserts()
+        t += breakfasts()
+        t += mains()
         return t
     }
 }

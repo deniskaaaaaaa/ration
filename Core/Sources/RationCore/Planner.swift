@@ -247,7 +247,12 @@ public enum Planner {
         var parts: [Part] = []
         var used = Set<String>()
         for s in t.slots {
-            let cands = pool.filter { !used.contains($0.food.id) && matches($0.food, s, opt) }
+            let cands = pool.filter { a in
+                guard !used.contains(a.food.id) && matches(a.food, s, opt) else { return false }
+                // Штучный продукт, которого дома меньше одной штуки, не берём (бутылка, банка, гранат).
+                if let l = a.limit, let pg = a.food.pieceGrams, pg > 0, pg <= (s.range ?? a.food.role.portion).upperBound * 1.05, l < pg { return false }
+                return true
+            }
             if cands.isEmpty {
                 if s.required { return nil }
                 continue
@@ -498,8 +503,10 @@ public enum Planner {
         if input.options.cookForTwoDays && d.slot.kind == .main {
             tip = (tip.isEmpty ? "" : tip + " ") + "Готовь сразу двойную порцию — вторая пойдёт на завтра."
         }
+        let steps = t.steps(f)
+        if steps.isEmpty { return nil }
         return Meal(slot: d.slot, templateID: t.id, title: t.title(f), minutes: t.minutes,
-                    ingredients: ings, steps: t.steps(f), tip: tip)
+                    ingredients: ings, steps: steps, tip: tip)
     }
 
     static func assemble(_ drafts: [Draft], slots: [MealSlot], input: PlannerInput) -> DayPlan {

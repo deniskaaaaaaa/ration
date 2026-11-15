@@ -184,9 +184,10 @@ final class PlannerTests: XCTestCase {
         let foods = Catalog.all.filter { ![.spice, .sauce, .fat, .drink].contains($0.role) && $0.id != "c:flour" && $0.id != "c:sugar" }
         var report = ""
         let options = [PlanOptions(mealCount: 3), PlanOptions(mealCount: 4, portableLunch: true),
-                       PlanOptions(mealCount: 5, maxMinutes: 30), PlanOptions(mealCount: 6, noOven: true, sweetSnack: true)]
+                       PlanOptions(mealCount: 5, maxMinutes: 30), PlanOptions(mealCount: 6, noOven: true, sweetSnack: true),
+                       PlanOptions(mealCount: 5, proteinDessert: true), PlanOptions(mealCount: 4, fewDishes: true, proteinDessert: true)]
         var templateUse: [String: Int] = [:]
-        for run in 0..<40 {
+        for run in 0..<90 {
             let n = Int.random(in: 8...26, using: &rng)
             let chosen = foods.shuffled(using: &rng).prefix(n)
             let pantry = chosen.map { PantryItem(food: $0, grams: Bool.random(using: &rng) ? nil : Double(Int.random(in: 2...20, using: &rng) * 100)) }
@@ -202,7 +203,7 @@ final class PlannerTests: XCTestCase {
                 XCTAssertFalse(m.steps.isEmpty, m.templateID)
                 for s in m.steps { XCTAssertFalse(s.contains("  ") || s.contains(" ,") || s.contains(",,"), "\(m.templateID): \(s)") }
             }
-            if run < 14 {
+            if run < 24 {
                 report += describe(plan, title: "Запуск \(run): \(n) продуктов, \(opt.mealCount) приёмов")
             }
         }
@@ -211,6 +212,30 @@ final class PlannerTests: XCTestCase {
         report += "Ни разу не выбраны: \(unused.joined(separator: ", "))\n"
         let dir = ProcessInfo.processInfo.environment["REPORT_DIR"] ?? FileManager.default.temporaryDirectory.path
         try report.write(toFile: dir + "/sample_plans.txt", atomically: true, encoding: .utf8)
+    }
+
+    func testProteinDessert() {
+        let home = [item("c:cottage_5", 1000), item("c:egg", 600), item("c:whey", 500), item("c:chicken_breast", 1000),
+                    item("c:rice_white", 1000), item("c:semolina", 500), item("c:oats", 500), item("c:milk_2", 1000),
+                    item("c:banana", 500), item("c:broccoli", 500), item("c:greek_yogurt_0", 500)]
+        let target = Profile().computedTarget
+        for (i, count) in [3, 4, 5, 6].enumerated() {
+            let input = PlannerInput(pantry: home, staples: staples, target: target,
+                                     options: PlanOptions(mealCount: count, proteinDessert: true), seed: UInt64(10 + i))
+            let plan = Planner.generate(input, attempts: 150)
+            XCTAssertTrue(plan.meals.contains { Templates.byID($0.templateID)?.dessert == true },
+                          "нет десерта при \(count) приёмах: \(plan.meals.map { $0.templateID })")
+            let dk = abs(plan.macros.kcal - target.kcal) / target.kcal
+            XCTAssertLessThan(dk, 0.06, "калории \(plan.macros.kcal) при \(count) приёмах")
+        }
+    }
+
+    func testOldOptionsDecode() throws {
+        let old = #"{"mealCount":5,"firstMeal":"06:30","portableLunch":true,"noOven":false,"fewDishes":false,"cookForTwoDays":false,"sweetSnack":true,"noFish":false,"noPork":false,"vegetarian":false}"#
+        let o = try JSONDecoder().decode(PlanOptions.self, from: Data(old.utf8))
+        XCTAssertEqual(o.mealCount, 5)
+        XCTAssertTrue(o.portableLunch)
+        XCTAssertFalse(o.proteinDessert)
     }
 
     func describe(_ plan: DayPlan, title: String) -> String {
