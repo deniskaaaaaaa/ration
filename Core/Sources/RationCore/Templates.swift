@@ -406,7 +406,7 @@ public enum Templates {
             tip: { _ in "Разложи по контейнерам — хорошо едется и тёплым, и холодным." }))
 
         t.append(T("oven_tray", [.main], minutes: 45,
-            slots: [S("p", [.meat, .fish, .sausage], noCooks: [.groundMeat, .cannedFish, .cookedMeat, .liver, .noCook, .bacon], main: true),
+            slots: [S("p", [.meat, .fish, .sausage], noCooks: [.groundMeat, .cannedFish, .cookedMeat, .liver, .noCook, .bacon, .cannedMeat], main: true),
                     S("s", [.potato]),
                     S("v", [.vegetable], req: false, tags: ["stew", "pepper", "onion", "carrot", "green", "mushroom", "tomato"], no: ["raw", "fatty"]),
                     S("v2", [.vegetable], req: false, tags: ["stew", "pepper", "onion", "carrot", "green", "mushroom", "tomato"], no: ["raw", "fatty"])],
@@ -514,7 +514,7 @@ public enum Templates {
 
         t.append(T("plov", [.main], minutes: 50,
             slots: [S("s", [.grain], tags: ["rice", "bulgur"], range: 60...110),
-                    S("p", [.meat], no: ["bone", "cooked", "ground"], noCooks: [.liver], main: true),
+                    S("p", [.meat], no: ["bone", "cooked", "ground"], noCooks: [.liver, .cannedMeat], main: true),
                     S("v", [.vegetable], req: false, tags: ["carrot"]),
                     S("v2", [.vegetable], req: false, tags: ["onion"])],
             extras: [X("fat", fat, 8...15)],
@@ -626,6 +626,7 @@ public enum Templates {
                 s += Say.vegPrep(veg)
                 if !veg.isEmpty { s.append("Добавь \(Say.list(veg.map { $0.words.acc })) в кастрюлю.") }
                 if p.role == .sausage { s.append("Нарежь \(Say.acc(p)) и добавь в суп.") }
+                if Say.cook(p) == .cannedMeat { s.append("Добавь \(Say.acc(p)) в кастрюлю.") }
                 if p.role == .legumes && Say.cook(p) == .cannedLegumes { s.append("Откинь \(Say.acc(p)) на дуршлаг и добавь в суп.") }
                 let sp = Say.spices(f.spices)
                 s.append("Посоли\(sp.isEmpty ? "" : ", добавь \(sp)") и вари ещё 15 минут, пока всё не станет мягким.")
@@ -732,7 +733,7 @@ public enum Templates {
             }))
 
         t.append(T("asian", [.main], minutes: 25,
-            slots: [S("p", [.meat, .fish, .legumes], noCooks: [.cannedFish, .cannedLegumes, .lentils, .dryBeans, .noCook, .liver, .groundMeat, .cookedMeat], main: true),
+            slots: [S("p", [.meat, .fish, .legumes], noCooks: [.cannedFish, .cannedLegumes, .lentils, .dryBeans, .noCook, .liver, .groundMeat, .cookedMeat, .cannedMeat], main: true),
                     S("s", [.pasta, .grain], tags: ["noodles", "rice"]),
                     S("v", [.vegetable], req: false, no: ["raw", "fatty"]),
                     S("v2", [.vegetable], req: false, no: ["raw", "fatty"])],
