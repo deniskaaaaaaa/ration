@@ -1,0 +1,5 @@
+База взята из кэша: foods-v2-2026-11-b030268364d3f3dcde88023f757bfc38485ffb71c7f8e8b6ce6d1cb14bc94564
+total 224320
+drwxr-xr-x  2 runner runner      4096 Nov 15 00:42 .
+drwxr-xr-x 10 runner runner      4096 Nov 15 00:42 ..
+-rw-r--r--  1 runner runner 229693018 Nov 15 00:15 foods.sqlite.gz

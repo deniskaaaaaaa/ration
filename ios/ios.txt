@@ -1,0 +1,3 @@
+База в приложении: 504M
+zip ok: 9 files
+Ratsion.ipa: 231265014 bytes, sha256 0a4a7b6b3db90170ca21a84db7bc04a49d67dddd7be6e6cf2b6936509c18cbc1
