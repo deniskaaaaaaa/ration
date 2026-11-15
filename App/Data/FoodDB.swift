@@ -3,7 +3,7 @@ import SQLite3
 
 private let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
 
-/// Встроенная база продуктов со штрихкодами (Open Food Facts, собирается в облаке при сборке приложения).
+/// Встроенная база продуктов со штрихкодами (Open Food Facts и USDA FoodData Central, собирается в облаке при сборке приложения).
 final class FoodDB: @unchecked Sendable {
     static let shared = FoodDB()
 

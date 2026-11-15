@@ -80,7 +80,7 @@ struct PantryView: View {
             if FoodDB.shared.available {
                 HStack(spacing: 6) {
                     Image(systemName: "externaldrive.fill").font(.system(size: 11))
-                    Text("В базе \(fmt(Double(FoodDB.shared.count))) продуктов со штрихкодами · Open Food Facts")
+                    Text("В базе \(fmt(Double(FoodDB.shared.count))) продуктов со штрихкодами · Open Food Facts и USDA")
                 }
                 .font(.system(size: 12))
                 .foregroundStyle(Theme.dim)

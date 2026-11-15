@@ -1,11 +1,11 @@
 name: Build Ratsion
 # 1) core — тесты движка рациона на Linux (дёшево) и пример дней для проверки текста рецептов;
-# 2) database — база продуктов из Open Food Facts (раз в месяц, дальше из кэша);
+# 2) database — база продуктов из Open Food Facts и USDA (раз в месяц, дальше из кэша);
 # 3) ios — сборка .ipa на Mac, проверка zip, выпуск в Releases («latest») и копия в ветке ipa;
 # 4) report — отчёты всех шагов в ветку dist.
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
   workflow_dispatch:
 permissions:
   contents: write
@@ -40,11 +40,12 @@ jobs:
         run: |
           cd report
           echo "commit: $GITHUB_SHA" > STATUS
-          git init -q -b dist-core
+          B=dist-core; [ "$GITHUB_REF_NAME" = main ] || B=dev-dist-core
+          git init -q -b "$B"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A && git commit -qm "Core report for ${GITHUB_SHA::7}"
-          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" dist-core
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" "$B"
           rm -rf .git
       - uses: actions/upload-artifact@v4
         if: always()
@@ -61,7 +62,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: key
-        run: echo "key=foods-v1-$(date +%Y-%m)-${{ hashFiles('tools/build_db.py', 'Core/Sources/RationCore/RoleMap.swift') }}" >> "$GITHUB_OUTPUT"
+        run: echo "key=foods-v2-$(date +%Y-%m)-${{ hashFiles('tools/build_db.py', 'Core/Sources/RationCore/RoleMap.swift') }}" >> "$GITHUB_OUTPUT"
       - uses: actions/cache@v4
         id: cache
         with:
@@ -73,13 +74,22 @@ jobs:
         run: |
           curl -fL --retry 5 --retry-delay 15 -o off.csv.gz https://static.openfoodfacts.org/data/en.openfoodfacts.org.products.csv.gz
           ls -la off.csv.gz
+      - name: Download USDA FoodData Central (Branded Foods)
+        if: steps.cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        run: |
+          U=$(curl -fsSL --retry 3 https://fdc.nal.usda.gov/download-datasets | grep -oE 'fdc-datasets/FoodData_Central_branded_food_csv_[0-9-]+\.zip' | sort -u | tail -1 || true)
+          if [ -n "$U" ]; then U="https://fdc.nal.usda.gov/$U"; else U="https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_branded_food_csv_2026-10-29.zip"; fi
+          echo "USDA: $U"
+          curl -fL --retry 5 --retry-delay 15 -o usda.zip "$U"
+          ls -la usda.zip
       - name: Build database
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
           set -o pipefail
           mkdir -p data report
-          python3 tools/build_db.py off.csv.gz data/foods.sqlite 2>&1 | tee report/db.log
-          rm -f off.csv.gz
+          python3 tools/build_db.py off.csv.gz data/foods.sqlite --usda usda.zip 2>&1 | tee report/db.log
+          rm -f off.csv.gz usda.zip
           gzip -6 -c data/foods.sqlite > data/foods.sqlite.gz
           rm -f data/foods.sqlite
           ls -la data | tee -a report/db.log
@@ -153,6 +163,7 @@ jobs:
           echo "IPA_SIZE=$SIZE" >> "$GITHUB_ENV"
           echo "IPA_SHA=$SHA" >> "$GITHUB_ENV"
       - name: Copy .ipa to the ipa branch (in parts under 100 MB)
+        if: github.ref == 'refs/heads/main'
         run: |
           set -e
           mkdir ipa-out && cd ipa-out
@@ -165,6 +176,7 @@ jobs:
           git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" ipa
           cd .. && rm -rf ipa-out
       - name: Publish release
+        if: github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -197,8 +209,9 @@ jobs:
             echo "database: ${{ needs.database.result }}"
             echo "ios: ${{ needs.ios.result }}"
           } > STATUS
-          git init -q -b dist
+          B=dist; [ "$GITHUB_REF_NAME" = main ] || B=dev-dist
+          git init -q -b "$B"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A && git commit -qm "Build of ${GITHUB_SHA::7}"
-          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" dist
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" "$B"
