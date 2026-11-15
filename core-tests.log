@@ -1,0 +1,78 @@
+Swift version 6.4.2 (swift-6.4.2-RELEASE)
+Target: x86_64-unknown-linux-gnu
+Building for debugging...
+[Computing dependencies]
+[Pre-planning 1 / 124]
+[Planning deferred tasks]
+[28 / 51] RationCore
+[33 / 56] RationCore
+[34 / 56] RationCore
+[46 / 61] RationCoreTests-product
+[50 / 61] RationCoreTests-product
+[54 / 62] RationCoreTests-product
+[55 / 62] RationCoreTests-test-runner
+[58 / 65] RationCoreTests-test-runner
+[62 / 65] RationCoreTests-test-runner
+[66 / 66] RationCoreTests-test-runner
+Build complete! (10.32 secs)
+Test Suite 'All tests' started at 2026-11-15 00:42:50.678
+Test Suite 'Debug-linux-x86_64.xctest' started at 2026-11-15 00:42:50.746
+Test Suite 'CatalogTests' started at 2026-11-15 00:42:50.746
+Test Case 'CatalogTests.testCatalogSane' started at 2026-11-15 00:42:50.746
+Test Case 'CatalogTests.testCatalogSane' passed (0.01 seconds)
+Test Case 'CatalogTests.testWith' started at 2026-11-15 00:42:50.756
+Test Case 'CatalogTests.testWith' passed (0.0 seconds)
+Test Suite 'CatalogTests' passed at 2026-11-15 00:42:50.756
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.01 (0.01) seconds
+Test Suite 'LabelTests' started at 2026-11-15 00:42:50.756
+Test Case 'LabelTests.testBarcodeVariants' started at 2026-11-15 00:42:50.756
+Test Case 'LabelTests.testBarcodeVariants' passed (0.006 seconds)
+Test Case 'LabelTests.testEULabel' started at 2026-11-15 00:42:50.762
+Test Case 'LabelTests.testEULabel' passed (0.001 seconds)
+Test Case 'LabelTests.testRussianLabel' started at 2026-11-15 00:42:50.763
+Test Case 'LabelTests.testRussianLabel' passed (0.1 seconds)
+Test Case 'LabelTests.testUSLabel' started at 2026-11-15 00:42:50.864
+Test Case 'LabelTests.testUSLabel' passed (0.0 seconds)
+Test Suite 'LabelTests' passed at 2026-11-15 00:42:50.864
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.108 (0.108) seconds
+Test Suite 'PlannerTests' started at 2026-11-15 00:42:50.864
+Test Case 'PlannerTests.testEveryTemplateText' started at 2026-11-15 00:42:50.864
+Test Case 'PlannerTests.testEveryTemplateText' passed (0.298 seconds)
+Test Case 'PlannerTests.testLimitsRespected' started at 2026-11-15 00:42:51.162
+Test Case 'PlannerTests.testLimitsRespected' passed (0.349 seconds)
+Test Case 'PlannerTests.testOldOptionsDecode' started at 2026-11-15 00:42:51.511
+Test Case 'PlannerTests.testOldOptionsDecode' passed (0.1 seconds)
+Test Case 'PlannerTests.testPlanHitsTarget' started at 2026-11-15 00:42:51.612
+Худшее отклонение калорий: 0%
+Test Case 'PlannerTests.testPlanHitsTarget' passed (3.575 seconds)
+Test Case 'PlannerTests.testProteinDessert' started at 2026-11-15 00:42:55.186
+Test Case 'PlannerTests.testProteinDessert' passed (0.812 seconds)
+Test Case 'PlannerTests.testRandomPantriesAndSamples' started at 2026-11-15 00:42:55.999
+Test Case 'PlannerTests.testRandomPantriesAndSamples' passed (31.619 seconds)
+Test Case 'PlannerTests.testReplaceMeal' started at 2026-11-15 00:43:27.618
+Test Case 'PlannerTests.testReplaceMeal' passed (0.525 seconds)
+Test Suite 'PlannerTests' passed at 2026-11-15 00:43:28.143
+	 Executed 7 tests, with 0 failures (0 unexpected) in 37.278 (37.278) seconds
+Test Suite 'RoleMapTests' started at 2026-11-15 00:43:28.143
+Test Case 'RoleMapTests.testClassify' started at 2026-11-15 00:43:28.143
+Test Case 'RoleMapTests.testClassify' passed (0.002 seconds)
+Test Case 'RoleMapTests.testRulesLoad' started at 2026-11-15 00:43:28.145
+Test Case 'RoleMapTests.testRulesLoad' passed (0.0 seconds)
+Test Suite 'RoleMapTests' passed at 2026-11-15 00:43:28.145
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+Test Suite 'TargetTests' started at 2026-11-15 00:43:28.145
+Test Case 'TargetTests.testDefaultCut' started at 2026-11-15 00:43:28.145
+Test Case 'TargetTests.testDefaultCut' passed (0.0 seconds)
+Test Case 'TargetTests.testSchedule' started at 2026-11-15 00:43:28.145
+Test Case 'TargetTests.testSchedule' passed (0.0 seconds)
+Test Suite 'TargetTests' passed at 2026-11-15 00:43:28.145
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'Debug-linux-x86_64.xctest' passed at 2026-11-15 00:43:28.145
+	 Executed 17 tests, with 0 failures (0 unexpected) in 37.399 (37.399) seconds
+Test Suite 'All tests' passed at 2026-11-15 00:43:28.145
+	 Executed 17 tests, with 0 failures (0 unexpected) in 37.399 (37.399) seconds
+◇ Test run started.
+↳ Testing Library Version: 6.4.2 (288a2328ff84644)
+↳ Target Platform: x86_64-unknown-linux-gnu
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.
+selftest ok
